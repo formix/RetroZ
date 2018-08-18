@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP 2222
+D Headers & Wire Housings GPIO Header for Raspberry Pi A+/B+/Pi 2/Pi 3 - 2x20 Female Header
+K
+F https://cdn-shop.adafruit.com/product-files/2222/00587.pdf
+$ENDCMP
+#
+#End Doc Library

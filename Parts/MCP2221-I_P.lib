@@ -19,7 +19,7 @@ F11 "https://www.alliedelec.com/microchip-technology-inc-mcp2221-i-p/70431559/" 
 F12 "MCP2221-I/P" 950 -900 50 H I L CNN "Arrow Part Number"
 F13 "https://www.arrow.com/en/products/mcp2221-ip/microchip-technology" 950 -1000 50 H I L CNN "Arrow Price/Stock"
 DRAW
-X VDD 1 500 -100 200 D 50 50 0 0 W N
+X VCC 1 500 -100 200 D 50 50 0 0 W N
 X GP0 2 0 -100 200 R 50 50 0 0 B
 X GP1 3 0 -200 200 R 50 50 0 0 B
 X ~RST 4 0 -300 200 R 50 50 0 0 I
@@ -32,7 +32,7 @@ X SCL 10 1100 -400 200 L 50 50 0 0 B
 X VUSB 11 1100 -300 200 L 50 50 0 0 B
 X D- 12 1100 -200 200 L 50 50 0 0 B
 X D+ 13 1100 -100 200 L 50 50 0 0 B
-X VSS 14 600 -600 200 U 50 50 0 0 W N
+X GND 14 600 -600 200 U 50 50 0 0 W N
 S 200 -650 900 -50 0 1 0 N
 ENDDRAW
 ENDDEF

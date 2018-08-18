@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name "Adafruit Raspberry-Pi Female Header")(type Legacy)(uri "$(KIPRJMOD)/../Parts/SHDR40W64P254_2X20_5130X500X865P.kicad_mod")(options "")(descr ""))
+)
