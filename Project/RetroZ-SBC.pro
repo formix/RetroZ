@@ -1,4 +1,4 @@
-update=mar 17 jui 2018 19:28:22 EDT
+update=18/08/2018 10:45:10
 version=1
 last_client=kicad
 [pcbnew]
@@ -64,8 +64,10 @@ LibName32=contrib
 LibName33=valves
 LibName34=D:/Program Files/KiCad/share/kicad/library/74xx
 LibName35=D:/Program Files/KiCad/share/kicad/library/Zilog
-LibName36=C:/Users/jeanp/Dropbox/documents/KiCad/RetroZ-SBC/Parts/AS6C4008-55PCN
-LibName37=Z84C40-SIO2
-LibName38=MCP2221-I_P
-LibName39=MAX699CPA&plus_
-LibName40=2222
+LibName36=Z84C40-SIO2
+LibName37=MCP2221-I_P
+LibName38=MAX699CPA&plus_
+LibName39=2222
+LibName40=AT28C64B-15PU
+LibName41=AS6C4008-55PCN
+LibName42=CH340G-SerialBasic
