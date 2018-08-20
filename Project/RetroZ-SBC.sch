@@ -1833,8 +1833,6 @@ $EndComp
 Connection ~ 14575 4600
 NoConn ~ 4100 7950
 NoConn ~ 4100 8050
-Text Notes 650  10025 0    600  ~ 0
-Manque un bouton reset!
 $Comp
 L VCC #PWR?
 U 1 1 5B7B29BB
