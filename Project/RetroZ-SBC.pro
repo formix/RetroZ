@@ -1,4 +1,4 @@
-update=18/08/2018 10:45:10
+update=20/08/2018 21:39:20
 version=1
 last_client=kicad
 [pcbnew]
@@ -71,3 +71,6 @@ LibName39=2222
 LibName40=AT28C64B-15PU
 LibName41=AS6C4008-55PCN
 LibName42=CH340G-SerialBasic
+LibName43=Z80-Family
+LibName44=RetroZ-SBC-Bus
+LibName45=PJ-102A
