@@ -130,7 +130,7 @@ U 1 1 5AF650E7
 P 5150 4575
 F 0 "U5" H 4600 5975 50  0000 L CNN
 F 1 "Z80CPU" H 5400 5975 50  0000 L CNN
-F 2 "Housings_DIP:DIP-40_W15.24mm_LongPads" H 5150 4975 50  0001 C CNN
+F 2 "Housings_DIP:DIP-28_W15.24mm_Socket_LongPads" H 5150 4975 50  0001 C CNN
 F 3 "https://www.mouser.ca/datasheet/2/450/ps0178-19386.pdf" H 5150 4975 50  0001 C CNN
 	1    5150 4575
 	1    0    0    -1  
@@ -731,13 +731,13 @@ Entry Wire Line
 Entry Wire Line
 	10925 3750 11025 3650
 Text GLabel 10750 3450 0    60   Input ~ 0
-IOP0
+A0
 Text GLabel 10750 3550 0    60   Input ~ 0
-IOP1
+A1
 Text GLabel 10750 3650 0    60   Input ~ 0
-IOP2
+A2
 Text GLabel 10750 3750 0    60   Input ~ 0
-IOP3
+A3
 Text Label 11250 3450 0    60   ~ 0
 A4
 Text Label 11250 3550 0    60   ~ 0
@@ -1142,7 +1142,7 @@ U 1 1 5B788475
 P 7375 3350
 F 0 "U8" H 7450 3400 60  0000 C CNN
 F 1 "AT28C64B-15PU" H 7675 2000 60  0000 C CNN
-F 2 "Housings_DIP:DIP-28_W15.24mm_LongPads" H 8575 3590 60  0001 C CNN
+F 2 "Housings_DIP:DIP-28_W15.24mm_Socket_LongPads" H 8575 3590 60  0001 C CNN
 F 3 "https://www.mouser.ca/datasheet/2/268/doc0270-1108115.pdf" H 7375 3350 60  0001 C CNN
 	1    7375 3350
 	1    0    0    -1  
@@ -1150,7 +1150,7 @@ $EndComp
 Text Notes 7725 4125 1    60   ~ 0
 8K ROM\n0000-1FFF
 Text GLabel 4100 6350 2    60   Input ~ 0
-IO_SEL
+A7
 Text Label 10800 3450 0    60   ~ 0
 A0
 Text Label 10800 3550 0    60   ~ 0
@@ -1161,8 +1161,8 @@ Text Label 10800 3750 0    60   ~ 0
 A3
 Entry Wire Line
 	10925 3950 11025 3850
-Text GLabel 10800 3950 0    60   Input ~ 0
-IO_SEL
+Text GLabel 10750 3950 0    60   Input ~ 0
+A7
 Text Label 10825 3950 0    60   ~ 0
 A7
 $Comp
@@ -1212,13 +1212,13 @@ $EndComp
 Text Notes 12000 7225 0    60   ~ 0
 GREEN LED\n(3.2V@20mA)
 Text GLabel 4100 6750 2    60   Input ~ 0
-IOP0
+A0
 Text GLabel 4100 6650 2    60   Input ~ 0
-IOP1
+A1
 Text GLabel 4100 6550 2    60   Input ~ 0
-IOP2
+A2
 Text GLabel 4100 6450 2    60   Input ~ 0
-IOP3
+A3
 Text GLabel 3100 7750 0    60   Input ~ 0
 ~IO6
 Text GLabel 3100 7850 0    60   Input ~ 0
@@ -1612,7 +1612,7 @@ Wire Wire Line
 Wire Wire Line
 	5225 7350 5050 7350
 Wire Wire Line
-	10800 3950 10925 3950
+	10750 3950 10925 3950
 Wire Wire Line
 	6825 7250 6825 8950
 Connection ~ 6825 8950
@@ -1704,9 +1704,9 @@ IEO
 Text GLabel 11550 6025 0    60   Input ~ 0
 ~IO1
 Text GLabel 11550 5825 0    60   Input ~ 0
-IOP0
+A0
 Text GLabel 11550 5925 0    60   Input ~ 0
-IOP1
+A1
 Text GLabel 12875 5075 2    60   Input ~ 0
 CLK
 Text GLabel 12875 4975 2    60   Input ~ 0
@@ -1747,7 +1747,7 @@ U 1 1 5B7C2178
 P 3300 6075
 F 0 "J1" H 3350 6150 60  0000 C CNN
 F 1 "RetroZ-SBC_MasterBus" H 3600 3975 60  0000 C CNN
-F 2 "SystemBus:SystemBus_2x20_CCW" H 4050 6275 60  0001 C CNN
+F 2 "SystemBus2:SHDR40W64P254_2X20_5130X500X865P" H 4050 6275 60  0001 C CNN
 F 3 "" H 3250 6100 60  0001 C CNN
 F 4 "RetroZ SBC Master Bus" V 3625 4775 60  0000 C CNN "Common Name"
 F 5 "J.P. Gravel 201808" H 3750 6375 60  0001 C CNN "Author"
