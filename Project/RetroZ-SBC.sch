@@ -1838,7 +1838,6 @@ F 9 "CUI" H 10875 7425 50  0001 L BNN "Field9"
 	-1   0    0    -1  
 $EndComp
 NoConn ~ 10675 7525
-Connection ~ 9750 8025
 NoConn ~ 4100 7950
 NoConn ~ 4100 8050
 NoConn ~ 3100 8050
