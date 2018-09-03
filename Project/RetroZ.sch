@@ -1,5 +1,5 @@
 EESchema Schematic File Version 2
-LIBS:RetroZ-SBC-rescue
+LIBS:RetroZ-rescue
 LIBS:power
 LIBS:device
 LIBS:switches
@@ -41,9 +41,9 @@ LIBS:AT28C64B-15PU
 LIBS:AS6C4008-55PCN
 LIBS:CH340G-SerialBasic
 LIBS:Z80-Family
-LIBS:RetroZ-SBC-Bus
+LIBS:RetroZ-Bus
 LIBS:PJ-102A
-LIBS:RetroZ-SBC-cache
+LIBS:RetroZ-cache
 EELAYER 25 0
 EELAYER END
 $Descr B 17000 11000
@@ -1142,7 +1142,7 @@ F 3 "" H 8525 2875 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L RetroZ-SBC_MasterBus J1
+L RetroZ_MasterBus J1
 U 1 1 5B7C2178
 P 12225 2825
 F 0 "J1" H 12275 2900 60  0000 C CNN

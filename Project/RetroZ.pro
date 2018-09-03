@@ -29,7 +29,7 @@ version=1
 version=1
 LibDir=../Parts
 [eeschema/libraries]
-LibName1=RetroZ-SBC-rescue
+LibName1=RetroZ-rescue
 LibName2=power
 LibName3=device
 LibName4=switches
@@ -72,5 +72,5 @@ LibName40=AT28C64B-15PU
 LibName41=AS6C4008-55PCN
 LibName42=CH340G-SerialBasic
 LibName43=Z80-Family
-LibName44=RetroZ-SBC-Bus
+LibName44=RetroZ-Bus
 LibName45=PJ-102A
