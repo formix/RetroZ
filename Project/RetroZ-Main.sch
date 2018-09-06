@@ -37,7 +37,7 @@ EELAYER END
 $Descr B 17000 11000
 encoding utf-8
 Sheet 1 1
-Title "RetroZ SBC"
+Title "RetroZ Stack Main"
 Date "2018-08-19"
 Rev "1"
 Comp "formix.org"
@@ -556,7 +556,7 @@ L R_Network05 RN1
 U 1 1 5B8DF0B8
 P 6025 3325
 F 0 "RN1" V 5725 3325 50  0000 C CNN
-F 1 "2k2" V 6325 3325 50  0000 C CNN
+F 1 "10k" V 6325 3325 50  0000 C CNN
 F 2 "Resistors_THT:R_Array_SIP6" V 6400 3325 50  0001 C CNN
 F 3 "https://www.mouser.ca/datasheet/2/54/600x-776645.pdf" H 6025 3325 50  0001 C CNN
 	1    6025 3325
@@ -805,68 +805,6 @@ Wire Wire Line
 	6225 3525 6450 3525
 Wire Wire Line
 	6450 3525 6450 6050
-$Comp
-L R_Network08 RN2
-U 1 1 5B8E0416
-P 10075 6850
-F 0 "RN2" V 9575 6850 50  0000 C CNN
-F 1 "2k2" V 10475 6850 50  0000 C CNN
-F 2 "Resistors_THT:R_Array_SIP9" V 10550 6850 50  0001 C CNN
-F 3 "https://www.mouser.ca/datasheet/2/54/600x-776645.pdf" H 10075 6850 50  0001 C CNN
-	1    10075 6850
-	0    -1   1    0   
-$EndComp
-$Comp
-L VCC #PWR016
-U 1 1 5B8E0D05
-P 9700 6450
-F 0 "#PWR016" H 9700 6300 50  0001 C CNN
-F 1 "VCC" H 9700 6600 50  0000 C CNN
-F 2 "" H 9700 6450 50  0001 C CNN
-F 3 "" H 9700 6450 50  0001 C CNN
-	1    9700 6450
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	9875 6450 9700 6450
-Wire Wire Line
-	10275 6450 10275 5975
-Connection ~ 10275 5975
-Wire Wire Line
-	10275 6550 10300 6550
-Wire Wire Line
-	10300 6550 10300 6000
-Connection ~ 10300 6000
-Wire Wire Line
-	10275 6650 10325 6650
-Wire Wire Line
-	10325 6650 10325 6025
-Connection ~ 10325 6025
-Wire Wire Line
-	10275 6750 10350 6750
-Wire Wire Line
-	10350 6750 10350 6050
-Connection ~ 10350 6050
-Wire Wire Line
-	10275 6850 10375 6850
-Wire Wire Line
-	10375 6850 10375 6075
-Connection ~ 10375 6075
-Wire Wire Line
-	10275 6950 10400 6950
-Wire Wire Line
-	10400 6950 10400 6100
-Connection ~ 10400 6100
-Wire Wire Line
-	10275 7050 10425 7050
-Wire Wire Line
-	10425 7050 10425 6125
-Connection ~ 10425 6125
-Wire Wire Line
-	10275 7150 10450 7150
-Wire Wire Line
-	10450 7150 10450 6150
-Connection ~ 10450 6150
 Wire Wire Line
 	8525 2875 7100 2875
 Connection ~ 7100 3125
