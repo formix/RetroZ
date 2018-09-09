@@ -349,7 +349,7 @@ U 1 1 5AF71F38
 P 7850 6775
 F 0 "U3" H 7950 7275 50  0000 C CNN
 F 1 "74LS138" H 8000 6226 50  0000 C CNN
-F 2 "Housings_DIP:DIP-16_W7.62mm_LongPads" H 7850 6775 50  0001 C CNN
+F 2 "Housings_DIP:DIP-16_W7.62mm_Socket_LongPads" H 7850 6775 50  0001 C CNN
 F 3 "http://www.ti.com/lit/ds/symlink/sn74s138a.pdf" H 7850 6775 50  0001 C CNN
 	1    7850 6775
 	1    0    0    -1  
@@ -488,7 +488,7 @@ U 1 1 5B383573
 P 10875 6850
 F 0 "U7" H 10550 7475 50  0000 C CNN
 F 1 "74HC273" H 10875 6500 50  0000 C CNN
-F 2 "Housings_DIP:DIP-20_W7.62mm_LongPads" H 10875 6850 50  0001 C CNN
+F 2 "Housings_DIP:DIP-20_W7.62mm_Socket_LongPads" H 10875 6850 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74hc273" H 10875 6850 50  0001 C CNN
 	1    10875 6850
 	1    0    0    -1  

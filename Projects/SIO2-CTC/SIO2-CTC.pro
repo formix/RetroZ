@@ -1,10 +1,6 @@
-update=04/09/2018 20:13:49
+update=08/09/2018 21:05:59
 version=1
-last_client=eeschema
-[general]
-version=1
-RootSch=
-BoardNm=
+last_client=kicad
 [pcbnew]
 version=1
 LastNetListRead=
@@ -27,9 +23,11 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
+[general]
+version=1
 [eeschema]
 version=1
-LibDir=../Parts
+LibDir=../../Parts
 [eeschema/libraries]
 LibName1=power
 LibName2=device
@@ -64,3 +62,5 @@ LibName30=atmel
 LibName31=contrib
 LibName32=valves
 LibName33=RetroZ-Bus
+LibName34=Z84C40-SIO2
+LibName35=Z80-Family
