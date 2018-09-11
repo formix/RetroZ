@@ -938,7 +938,7 @@ Wire Wire Line
 Text GLabel 7250 7025 0    60   Input ~ 0
 ~WR
 $Comp
-L RetroZ-SBC_ClientBus J1
+L RetroZ-SBC_ClientBus-RESCUE-RetroZ-Memory J1
 U 1 1 5B8F2F63
 P 5300 2825
 F 0 "J1" H 5350 2900 60  0000 C CNN

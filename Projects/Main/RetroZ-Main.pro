@@ -1,4 +1,4 @@
-update=Mon 31 Jul 2017 10:04:56 AM MDT
+update=10/09/2018 19:08:26
 version=1
 last_client=kicad
 [general]
@@ -29,7 +29,7 @@ version=1
 NetIExt=net
 [eeschema]
 version=1
-LibDir=
+LibDir=../../Parts
 [eeschema/libraries]
 LibName1=power
 LibName2=device
@@ -63,3 +63,4 @@ LibName29=opto
 LibName30=atmel
 LibName31=contrib
 LibName32=valves
+LibName33=RetroZ-Bus
