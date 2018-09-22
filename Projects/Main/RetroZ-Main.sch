@@ -225,7 +225,7 @@ Text GLabel 7100 5750 0    60   Input ~ 0
 ~IORQ
 Text GLabel 6825 4850 0    60   Input ~ 0
 ~WAIT
-Text GLabel 7050 3900 0    60   Input ~ 0
+Text GLabel 6925 2875 0    60   Input ~ 0
 ~RESET
 Text GLabel 6975 4150 0    60   Input ~ 0
 CLK
@@ -584,11 +584,6 @@ Wire Wire Line
 	7100 4050 7100 4150
 Wire Wire Line
 	7100 4150 6975 4150
-Connection ~ 7100 3750
-Wire Wire Line
-	7100 2875 7100 3900
-Wire Wire Line
-	7100 3900 7050 3900
 Wire Wire Line
 	6475 4950 7100 4950
 Wire Wire Line
@@ -789,7 +784,7 @@ Wire Wire Line
 Wire Wire Line
 	6450 3525 6450 6050
 Wire Wire Line
-	8525 2875 7100 2875
+	6925 2875 8525 2875
 Connection ~ 7100 3125
 Text GLabel 7000 5950 0    60   Input ~ 0
 ~BUSRQ
@@ -828,4 +823,7 @@ Wire Wire Line
 	8975 5550 8975 6000
 Wire Wire Line
 	9000 5450 9000 5975
+Wire Wire Line
+	7100 2875 7100 3750
+Connection ~ 7100 2875
 $EndSCHEMATC

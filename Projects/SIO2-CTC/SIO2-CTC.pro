@@ -1,4 +1,4 @@
-update=10/09/2018 22:07:22
+update=21/09/2018 22:50:48
 version=1
 last_client=kicad
 [pcbnew]
@@ -65,3 +65,4 @@ LibName33=RetroZ-Bus
 LibName34=Z84C40-SIO2
 LibName35=Z80-Family
 LibName36=MCP2221-I_P
+LibName37=FT230XS-U
