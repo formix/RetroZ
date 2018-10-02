@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:SIO2-CTC-rescue
 LIBS:power
 LIBS:device
 LIBS:switches
@@ -52,19 +53,6 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L RetroZ-SBC_ClientBus J1
-U 1 1 5B9471D1
-P 2475 1550
-F 0 "J1" H 2525 1625 60  0000 C CNN
-F 1 "Master Bus" H 2775 -550 60  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x20_Pitch2.54mm" H 3225 1750 60  0001 C CNN
-F 3 "" H 2425 1575 60  0001 C CNN
-F 4 "RetroZ SBC Master Bus" H 2925 1975 60  0001 C CNN "Common Name"
-F 5 "J.P. Gravel 201808" H 2925 1850 60  0001 C CNN "Author"
-	1    2475 1550
-	1    0    0    -1  
-$EndComp
-$Comp
 L Z84C3008PEG U2
 U 1 1 5B947319
 P 4825 1400
@@ -91,12 +79,12 @@ $EndComp
 $Comp
 L 74LS138 U1
 U 1 1 5B947526
-P 2775 4575
-F 0 "U1" H 2875 5075 50  0000 C CNN
-F 1 "74LS138" H 2925 4026 50  0000 C CNN
-F 2 "Housings_DIP:DIP-16_W7.62mm_Socket_LongPads" H 2775 4575 50  0001 C CNN
-F 3 "" H 2775 4575 50  0001 C CNN
-	1    2775 4575
+P 2775 4500
+F 0 "U1" H 2875 5000 50  0000 C CNN
+F 1 "74LS138" H 2925 3951 50  0000 C CNN
+F 2 "Housings_DIP:DIP-16_W7.62mm_Socket_LongPads" H 2775 4500 50  0001 C CNN
+F 3 "" H 2775 4500 50  0001 C CNN
+	1    2775 4500
 	1    0    0    -1  
 $EndComp
 NoConn ~ 2275 1625
@@ -107,14 +95,11 @@ NoConn ~ 2275 2025
 NoConn ~ 2275 2125
 NoConn ~ 2275 2225
 NoConn ~ 2275 2325
-NoConn ~ 2275 3225
-NoConn ~ 2275 3325
-NoConn ~ 2275 3425
 $Comp
-L VCC #PWR01
+L VCC #PWR5
 U 1 1 5B970351
 P 3375 1500
-F 0 "#PWR01" H 3375 1350 50  0001 C CNN
+F 0 "#PWR5" H 3375 1350 50  0001 C CNN
 F 1 "VCC" H 3375 1650 50  0000 C CNN
 F 2 "" H 3375 1500 50  0001 C CNN
 F 3 "" H 3375 1500 50  0001 C CNN
@@ -122,10 +107,10 @@ F 3 "" H 3375 1500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR02
+L GND #PWR2
 U 1 1 5B97036D
 P 2200 3650
-F 0 "#PWR02" H 2200 3400 50  0001 C CNN
+F 0 "#PWR2" H 2200 3400 50  0001 C CNN
 F 1 "GND" H 2200 3500 50  0000 C CNN
 F 2 "" H 2200 3650 50  0001 C CNN
 F 3 "" H 2200 3650 50  0001 C CNN
@@ -228,50 +213,44 @@ Text Label 4525 3950 0    60   ~ 0
 D6
 Text Label 4525 4050 0    60   ~ 0
 D7
-Text GLabel 3375 4425 2    60   Input ~ 0
-~SEL_SIO2
-Text GLabel 3375 4325 2    60   Input ~ 0
-SEL_CTC
-Text GLabel 4650 4350 0    60   Input ~ 0
-~SEL_SIO2
+Text GLabel 3375 4250 2    60   Input ~ 0
+~SEL_CTC
 Text GLabel 4625 2550 0    60   Input ~ 0
-SEL_CTC
-NoConn ~ 3375 4225
-NoConn ~ 3375 4525
-NoConn ~ 3375 4625
-NoConn ~ 3375 4725
-NoConn ~ 3375 4825
-NoConn ~ 3375 4925
+~SEL_CTC
+NoConn ~ 3375 4150
+NoConn ~ 3375 4450
+NoConn ~ 3375 4550
+NoConn ~ 3375 4650
+NoConn ~ 3375 4750
+NoConn ~ 3375 4850
 $Comp
-L VCC #PWR03
+L VCC #PWR6
 U 1 1 5B970BF9
 P 4100 2675
-F 0 "#PWR03" H 4100 2525 50  0001 C CNN
+F 0 "#PWR6" H 4100 2525 50  0001 C CNN
 F 1 "VCC" H 4100 2825 50  0000 C CNN
 F 2 "" H 4100 2675 50  0001 C CNN
 F 3 "" H 4100 2675 50  0001 C CNN
 	1    4100 2675
 	1    0    0    -1  
 $EndComp
-Text Label 2075 2425 0    60   ~ 0
-A7
-Text Label 2075 2525 0    60   ~ 0
-A6
-Text Label 2075 2625 0    60   ~ 0
-A5
 Text Label 2075 2725 0    60   ~ 0
+A7
+Text Label 2075 2825 0    60   ~ 0
+A6
+Text Label 2075 2925 0    60   ~ 0
+A5
+Text Label 2075 3025 0    60   ~ 0
 A4
-NoConn ~ 2275 2825
-NoConn ~ 2275 2925
 $Comp
-L GND #PWR04
+L GND #PWR1
 U 1 1 5B970E2B
-P 2175 4925
-F 0 "#PWR04" H 2175 4675 50  0001 C CNN
-F 1 "GND" H 2175 4775 50  0000 C CNN
-F 2 "" H 2175 4925 50  0001 C CNN
-F 3 "" H 2175 4925 50  0001 C CNN
-	1    2175 4925
+P 2175 4850
+F 0 "#PWR1" H 2175 4600 50  0001 C CNN
+F 1 "GND" H 2175 4700 50  0000 C CNN
+F 2 "" H 2175 4850 50  0001 C CNN
+F 3 "" H 2175 4850 50  0001 C CNN
+	1    2175 4850
 	1    0    0    -1  
 $EndComp
 Text GLabel 4625 2800 0    60   Input ~ 0
@@ -300,9 +279,9 @@ Text GLabel 3275 1925 2    60   Input ~ 0
 ~M1
 Text GLabel 4650 5400 0    60   Input ~ 0
 CLK
-Text GLabel 2275 3125 0    60   Input ~ 0
+Text GLabel 2275 3425 0    60   Input ~ 0
 A0
-Text GLabel 2275 3025 0    60   Input ~ 0
+Text GLabel 2275 3325 0    60   Input ~ 0
 A1
 Text GLabel 4650 5150 0    60   Input ~ 0
 A0
@@ -332,16 +311,10 @@ Text GLabel 6250 3950 2    60   Input ~ 0
 ~WAIT
 Text GLabel 3275 3525 2    60   Input ~ 0
 ~WAIT
-Text GLabel 6250 5250 2    60   Input ~ 0
-~WAIT
-Text GLabel 3275 1725 2    60   Input ~ 0
-Rx
-Text GLabel 3275 1825 2    60   Input ~ 0
-Tx
 Text GLabel 6250 4850 2    60   Input ~ 0
-Rx
+RxB
 Text GLabel 6250 5050 2    60   Input ~ 0
-Tx
+TxB
 NoConn ~ 6250 5450
 NoConn ~ 6250 5550
 NoConn ~ 6250 5650
@@ -361,10 +334,10 @@ F 3 "" H 10500 3400 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L GND #PWR05
+L GND #PWR8
 U 1 1 5B972CAC
 P 9125 4525
-F 0 "#PWR05" H 9125 4275 50  0001 C CNN
+F 0 "#PWR8" H 9125 4275 50  0001 C CNN
 F 1 "GND" H 9125 4375 50  0000 C CNN
 F 2 "" H 9125 4525 50  0001 C CNN
 F 3 "" H 9125 4525 50  0001 C CNN
@@ -374,19 +347,19 @@ $EndComp
 NoConn ~ 10050 3650
 Text GLabel 7350 3325 1    60   Input ~ 0
 ~RESET
-Text Label 8750 2150 0    60   ~ 0
+Text Label 9075 2150 0    60   ~ 0
 CBUS0
-Text Label 8750 2250 0    60   ~ 0
+Text Label 9075 2250 0    60   ~ 0
 CBUS3
-Text Label 8600 2350 0    60   ~ 0
+Text Label 8925 2350 0    60   ~ 0
 CLK/TRG0
-Text Label 8600 2450 0    60   ~ 0
+Text Label 8925 2450 0    60   ~ 0
 CLK/TRG1
-Text Label 8600 2550 0    60   ~ 0
+Text Label 8925 2550 0    60   ~ 0
 CLK/TRG2
-Text Label 8600 2650 0    60   ~ 0
+Text Label 8925 2650 0    60   ~ 0
 CLK/TRG3
-Text Label 8700 2750 0    60   ~ 0
+Text Label 9025 2750 0    60   ~ 0
 ZC/TO2
 $Comp
 L LED D2
@@ -411,10 +384,10 @@ F 3 "" H 8475 3200 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L VCC #PWR06
+L VCC #PWR7
 U 1 1 5B973E09
 P 8950 2950
-F 0 "#PWR06" H 8950 2800 50  0001 C CNN
+F 0 "#PWR7" H 8950 2800 50  0001 C CNN
 F 1 "VCC" H 8950 3100 50  0000 C CNN
 F 2 "" H 8950 2950 50  0001 C CNN
 F 3 "" H 8950 2950 50  0001 C CNN
@@ -443,26 +416,15 @@ F 3 "" H 8125 3200 50  0001 C CNN
 	1    8125 3200
 	0    1    1    0   
 $EndComp
-$Comp
-L Conn_01x08 J2
-U 1 1 5B97523F
-P 9275 2350
-F 0 "J2" H 9275 2750 50  0000 C CNN
-F 1 "Conn_01x08" H 9275 1850 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Angled_1x08_Pitch2.54mm" H 9275 2350 50  0001 C CNN
-F 3 "" H 9275 2350 50  0001 C CNN
-	1    9275 2350
-	1    0    0    -1  
-$EndComp
 Text GLabel 4650 5850 0    60   Input ~ 0
 IEO
-Text GLabel 8725 2050 0    60   Input ~ 0
+Text GLabel 9050 2050 0    60   Input ~ 0
 IEO
 $Comp
-L GND #PWR07
+L GND #PWR4
 U 1 1 5B975DBD
 P 2225 6100
-F 0 "#PWR07" H 2225 5850 50  0001 C CNN
+F 0 "#PWR4" H 2225 5850 50  0001 C CNN
 F 1 "GND" H 2225 5950 50  0000 C CNN
 F 2 "" H 2225 6100 50  0001 C CNN
 F 3 "" H 2225 6100 50  0001 C CNN
@@ -470,10 +432,10 @@ F 3 "" H 2225 6100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L VCC #PWR08
+L VCC #PWR3
 U 1 1 5B975DCF
 P 2225 5800
-F 0 "#PWR08" H 2225 5650 50  0001 C CNN
+F 0 "#PWR3" H 2225 5650 50  0001 C CNN
 F 1 "VCC" H 2225 5950 50  0000 C CNN
 F 2 "" H 2225 5800 50  0001 C CNN
 F 3 "" H 2225 5800 50  0001 C CNN
@@ -546,6 +508,125 @@ F 3 "https://www.mouser.ca/datasheet/2/163/DS_FT230X-5395.pdf" H 8150 3725 60  0
 	1    7875 3375
 	1    0    0    -1  
 $EndComp
+$Comp
+L C C7
+U 1 1 5BA5CB0E
+P 9125 4100
+F 0 "C7" H 9150 4200 50  0000 L CNN
+F 1 "0.1uF" H 9150 4000 50  0000 L CNN
+F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 9163 3950 50  0001 C CNN
+F 3 "" H 9125 4100 50  0001 C CNN
+	1    9125 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R3
+U 1 1 5BA5D462
+P 9775 3450
+F 0 "R3" V 9675 3475 50  0000 C CNN
+F 1 "27" V 9775 3450 50  0000 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" V 9705 3450 50  0001 C CNN
+F 3 "" H 9775 3450 50  0001 C CNN
+	1    9775 3450
+	0    1    1    0   
+$EndComp
+$Comp
+L R R4
+U 1 1 5BA5D545
+P 9775 3550
+F 0 "R4" V 9875 3575 50  0000 C CNN
+F 1 "27" V 9775 3550 50  0000 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" V 9705 3550 50  0001 C CNN
+F 3 "" H 9775 3550 50  0001 C CNN
+	1    9775 3550
+	0    1    1    0   
+$EndComp
+$Comp
+L C C9
+U 1 1 5BA5D9DB
+P 9600 3850
+F 0 "C9" H 9625 3950 50  0000 L CNN
+F 1 "47pf" H 9625 3750 50  0000 L CNN
+F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 9638 3700 50  0001 C CNN
+F 3 "" H 9600 3850 50  0001 C CNN
+	1    9600 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C8
+U 1 1 5BA5DA38
+P 9375 3975
+F 0 "C8" H 9400 4075 50  0000 L CNN
+F 1 "47pf" H 9400 3875 50  0000 L CNN
+F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 9413 3825 50  0001 C CNN
+F 3 "" H 9375 3975 50  0001 C CNN
+	1    9375 3975
+	1    0    0    -1  
+$EndComp
+NoConn ~ 10050 3250
+$Comp
+L C C6
+U 1 1 5BA5E19A
+P 3700 5950
+F 0 "C6" H 3725 6050 50  0000 L CNN
+F 1 "4.7uF" H 3725 5850 50  0000 L CNN
+F 2 "Capacitors_THT:CP_Radial_D5.0mm_P2.50mm" H 3738 5800 50  0001 C CNN
+F 3 "" H 3700 5950 50  0001 C CNN
+	1    3700 5950
+	1    0    0    -1  
+$EndComp
+Text Label 6600 4150 0    60   ~ 0
+~RTSA
+Text Label 6600 4250 0    60   ~ 0
+~CTSA
+Text Label 6575 3650 0    60   ~ 0
+TxA
+Text Label 6575 3450 0    60   ~ 0
+RxA
+Text Label 7675 3000 0    60   ~ 0
+TxLED
+Text Label 7675 3200 0    60   ~ 0
+RxLED
+Text Label 8975 3450 0    60   ~ 0
+USBDP
+Text Label 8975 3550 0    60   ~ 0
+USBDM
+Text Label 9950 3450 0    60   ~ 0
+D+
+Text Label 9950 3550 0    60   ~ 0
+D-
+$Comp
+L RetroZ-SBC_ClientBus J1
+U 1 1 5BB2C846
+P 2475 1550
+F 0 "J1" H 2525 1625 60  0000 C CNN
+F 1 "RetroZ-SBC_ClientBus" H 2775 -550 60  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x20_Pitch2.54mm" H 3225 1750 60  0001 C CNN
+F 3 "" H 2425 1575 60  0001 C CNN
+F 4 "RetroZ SBC Master Bus" H 2925 1975 60  0001 C CNN "Common Name"
+F 5 "J.P. Gravel 201808" H 2925 1850 60  0001 C CNN "Author"
+	1    2475 1550
+	1    0    0    -1  
+$EndComp
+NoConn ~ 2275 2425
+NoConn ~ 2275 2525
+NoConn ~ 2275 2625
+NoConn ~ 2275 3125
+NoConn ~ 2275 3225
+NoConn ~ 3275 1725
+NoConn ~ 3275 1825
+NoConn ~ 6250 5250
+$Comp
+L Conn_01x10 J2
+U 1 1 5BB2D9F5
+P 9600 2450
+F 0 "J2" H 9600 2950 50  0000 C CNN
+F 1 "Conn_01x10" H 9600 1850 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x10_Pitch2.54mm" H 9600 2450 50  0001 C CNN
+F 3 "" H 9600 2450 50  0001 C CNN
+	1    9600 2450
+	1    0    0    -1  
+$EndComp
 Wire Wire Line
 	3275 1625 3375 1625
 Wire Wire Line
@@ -605,25 +686,19 @@ Wire Wire Line
 Wire Wire Line
 	4050 4050 4650 4050
 Wire Wire Line
-	2275 2725 1875 2725
+	2275 3025 1875 3025
 Wire Wire Line
-	1875 2725 1875 4225
+	1875 4150 2175 4150
 Wire Wire Line
-	1875 4225 2175 4225
+	2275 2925 1850 2925
 Wire Wire Line
-	2275 2625 1850 2625
+	1850 4250 2175 4250
 Wire Wire Line
-	1850 2625 1850 4325
+	2275 2825 1825 2825
 Wire Wire Line
-	1850 4325 2175 4325
+	1825 4350 2175 4350
 Wire Wire Line
-	2275 2525 1825 2525
-Wire Wire Line
-	1825 2525 1825 4425
-Wire Wire Line
-	1825 4425 2175 4425
-Wire Wire Line
-	2275 2425 1800 2425
+	2275 2725 1800 2725
 Wire Wire Line
 	4625 2700 4100 2700
 Wire Wire Line
@@ -649,11 +724,7 @@ Wire Wire Line
 	7075 3750 6250 3750
 Connection ~ 7075 3550
 Wire Wire Line
-	1800 2425 1800 4725
-Wire Wire Line
-	1800 4725 2175 4725
-Wire Wire Line
-	2175 4825 2175 4925
+	1800 4650 2175 4650
 Wire Wire Line
 	6250 3450 7325 3450
 Wire Wire Line
@@ -674,41 +745,41 @@ Wire Wire Line
 	9125 4375 10400 4375
 Connection ~ 10400 3900
 Wire Wire Line
-	7475 2150 9075 2150
+	7475 2150 9400 2150
 Wire Wire Line
 	7350 3650 7350 3325
 Wire Wire Line
-	7525 2250 9075 2250
+	7525 2250 9400 2250
 Wire Wire Line
 	5950 2150 7425 2150
 Wire Wire Line
 	7425 2150 7425 2350
 Wire Wire Line
-	7425 2350 9075 2350
+	7425 2350 9400 2350
 Wire Wire Line
 	5950 2250 7375 2250
 Wire Wire Line
 	7375 2250 7375 2450
 Wire Wire Line
-	7375 2450 9075 2450
+	7375 2450 9400 2450
 Wire Wire Line
 	5950 2350 7325 2350
 Wire Wire Line
 	7325 2350 7325 2550
 Wire Wire Line
-	7325 2550 9075 2550
+	7325 2550 9400 2550
 Wire Wire Line
 	5950 2450 7275 2450
 Wire Wire Line
 	7275 2450 7275 2650
 Wire Wire Line
-	7275 2650 9075 2650
+	7275 2650 9400 2650
 Wire Wire Line
 	5950 2800 7275 2800
 Wire Wire Line
 	7275 2800 7275 2750
 Wire Wire Line
-	7275 2750 9075 2750
+	7275 2750 9400 2750
 Wire Wire Line
 	8950 3000 8875 3000
 Wire Wire Line
@@ -727,7 +798,7 @@ Wire Wire Line
 Wire Wire Line
 	8950 3200 8950 2950
 Wire Wire Line
-	9075 2050 8725 2050
+	9400 2050 9050 2050
 Wire Wire Line
 	2225 5800 3700 5800
 Connection ~ 2525 5800
@@ -772,17 +843,6 @@ Wire Wire Line
 	8975 4300 8975 3950
 Wire Wire Line
 	8975 3950 8925 3950
-$Comp
-L C C7
-U 1 1 5BA5CB0E
-P 9125 4100
-F 0 "C7" H 9150 4200 50  0000 L CNN
-F 1 "0.1uF" H 9150 4000 50  0000 L CNN
-F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 9163 3950 50  0001 C CNN
-F 3 "" H 9125 4100 50  0001 C CNN
-	1    9125 4100
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	9125 4250 9125 4525
 Connection ~ 9125 4375
@@ -793,28 +853,6 @@ Wire Wire Line
 Wire Wire Line
 	8925 3800 9125 3800
 Connection ~ 9125 3800
-$Comp
-L R R3
-U 1 1 5BA5D462
-P 9775 3450
-F 0 "R3" V 9675 3475 50  0000 C CNN
-F 1 "27" V 9775 3450 50  0000 C CNN
-F 2 "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" V 9705 3450 50  0001 C CNN
-F 3 "" H 9775 3450 50  0001 C CNN
-	1    9775 3450
-	0    1    1    0   
-$EndComp
-$Comp
-L R R4
-U 1 1 5BA5D545
-P 9775 3550
-F 0 "R4" V 9875 3575 50  0000 C CNN
-F 1 "27" V 9775 3550 50  0000 C CNN
-F 2 "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" V 9705 3550 50  0001 C CNN
-F 3 "" H 9775 3550 50  0001 C CNN
-	1    9775 3550
-	0    1    1    0   
-$EndComp
 Wire Wire Line
 	10050 3450 9925 3450
 Wire Wire Line
@@ -823,28 +861,6 @@ Wire Wire Line
 	9625 3550 8925 3550
 Wire Wire Line
 	9625 3450 8925 3450
-$Comp
-L C C9
-U 1 1 5BA5D9DB
-P 9600 3850
-F 0 "C9" H 9625 3950 50  0000 L CNN
-F 1 "47pf" H 9625 3750 50  0000 L CNN
-F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 9638 3700 50  0001 C CNN
-F 3 "" H 9600 3850 50  0001 C CNN
-	1    9600 3850
-	1    0    0    -1  
-$EndComp
-$Comp
-L C C8
-U 1 1 5BA5DA38
-P 9375 3975
-F 0 "C8" H 9400 4075 50  0000 L CNN
-F 1 "47pf" H 9400 3875 50  0000 L CNN
-F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 9413 3825 50  0001 C CNN
-F 3 "" H 9375 3975 50  0001 C CNN
-	1    9375 3975
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	9600 3700 9600 3550
 Connection ~ 9600 3550
@@ -857,40 +873,26 @@ Connection ~ 9600 4375
 Wire Wire Line
 	9375 4125 9375 4375
 Connection ~ 9375 4375
-NoConn ~ 10050 3250
-$Comp
-L C C6
-U 1 1 5BA5E19A
-P 3700 5950
-F 0 "C6" H 3725 6050 50  0000 L CNN
-F 1 "4.7uF" H 3725 5850 50  0000 L CNN
-F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 3738 5800 50  0001 C CNN
-F 3 "" H 3700 5950 50  0001 C CNN
-	1    3700 5950
-	1    0    0    -1  
-$EndComp
 Connection ~ 3425 5800
 Connection ~ 3425 6100
-Text Label 6600 4150 0    60   ~ 0
-~RTSA
-Text Label 6600 4250 0    60   ~ 0
-~CTSA
-Text Label 6575 3650 0    60   ~ 0
-TxA
-Text Label 6575 3450 0    60   ~ 0
-RxA
-Text Label 7675 3000 0    60   ~ 0
-TxLED
-Text Label 7675 3200 0    60   ~ 0
-RxLED
 Wire Wire Line
 	8325 3200 8275 3200
-Text Label 8975 3450 0    60   ~ 0
-USBDP
-Text Label 8975 3550 0    60   ~ 0
-USBDM
-Text Label 9950 3450 0    60   ~ 0
-D+
-Text Label 9950 3550 0    60   ~ 0
-D-
+Wire Wire Line
+	1800 2725 1800 4650
+Wire Wire Line
+	1825 2825 1825 4350
+Wire Wire Line
+	1850 2925 1850 4250
+Wire Wire Line
+	1875 3025 1875 4150
+Text GLabel 9400 2850 0    60   Input ~ 0
+RxB
+Text GLabel 9400 2950 0    60   Input ~ 0
+TxB
+Wire Wire Line
+	3375 4350 4650 4350
+Text Label 4200 4350 0    60   ~ 0
+~SEL_SIO2
+Text GLabel 2175 4750 0    60   Input ~ 0
+~IORQ
 $EndSCHEMATC
