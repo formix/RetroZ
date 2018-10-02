@@ -377,7 +377,7 @@ U 1 1 5B28C7AE
 P 4875 8025
 F 0 "C1" H 4900 8125 50  0000 L CNN
 F 1 "4.7uf" H 4900 7925 50  0000 L CNN
-F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 4913 7875 50  0001 C CNN
+F 2 "Capacitors_THT:CP_Radial_D5.0mm_P2.50mm" H 4913 7875 50  0001 C CNN
 F 3 "" H 4875 8025 50  0001 C CNN
 	1    4875 8025
 	1    0    0    -1  
@@ -569,7 +569,7 @@ Text GLabel 10700 2000 2    60   Input ~ 0
 Text GLabel 9500 1750 2    60   Input ~ 0
 RAMONLY
 Text Notes 10175 7925 0    60   ~ 0
-Ram bank selecor (port 128)\n10000000 0x70\n    D0..3: Ram bank\n    D7: RAMONLY bit
+Ram bank selecor (port 128)\n10000000 0x70\n    D0..3: Ram bank\n    D4..6: DMA Select\n    D7: RAMONLY bit
 $Comp
 L 74LS08 U5
 U 1 1 5B3A6D2E
