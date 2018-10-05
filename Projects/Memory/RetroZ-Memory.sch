@@ -569,7 +569,7 @@ Text GLabel 9200 2000 2    60   Input ~ 0
 Text GLabel 8000 1750 2    60   Input ~ 0
 RAMONLY
 Text Notes 8675 7925 0    60   ~ 0
-Ram bank selecor (port 128)\n10000000 0x70\n    D0..3: Ram bank\n    D4..6: DMA Select\n    D7: RAMONLY bit
+Ram bank selecor (port 128)\n10000000 0x80\n    D0..3: Ram bank\n    D4..6: DMA Select\n    D7: RAMONLY bit
 $Comp
 L 74LS08 U5
 U 1 1 5B3A6D2E
@@ -588,7 +588,7 @@ P 8150 7850
 F 0 "U5" H 8150 7900 50  0000 C CNN
 F 1 "74LS08" H 8150 7800 50  0000 C CNN
 F 2 "Housings_DIP:DIP-14_W7.62mm_Socket_LongPads" H 8150 7850 50  0001 C CNN
-F 3 "" H 8150 7850 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/sn74ls08.pdf" H 8150 7850 50  0001 C CNN
 	2    8150 7850
 	0    -1   -1   0   
 $EndComp
@@ -767,7 +767,7 @@ P 7525 7450
 F 0 "U4" H 7675 7550 50  0000 C CNN
 F 1 "74HCT04" H 7725 7350 50  0000 C CNN
 F 2 "Housings_DIP:DIP-14_W7.62mm_Socket_LongPads" H 7525 7450 50  0001 C CNN
-F 3 "" H 7525 7450 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/sn74hct04.pdf" H 7525 7450 50  0001 C CNN
 	2    7525 7450
 	0    1    1    0   
 $EndComp
