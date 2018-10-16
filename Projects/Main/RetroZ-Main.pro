@@ -1,4 +1,4 @@
-update=10/09/2018 19:08:26
+update=15/10/2018 21:46:07
 version=1
 last_client=kicad
 [general]
@@ -64,3 +64,4 @@ LibName30=atmel
 LibName31=contrib
 LibName32=valves
 LibName33=RetroZ-Bus
+LibName34=ADM80X
