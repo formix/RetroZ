@@ -514,9 +514,9 @@ Text Label 5625 1925 0    60   ~ 0
 A15
 Text GLabel 7025 3200 2    60   Input ~ 0
 ~ROM_SEL
-Text GLabel 9375 1375 0    60   Input ~ 0
+Text GLabel 8450 1275 0    60   Input ~ 0
 ~RAM_SEL
-Text GLabel 6400 4675 2    60   Input ~ 0
+Text GLabel 8150 5075 0    60   Input ~ 0
 ~RAM_SEL
 Text GLabel 11500 6450 2    60   Input ~ 0
 RAM_A16
@@ -553,7 +553,7 @@ F 3 "" H 10700 6350 60  0001 C CNN
 	1    10700 6350
 	1    0    0    -1  
 $EndComp
-Text GLabel 7775 1375 0    60   Input ~ 0
+Text GLabel 7775 1475 0    60   Input ~ 0
 ~ROM_SEL
 Text GLabel 6250 1375 2    60   Input ~ 0
 RAMONLY
@@ -805,8 +805,6 @@ F 3 "" H 13875 3875 50  0001 C CNN
 $EndComp
 Text Notes 11550 3550 0    60   ~ 0
 Stabilization Condensators
-Text Notes 5950 6100 0    60   ~ 0
-Memory Selection
 $Comp
 L CP1 C1
 U 1 1 5BC3D9DD
@@ -1121,35 +1119,19 @@ Wire Notes Line
 	12325 8950 5275 8950
 Wire Notes Line
 	5275 8950 5275 5950
-Wire Wire Line
-	9700 1375 9700 1700
-Wire Wire Line
-	9700 1375 9375 1375
 $Comp
 L 74LS08 U5
 U 4 1 5BC6C599
-P 6700 5075
-F 0 "U5" H 6700 5125 50  0000 C CNN
-F 1 "74LS08" H 6700 5025 50  0000 C CNN
-F 2 "" H 6700 5075 50  0001 C CNN
-F 3 "" H 6700 5075 50  0001 C CNN
-	4    6700 5075
-	1    0    0    -1  
+P 9050 1275
+F 0 "U5" H 9050 1325 50  0000 C CNN
+F 1 "74LS08" H 9050 1225 50  0000 C CNN
+F 2 "" H 9050 1275 50  0001 C CNN
+F 3 "" H 9050 1275 50  0001 C CNN
+	4    9050 1275
+	-1   0    0    1   
 $EndComp
-Text GLabel 6400 5475 2    60   Input ~ 0
+Text GLabel 9650 1175 2    60   Input ~ 0
 A15
-Wire Wire Line
-	6400 4675 6100 4675
-Wire Wire Line
-	6100 4675 6100 4975
-Wire Wire Line
-	6400 5475 6100 5475
-Wire Wire Line
-	6100 5475 6100 5175
-Wire Wire Line
-	7300 5075 8150 5075
-Text Label 7525 5075 0    60   ~ 0
-RAM_E
 $Comp
 L 4002 U10
 U 1 1 5BC6FC87
@@ -1177,8 +1159,6 @@ Wire Wire Line
 Wire Wire Line
 	7150 1775 7150 2300
 Wire Wire Line
-	8050 1375 8050 1775
-Wire Wire Line
 	7150 2300 8500 2300
 Wire Notes Line
 	5025 975  9925 975 
@@ -1186,8 +1166,6 @@ Wire Notes Line
 	9925 975  9925 2675
 Wire Notes Line
 	9925 2675 5025 2675
-Wire Wire Line
-	8050 1375 7775 1375
 $Comp
 L C C11
 U 1 1 5BC72D31
@@ -1203,4 +1181,12 @@ Connection ~ 13875 3725
 Connection ~ 13875 4025
 Wire Notes Line
 	14575 3275 14575 4350
+Wire Wire Line
+	8050 1775 8050 1475
+Wire Wire Line
+	8050 1475 7775 1475
+Wire Wire Line
+	9700 1700 9700 1375
+Wire Wire Line
+	9700 1375 9650 1375
 $EndSCHEMATC
