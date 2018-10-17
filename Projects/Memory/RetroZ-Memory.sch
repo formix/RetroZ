@@ -502,11 +502,11 @@ Text GLabel 8675 7350 0    60   Input ~ 0
 ~RESET
 Entry Wire Line
 	5225 2525 5125 2625
-Text Label 5625 1275 0    60   ~ 0
+Text Label 5625 1725 0    60   ~ 0
 A13
 Entry Wire Line
 	5400 2525 5300 2625
-Text Label 5625 1475 0    60   ~ 0
+Text Label 5625 1825 0    60   ~ 0
 A14
 Entry Wire Line
 	5575 2525 5475 2625
@@ -514,7 +514,7 @@ Text Label 5625 1925 0    60   ~ 0
 A15
 Text GLabel 7025 3200 2    60   Input ~ 0
 ~ROM_SEL
-Text GLabel 10850 1375 0    60   Input ~ 0
+Text GLabel 9375 1375 0    60   Input ~ 0
 ~RAM_SEL
 Text GLabel 6400 4675 2    60   Input ~ 0
 ~RAM_SEL
@@ -553,23 +553,12 @@ F 3 "" H 10700 6350 60  0001 C CNN
 	1    10700 6350
 	1    0    0    -1  
 $EndComp
-Text GLabel 8925 1650 0    60   Input ~ 0
+Text GLabel 7775 1375 0    60   Input ~ 0
 ~ROM_SEL
-Text GLabel 7850 1425 0    60   Input ~ 0
+Text GLabel 6250 1375 2    60   Input ~ 0
 RAMONLY
 Text Notes 8675 7925 0    60   ~ 0
 Ram bank selecor (port 128)\n10000000 0x80\n    D0..3: Ram bank\n    D4..6: DMA Select\n    D7: RAMONLY bit
-$Comp
-L 74LS08 U5
-U 1 1 5B3A6D2E
-P 7700 2150
-F 0 "U5" H 7700 2200 50  0000 C CNN
-F 1 "74LS08" H 7700 2100 50  0000 C CNN
-F 2 "Housings_DIP:DIP-14_W7.62mm_Socket_LongPads" H 7700 2150 50  0001 C CNN
-F 3 "" H 7700 2150 50  0001 C CNN
-	1    7700 2150
-	1    0    0    -1  
-$EndComp
 $Comp
 L 74LS08 U5
 U 2 1 5B3A8CFD
@@ -596,29 +585,7 @@ Text GLabel 5750 2425 2    60   Input ~ 0
 A15
 Text GLabel 10800 8450 3    60   Input ~ 0
 A15
-$Comp
-L 74LS32 U1
-U 3 1 5B3AF1BA
-P 6450 1375
-F 0 "U1" H 6450 1425 50  0000 C CNN
-F 1 "74LS32" H 6450 1325 50  0000 C CNN
-F 2 "Housings_DIP:DIP-14_W7.62mm_Socket_LongPads" H 6450 1375 50  0001 C CNN
-F 3 "" H 6450 1375 50  0001 C CNN
-	3    6450 1375
-	1    0    0    -1  
-$EndComp
-$Comp
-L 74LS32 U1
-U 4 1 5B3AF33E
-P 6450 1825
-F 0 "U1" H 6450 1875 50  0000 C CNN
-F 1 "74LS32" H 6450 1775 50  0000 C CNN
-F 2 "Housings_DIP:DIP-14_W7.62mm_Socket_LongPads" H 6450 1825 50  0001 C CNN
-F 3 "" H 6450 1825 50  0001 C CNN
-	4    6450 1825
-	1    0    0    -1  
-$EndComp
-Text Notes 7900 1175 0    60   ~ 0
+Text Notes 6850 1150 0    60   ~ 0
 Memory chip select
 $Comp
 L AT28C64B-15PU U2
@@ -730,23 +697,12 @@ Text GLabel 3400 5500 0    60   Input ~ 0
 $Comp
 L 74HCT04 U4
 U 4 1 5B8F5C19
-P 8750 2000
-F 0 "U4" H 8900 2100 50  0000 C CNN
-F 1 "74HCT04" H 8950 1900 50  0000 C CNN
-F 2 "Housings_DIP:DIP-14_W7.62mm_Socket_LongPads" H 8750 2000 50  0001 C CNN
-F 3 "" H 8750 2000 50  0001 C CNN
-	4    8750 2000
-	1    0    0    -1  
-$EndComp
-$Comp
-L 74HCT04 U4
-U 1 1 5B8F5C9F
-P 6600 2250
-F 0 "U4" H 6750 2350 50  0000 C CNN
-F 1 "74HCT04" H 6800 2150 50  0000 C CNN
-F 2 "Housings_DIP:DIP-14_W7.62mm_Socket_LongPads" H 6600 2250 50  0001 C CNN
-F 3 "" H 6600 2250 50  0001 C CNN
-	1    6600 2250
+P 7600 1775
+F 0 "U4" H 7750 1875 50  0000 C CNN
+F 1 "74HCT04" H 7800 1675 50  0000 C CNN
+F 2 "Housings_DIP:DIP-14_W7.62mm_Socket_LongPads" H 7600 1775 50  0001 C CNN
+F 3 "" H 7600 1775 50  0001 C CNN
+	4    7600 1775
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -759,17 +715,6 @@ F 2 "Housings_DIP:DIP-14_W7.62mm_Socket_LongPads" H 7525 7450 50  0001 C CNN
 F 3 "http://www.ti.com/lit/ds/symlink/sn74hct04.pdf" H 7525 7450 50  0001 C CNN
 	2    7525 7450
 	0    1    1    0   
-$EndComp
-$Comp
-L 74HCT04 U4
-U 3 1 5B8F5F26
-P 7550 1750
-F 0 "U4" H 7725 1650 50  0000 C CNN
-F 1 "74HCT04" H 7700 1875 50  0000 C CNN
-F 2 "Housings_DIP:DIP-14_W7.62mm_Socket_LongPads" H 7550 1750 50  0001 C CNN
-F 3 "" H 7550 1750 50  0001 C CNN
-	3    7550 1750
-	-1   0    0    1   
 $EndComp
 Entry Wire Line
 	8350 6850 8250 6750
@@ -798,43 +743,43 @@ DMA2
 $Comp
 L 74LS138 U9
 U 1 1 5BA66C80
-P 10575 2050
-F 0 "U9" H 10675 2550 50  0000 C CNN
-F 1 "74LS138" H 10725 1501 50  0000 C CNN
-F 2 "Housings_DIP:DIP-16_W7.62mm_Socket_LongPads" H 10575 2050 50  0001 C CNN
-F 3 "http://www.ti.com/lit/ds/symlink/sn74s138a.pdf" H 10575 2050 50  0001 C CNN
-	1    10575 2050
+P 9100 2050
+F 0 "U9" H 9200 2550 50  0000 C CNN
+F 1 "74LS138" H 9250 1501 50  0000 C CNN
+F 2 "Housings_DIP:DIP-16_W7.62mm_Socket_LongPads" H 9100 2050 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/sn74s138a.pdf" H 9100 2050 50  0001 C CNN
+	1    9100 2050
 	1    0    0    -1  
 $EndComp
-Text Label 9225 2300 0    60   ~ 0
+Text Label 7575 2300 0    60   ~ 0
 ~RAMS
-Text GLabel 9975 1700 0    60   Input ~ 0
+Text GLabel 8500 1700 0    60   Input ~ 0
 DMA0
-Text GLabel 9975 1800 0    60   Input ~ 0
+Text GLabel 8500 1800 0    60   Input ~ 0
 DMA1
-Text GLabel 9975 1900 0    60   Input ~ 0
+Text GLabel 8500 1900 0    60   Input ~ 0
 DMA2
 $Comp
 L VCC #PWR06
 U 1 1 5BA67202
-P 9975 2200
-F 0 "#PWR06" H 9975 2050 50  0001 C CNN
-F 1 "VCC" H 9975 2350 50  0000 C CNN
-F 2 "" H 9975 2200 50  0001 C CNN
-F 3 "" H 9975 2200 50  0001 C CNN
-	1    9975 2200
+P 8500 2200
+F 0 "#PWR06" H 8500 2050 50  0001 C CNN
+F 1 "VCC" H 8500 2350 50  0000 C CNN
+F 2 "" H 8500 2200 50  0001 C CNN
+F 3 "" H 8500 2200 50  0001 C CNN
+	1    8500 2200
 	1    0    0    -1  
 $EndComp
-NoConn ~ 11175 1800
-NoConn ~ 11175 1900
-NoConn ~ 11175 2000
-NoConn ~ 11175 2100
-NoConn ~ 11175 2200
-NoConn ~ 11175 2300
-NoConn ~ 11175 2400
+NoConn ~ 9700 1800
+NoConn ~ 9700 1900
+NoConn ~ 9700 2000
+NoConn ~ 9700 2100
+NoConn ~ 9700 2200
+NoConn ~ 9700 2300
+NoConn ~ 9700 2400
 Text GLabel 4950 6100 2    60   Input ~ 0
 ~MREQ
-Text GLabel 9975 2400 0    60   Input ~ 0
+Text GLabel 8500 2400 0    60   Input ~ 0
 ~MREQ
 $Comp
 L C C9
@@ -1082,7 +1027,7 @@ Wire Bus Line
 Wire Bus Line
 	9775 4575 9775 5725
 Wire Wire Line
-	10400 3725 13875 3725
+	10400 3725 14250 3725
 Connection ~ 12750 3725
 Connection ~ 12350 3725
 Connection ~ 11950 3725
@@ -1090,7 +1035,7 @@ Connection ~ 11550 3725
 Connection ~ 11175 3725
 Connection ~ 10775 3725
 Wire Wire Line
-	10400 4025 13875 4025
+	10400 4025 14250 4025
 Connection ~ 12750 4025
 Connection ~ 12350 4025
 Connection ~ 11950 4025
@@ -1134,9 +1079,6 @@ Wire Wire Line
 Wire Wire Line
 	10075 6650 10700 6650
 Wire Wire Line
-	8300 2000 8300 2300
-Connection ~ 8300 2150
-Wire Wire Line
 	10075 8450 10600 8450
 Wire Wire Line
 	10700 6750 10700 7250
@@ -1144,36 +1086,12 @@ Connection ~ 10700 7050
 Connection ~ 10700 6950
 Connection ~ 10700 6850
 Wire Wire Line
-	5225 1275 5225 2525
-Wire Wire Line
-	5225 1275 5850 1275
-Wire Wire Line
-	5400 1475 5400 2525
-Wire Wire Line
-	5400 1475 5850 1475
-Wire Wire Line
-	7050 1375 7050 1600
-Wire Wire Line
-	7050 1600 5850 1600
-Wire Wire Line
-	5850 1600 5850 1725
-Wire Wire Line
 	5575 1925 5575 2525
 Wire Wire Line
-	5575 1925 5850 1925
+	5575 1925 5950 1925
 Wire Wire Line
 	5750 2425 5575 2425
 Connection ~ 5575 2425
-Wire Wire Line
-	7100 1750 7100 2050
-Wire Wire Line
-	7050 1825 7050 2050
-Wire Wire Line
-	7050 2050 6150 2050
-Wire Wire Line
-	6150 2050 6150 2250
-Wire Wire Line
-	7050 2250 7100 2250
 Connection ~ 10275 8450
 Wire Bus Line
 	8250 5725 8250 6950
@@ -1190,19 +1108,11 @@ Connection ~ 13500 4025
 Wire Notes Line
 	5025 975  5025 2675
 Wire Notes Line
-	5025 2675 11775 2675
-Wire Notes Line
-	11775 2675 11775 975 
-Wire Notes Line
-	11775 975  5025 975 
-Wire Notes Line
 	10150 3275 10150 4350
 Wire Notes Line
-	10150 4350 14300 4350
+	10150 4350 14575 4350
 Wire Notes Line
-	14300 4350 14300 3275
-Wire Notes Line
-	14300 3275 10150 3275
+	10150 3275 14575 3275
 Wire Notes Line
 	5275 5950 12325 5950
 Wire Notes Line
@@ -1212,19 +1122,9 @@ Wire Notes Line
 Wire Notes Line
 	5275 8950 5275 5950
 Wire Wire Line
-	8300 2300 9975 2300
+	9700 1375 9700 1700
 Wire Wire Line
-	8000 1750 8000 1425
-Wire Wire Line
-	8000 1425 7850 1425
-Wire Wire Line
-	9200 2000 9200 1650
-Wire Wire Line
-	9200 1650 8925 1650
-Wire Wire Line
-	11175 1375 11175 1700
-Wire Wire Line
-	11175 1375 10850 1375
+	9700 1375 9375 1375
 $Comp
 L 74LS08 U5
 U 4 1 5BC6C599
@@ -1250,4 +1150,57 @@ Wire Wire Line
 	7300 5075 8150 5075
 Text Label 7525 5075 0    60   ~ 0
 RAM_E
+$Comp
+L 4002 U10
+U 1 1 5BC6FC87
+P 6550 1775
+F 0 "U10" H 6550 1875 50  0000 C CNN
+F 1 "4002" H 6550 1675 50  0000 C CNN
+F 2 "Housings_DIP:DIP-14_W7.62mm_Socket_LongPads" H 6550 1775 60  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/cd74hc4002.pdf" H 6550 1775 60  0001 C CNN
+F 4 "CD74HC4002E" H 6550 1775 60  0001 C CNN "Mfr.#"
+	1    6550 1775
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5400 2525 5400 1825
+Wire Wire Line
+	5400 1825 5950 1825
+Wire Wire Line
+	5225 2525 5225 1725
+Wire Wire Line
+	5225 1725 5950 1725
+Wire Wire Line
+	6250 1375 5950 1375
+Wire Wire Line
+	5950 1375 5950 1625
+Wire Wire Line
+	7150 1775 7150 2300
+Wire Wire Line
+	8050 1375 8050 1775
+Wire Wire Line
+	7150 2300 8500 2300
+Wire Notes Line
+	5025 975  9925 975 
+Wire Notes Line
+	9925 975  9925 2675
+Wire Notes Line
+	9925 2675 5025 2675
+Wire Wire Line
+	8050 1375 7775 1375
+$Comp
+L C C11
+U 1 1 5BC72D31
+P 14250 3875
+F 0 "C11" H 14275 3975 50  0000 L CNN
+F 1 "0.1uf" H 14275 3775 50  0000 L CNN
+F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 14288 3725 50  0001 C CNN
+F 3 "" H 14250 3875 50  0001 C CNN
+	1    14250 3875
+	1    0    0    -1  
+$EndComp
+Connection ~ 13875 3725
+Connection ~ 13875 4025
+Wire Notes Line
+	14575 3275 14575 4350
 $EndSCHEMATC
