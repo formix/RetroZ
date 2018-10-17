@@ -1,4 +1,4 @@
-update=22/09/2018 08:37:45
+update=16/10/2018 21:11:55
 version=1
 last_client=kicad
 [general]
@@ -64,3 +64,13 @@ LibName30=atmel
 LibName31=contrib
 LibName32=valves
 LibName33=RetroZ-Bus
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=Pcbnew
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60

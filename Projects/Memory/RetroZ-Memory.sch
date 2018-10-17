@@ -514,9 +514,9 @@ Text Label 5625 1925 0    60   ~ 0
 A15
 Text GLabel 7025 3200 2    60   Input ~ 0
 ~ROM_SEL
-Text GLabel 11175 1700 2    60   Input ~ 0
+Text GLabel 10850 1375 0    60   Input ~ 0
 ~RAM_SEL
-Text GLabel 8150 5075 0    60   Input ~ 0
+Text GLabel 6400 4675 2    60   Input ~ 0
 ~RAM_SEL
 Text GLabel 11500 6450 2    60   Input ~ 0
 RAM_A16
@@ -553,9 +553,9 @@ F 3 "" H 10700 6350 60  0001 C CNN
 	1    10700 6350
 	1    0    0    -1  
 $EndComp
-Text GLabel 9200 2000 2    60   Input ~ 0
+Text GLabel 8925 1650 0    60   Input ~ 0
 ~ROM_SEL
-Text GLabel 8000 1750 2    60   Input ~ 0
+Text GLabel 7850 1425 0    60   Input ~ 0
 RAMONLY
 Text Notes 8675 7925 0    60   ~ 0
 Ram bank selecor (port 128)\n10000000 0x80\n    D0..3: Ram bank\n    D4..6: DMA Select\n    D7: RAMONLY bit
@@ -618,7 +618,7 @@ F 3 "" H 6450 1825 50  0001 C CNN
 	4    6450 1825
 	1    0    0    -1  
 $EndComp
-Text Notes 7400 1400 0    60   ~ 0
+Text Notes 7900 1175 0    60   ~ 0
 Memory chip select
 $Comp
 L AT28C64B-15PU U2
@@ -823,6 +823,54 @@ F 1 "VCC" H 9975 2350 50  0000 C CNN
 F 2 "" H 9975 2200 50  0001 C CNN
 F 3 "" H 9975 2200 50  0001 C CNN
 	1    9975 2200
+	1    0    0    -1  
+$EndComp
+NoConn ~ 11175 1800
+NoConn ~ 11175 1900
+NoConn ~ 11175 2000
+NoConn ~ 11175 2100
+NoConn ~ 11175 2200
+NoConn ~ 11175 2300
+NoConn ~ 11175 2400
+Text GLabel 4950 6100 2    60   Input ~ 0
+~MREQ
+Text GLabel 9975 2400 0    60   Input ~ 0
+~MREQ
+$Comp
+L C C9
+U 1 1 5BA6BA2B
+P 13500 3875
+F 0 "C9" H 13525 3975 50  0000 L CNN
+F 1 "0.1uf" H 13525 3775 50  0000 L CNN
+F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 13538 3725 50  0001 C CNN
+F 3 "" H 13500 3875 50  0001 C CNN
+	1    13500 3875
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C10
+U 1 1 5BA6BA31
+P 13875 3875
+F 0 "C10" H 13900 3975 50  0000 L CNN
+F 1 "0.1uf" H 13900 3775 50  0000 L CNN
+F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 13913 3725 50  0001 C CNN
+F 3 "" H 13875 3875 50  0001 C CNN
+	1    13875 3875
+	1    0    0    -1  
+$EndComp
+Text Notes 11550 3550 0    60   ~ 0
+Stabilization Condensators
+Text Notes 5950 6100 0    60   ~ 0
+Memory Selection
+$Comp
+L CP1 C1
+U 1 1 5BC3D9DD
+P 10400 3875
+F 0 "C1" H 10425 3975 50  0000 L CNN
+F 1 "4.7uf" H 10425 3775 50  0000 L CNN
+F 2 "Capacitors_THT:CP_Radial_D5.0mm_P2.50mm" H 10400 3875 50  0001 C CNN
+F 3 "" H 10400 3875 50  0001 C CNN
+	1    10400 3875
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -1086,8 +1134,6 @@ Wire Wire Line
 Wire Wire Line
 	10075 6650 10700 6650
 Wire Wire Line
-	8300 2300 9975 2300
-Wire Wire Line
 	8300 2000 8300 2300
 Connection ~ 8300 2150
 Wire Wire Line
@@ -1137,39 +1183,6 @@ Wire Wire Line
 	7025 3000 7025 2875
 Wire Wire Line
 	10275 7050 10275 8450
-NoConn ~ 11175 1800
-NoConn ~ 11175 1900
-NoConn ~ 11175 2000
-NoConn ~ 11175 2100
-NoConn ~ 11175 2200
-NoConn ~ 11175 2300
-NoConn ~ 11175 2400
-Text GLabel 4950 6100 2    60   Input ~ 0
-~MREQ
-Text GLabel 9975 2400 0    60   Input ~ 0
-~MREQ
-$Comp
-L C C9
-U 1 1 5BA6BA2B
-P 13500 3875
-F 0 "C9" H 13525 3975 50  0000 L CNN
-F 1 "0.1uf" H 13525 3775 50  0000 L CNN
-F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 13538 3725 50  0001 C CNN
-F 3 "" H 13500 3875 50  0001 C CNN
-	1    13500 3875
-	1    0    0    -1  
-$EndComp
-$Comp
-L C C10
-U 1 1 5BA6BA31
-P 13875 3875
-F 0 "C10" H 13900 3975 50  0000 L CNN
-F 1 "0.1uf" H 13900 3775 50  0000 L CNN
-F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 13913 3725 50  0001 C CNN
-F 3 "" H 13875 3875 50  0001 C CNN
-	1    13875 3875
-	1    0    0    -1  
-$EndComp
 Connection ~ 13125 3725
 Connection ~ 13500 3725
 Connection ~ 13125 4025
@@ -1182,8 +1195,6 @@ Wire Notes Line
 	11775 2675 11775 975 
 Wire Notes Line
 	11775 975  5025 975 
-Text Notes 11550 3550 0    60   ~ 0
-Stabilization Condensators
 Wire Notes Line
 	10150 3275 10150 4350
 Wire Notes Line
@@ -1200,17 +1211,43 @@ Wire Notes Line
 	12325 8950 5275 8950
 Wire Notes Line
 	5275 8950 5275 5950
-Text Notes 5950 6100 0    60   ~ 0
-Memory Selection
+Wire Wire Line
+	8300 2300 9975 2300
+Wire Wire Line
+	8000 1750 8000 1425
+Wire Wire Line
+	8000 1425 7850 1425
+Wire Wire Line
+	9200 2000 9200 1650
+Wire Wire Line
+	9200 1650 8925 1650
+Wire Wire Line
+	11175 1375 11175 1700
+Wire Wire Line
+	11175 1375 10850 1375
 $Comp
-L CP1 C1
-U 1 1 5BC3D9DD
-P 10400 3875
-F 0 "C1" H 10425 3975 50  0000 L CNN
-F 1 "4.7uf" H 10425 3775 50  0000 L CNN
-F 2 "Capacitors_THT:CP_Radial_D5.0mm_P2.50mm" H 10400 3875 50  0001 C CNN
-F 3 "" H 10400 3875 50  0001 C CNN
-	1    10400 3875
+L 74LS08 U5
+U 4 1 5BC6C599
+P 6700 5075
+F 0 "U5" H 6700 5125 50  0000 C CNN
+F 1 "74LS08" H 6700 5025 50  0000 C CNN
+F 2 "" H 6700 5075 50  0001 C CNN
+F 3 "" H 6700 5075 50  0001 C CNN
+	4    6700 5075
 	1    0    0    -1  
 $EndComp
+Text GLabel 6400 5475 2    60   Input ~ 0
+A15
+Wire Wire Line
+	6400 4675 6100 4675
+Wire Wire Line
+	6100 4675 6100 4975
+Wire Wire Line
+	6400 5475 6100 5475
+Wire Wire Line
+	6100 5475 6100 5175
+Wire Wire Line
+	7300 5075 8150 5075
+Text Label 7525 5075 0    60   ~ 0
+RAM_E
 $EndSCHEMATC
