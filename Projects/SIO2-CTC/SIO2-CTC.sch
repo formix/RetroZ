@@ -72,7 +72,7 @@ P 5450 4600
 F 0 "U3" H 4800 6000 50  0000 L CNN
 F 1 "Z84C40" H 5800 6000 50  0000 L CNN
 F 2 "Housings_DIP:DIP-42_W15.24mm_Socket_LongPads" H 5450 4600 50  0001 C CNN
-F 3 "" H 5450 4600 50  0001 C CNN
+F 3 "https://www.mouser.ca/datasheet/2/450/ps0183-36189.pdf" H 5450 4600 50  0001 C CNN
 	1    5450 4600
 	1    0    0    -1  
 $EndComp
@@ -881,4 +881,8 @@ F 3 "" H 2225 5950 50  0001 C CNN
 	1    2225 5950
 	1    0    0    -1  
 $EndComp
+Text Notes 4725 6500 0    60   ~ 0
+0xA0 (10100000): Channel A, Data\n0xA2 (10100010): Channel A, Control\n0xA1 (10100001): Channel B, Data\n0xA3 (10100011): Channel b, Control
+Text Notes 4700 1225 0    60   ~ 0
+0x90 (1001000): Channel 0\n0x91 (1001001): Channel 1\n0x92 (1001010): Channel 2\n0x93 (1001011): Channel 3
 $EndSCHEMATC

@@ -600,17 +600,6 @@ F 3 "https://www.mouser.ca/datasheet/2/268/doc0270-1108115.pdf" H 6125 2850 60  
 $EndComp
 Text Notes 6475 3625 1    60   ~ 0
 8K ROM\n0000-1FFF
-$Comp
-L VCC #PWR03
-U 1 1 5B7B29BB
-P 7025 2875
-F 0 "#PWR03" H 7025 2725 50  0001 C CNN
-F 1 "VCC" H 7025 3025 50  0000 C CNN
-F 2 "" H 7025 2875 50  0001 C CNN
-F 3 "" H 7025 2875 50  0001 C CNN
-	1    7025 2875
-	1    0    0    -1  
-$EndComp
 NoConn ~ 6950 6625
 NoConn ~ 6950 6725
 NoConn ~ 6950 6825
@@ -1096,8 +1085,6 @@ Wire Bus Line
 Wire Bus Line
 	5025 5725 5025 3700
 Wire Wire Line
-	7025 3000 7025 2875
-Wire Wire Line
 	10275 7050 10275 8450
 Connection ~ 13125 3725
 Connection ~ 13500 3725
@@ -1189,4 +1176,6 @@ Wire Wire Line
 	9700 1700 9700 1375
 Wire Wire Line
 	9700 1375 9650 1375
+Text GLabel 7025 3000 2    60   Input ~ 0
+~MWR
 $EndSCHEMATC
