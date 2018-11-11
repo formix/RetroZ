@@ -62,6 +62,8 @@ F 2 "Housings_DIP:DIP-28_W15.24mm_LongPads" H 5825 1675 60  0001 C CNN
 F 3 "https://www.mouser.ca/datasheet/2/450/zilog_570ps0181-1212461.pdf" H 6525 1575 60  0001 C CNN
 F 4 "J.P. Gravel 201808" H 5275 1775 60  0001 C CNN "Author"
 F 5 "Z80 CTC" H 5275 800 60  0000 C CNN "Common Name"
+F 6 "Z84C3008PEG" H 4825 1400 60  0001 C CNN "Mfr.#"
+F 7 "4828-3004-CP" H 4825 1400 60  0001 C CNN "Mfr.#2"
 	1    4825 1400
 	1    0    0    -1  
 $EndComp
@@ -73,6 +75,8 @@ F 0 "U3" H 4800 6000 50  0000 L CNN
 F 1 "Z84C40" H 5800 6000 50  0000 L CNN
 F 2 "Housings_DIP:DIP-42_W15.24mm_Socket_LongPads" H 5450 4600 50  0001 C CNN
 F 3 "https://www.mouser.ca/datasheet/2/450/ps0183-36189.pdf" H 5450 4600 50  0001 C CNN
+F 4 "Z84C40" H 5450 4600 60  0001 C CNN "Mfr.#"
+F 5 "4840-6004-CP" H 5450 4600 60  0001 C CNN "Mfr.#2"
 	1    5450 4600
 	1    0    0    -1  
 $EndComp
@@ -83,7 +87,10 @@ P 2775 4500
 F 0 "U1" H 2875 5000 50  0000 C CNN
 F 1 "74LS138" H 2925 3951 50  0000 C CNN
 F 2 "Housings_DIP:DIP-16_W7.62mm_Socket_LongPads" H 2775 4500 50  0001 C CNN
-F 3 "" H 2775 4500 50  0001 C CNN
+F 3 "http://www.ti.com/general/docs/suppproductinfo.tsp?distId=26&gotoUrl=http%3A%2F%2Fwww.ti.com%2Flit%2Fgpn%2Fsn74ls138" H 2775 4500 50  0001 C CNN
+F 4 "74LS138N" H 2775 4500 60  0001 C CNN "Mfr.#"
+F 5 "https://www.mouser.ca/datasheet/2/1/ts1099-69111.pdf" H 2775 4500 60  0001 C CNN "Datasheet2"
+F 6 "4816-3004-CP" H 2775 4500 60  0001 C CNN "Mfr.#2"
 	1    2775 4500
 	1    0    0    -1  
 $EndComp
@@ -368,7 +375,8 @@ P 8725 3000
 F 0 "D2" H 8725 3100 50  0000 C CNN
 F 1 "Tx" H 8725 2900 50  0000 C CNN
 F 2 "LEDs:LED_D3.0mm_Horizontal_O1.27mm_Z2.0mm" H 8725 3000 50  0001 C CNN
-F 3 "" H 8725 3000 50  0001 C CNN
+F 3 "https://www.mouser.ca/datasheet/2/239/LTL-4211N-1143820.pdf" H 8725 3000 50  0001 C CNN
+F 4 "LTL-4211N" H 8725 3000 60  0001 C CNN "Mfr.#"
 	1    8725 3000
 	1    0    0    -1  
 $EndComp
@@ -379,7 +387,8 @@ P 8475 3200
 F 0 "D1" H 8475 3300 50  0000 C CNN
 F 1 "Rx" H 8475 3100 50  0000 C CNN
 F 2 "LEDs:LED_D3.0mm_Horizontal_O1.27mm_Z2.0mm" H 8475 3200 50  0001 C CNN
-F 3 "" H 8475 3200 50  0001 C CNN
+F 3 "https://www.mouser.ca/datasheet/2/239/LTL-4211N-1143820.pdf" H 8475 3200 50  0001 C CNN
+F 4 "LTL-4211N" H 8475 3200 60  0001 C CNN "Mfr.#"
 	1    8475 3200
 	1    0    0    -1  
 $EndComp
@@ -402,6 +411,7 @@ F 0 "R2" V 8100 3000 50  0000 C CNN
 F 1 "330" V 8175 3000 50  0000 C CNN
 F 2 "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" V 8105 3000 50  0001 C CNN
 F 3 "" H 8175 3000 50  0001 C CNN
+F 4 "CFR-25JR-52-330R" V 8175 3000 60  0001 C CNN "Mfr.#"
 	1    8175 3000
 	0    1    1    0   
 $EndComp
@@ -413,6 +423,7 @@ F 0 "R1" V 8050 3200 50  0000 C CNN
 F 1 "330" V 8125 3200 50  0000 C CNN
 F 2 "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" V 8055 3200 50  0001 C CNN
 F 3 "" H 8125 3200 50  0001 C CNN
+F 4 "CFR-25JR-52-330R" V 8125 3200 60  0001 C CNN "Mfr.#"
 	1    8125 3200
 	0    1    1    0   
 $EndComp
@@ -450,6 +461,7 @@ F 0 "C2" H 2550 6050 50  0000 L CNN
 F 1 "0.1uF" H 2550 5850 50  0000 L CNN
 F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 2563 5800 50  0001 C CNN
 F 3 "" H 2525 5950 50  0001 C CNN
+F 4 "K104K15X7RF5TL2" H 2525 5950 60  0001 C CNN "Mfr.#"
 	1    2525 5950
 	1    0    0    -1  
 $EndComp
@@ -461,6 +473,7 @@ F 0 "C3" H 2850 6050 50  0000 L CNN
 F 1 "0.1uF" H 2850 5850 50  0000 L CNN
 F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 2863 5800 50  0001 C CNN
 F 3 "" H 2825 5950 50  0001 C CNN
+F 4 "K104K15X7RF5TL2" H 2825 5950 60  0001 C CNN "Mfr.#"
 	1    2825 5950
 	1    0    0    -1  
 $EndComp
@@ -472,6 +485,7 @@ F 0 "C4" H 3150 6050 50  0000 L CNN
 F 1 "0.1uF" H 3150 5850 50  0000 L CNN
 F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 3163 5800 50  0001 C CNN
 F 3 "" H 3125 5950 50  0001 C CNN
+F 4 "K104K15X7RF5TL2" H 3125 5950 60  0001 C CNN "Mfr.#"
 	1    3125 5950
 	1    0    0    -1  
 $EndComp
@@ -483,6 +497,7 @@ F 0 "U4" H 7925 3425 60  0000 C CNN
 F 1 "FT230XS-U" H 8300 2575 60  0000 C CNN
 F 2 "Housings_SSOP:TSSOP-16_4.4x5mm_Pitch0.65mm" H 8125 3575 60  0001 C CNN
 F 3 "https://www.mouser.ca/datasheet/2/163/DS_FT230X-5395.pdf" H 8150 3725 60  0001 C CNN
+F 4 "FT230XS-U" H 7875 3375 60  0001 C CNN "Mfr.#"
 	1    7875 3375
 	1    0    0    -1  
 $EndComp
@@ -494,6 +509,7 @@ F 0 "C7" H 9150 4200 50  0000 L CNN
 F 1 "0.1uF" H 9150 4000 50  0000 L CNN
 F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 9163 3950 50  0001 C CNN
 F 3 "" H 9125 4100 50  0001 C CNN
+F 4 "K104K15X7RF5TL2" H 9125 4100 60  0001 C CNN "Mfr.#"
 	1    9125 4100
 	1    0    0    -1  
 $EndComp
@@ -527,6 +543,7 @@ F 0 "C9" H 9625 3950 50  0000 L CNN
 F 1 "47pf" H 9625 3750 50  0000 L CNN
 F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 9638 3700 50  0001 C CNN
 F 3 "" H 9600 3850 50  0001 C CNN
+F 4 "21RD747-RC" H 9600 3850 60  0001 C CNN "Mfr.#"
 	1    9600 3850
 	1    0    0    -1  
 $EndComp
@@ -538,6 +555,7 @@ F 0 "C8" H 9400 4075 50  0000 L CNN
 F 1 "47pf" H 9400 3875 50  0000 L CNN
 F 2 "Capacitors_THT:C_Disc_D3.4mm_W2.1mm_P2.50mm" H 9413 3825 50  0001 C CNN
 F 3 "" H 9375 3975 50  0001 C CNN
+F 4 "21RD747-RC" H 9375 3975 60  0001 C CNN "Mfr.#"
 	1    9375 3975
 	1    0    0    -1  
 $EndComp
@@ -568,9 +586,10 @@ P 2475 1550
 F 0 "J1" H 2525 1625 60  0000 C CNN
 F 1 "Client Bus" H 2775 -550 60  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Straight_2x20_Pitch2.54mm" H 3225 1750 60  0001 C CNN
-F 3 "" H 2425 1575 60  0001 C CNN
+F 3 "https://www.mouser.ca/ProductDetail/Adafruit/2223?qs=%2fha2pyFaduidPXPXSuFTA%252bpgx%252bFdWwp2gD3vvkg%2fNZGxFnQuzv6LiQ%3d%3d" H 2425 1575 60  0001 C CNN
 F 4 "RetroZ SBC Master Bus" H 2925 1975 60  0001 C CNN "Common Name"
 F 5 "J.P. Gravel 201808" H 2925 1850 60  0001 C CNN "Author"
+F 6 "2223" H 2475 1550 60  0001 C CNN "Mfr.#"
 	1    2475 1550
 	1    0    0    -1  
 $EndComp
@@ -878,6 +897,7 @@ F 0 "C1" H 2250 6050 50  0000 L CNN
 F 1 "4.7uF" H 2250 5850 50  0000 L CNN
 F 2 "Capacitors_THT:CP_Radial_D5.0mm_P2.50mm" H 2225 5950 50  0001 C CNN
 F 3 "" H 2225 5950 50  0001 C CNN
+F 4 "UKL1E4R7KDD" H 2225 5950 60  0001 C CNN "Mfr.#"
 	1    2225 5950
 	1    0    0    -1  
 $EndComp
