@@ -2,8 +2,8 @@
 A minimalist single board Z80 retro computer based on the S80 design 
 specifications.
 
-![RetroZ SBC for S80 Architecture](/formix/RetroZ/blob/master/Documents/RetroZ-SBC-Front.png?raw=true)
-[Back of the board](/formix/RetroZ/blob/master/Documents/RetroZ-SBC-Back.png?raw=true)
+![RetroZ SBC for S80 Architecture](https://raw.githubusercontent.com/formix/RetroZ/master/Documents/RetroZ-SBC-Front.png)
+[Back of the board](https://raw.githubusercontent.com/formix/RetroZ/master/Documents/RetroZ-SBC-Back.png)
 
 You can find the board schematic as a PDF [here]().
 
@@ -26,7 +26,7 @@ power-on reset monitor sets the computer to its initial state at power on.
 
 ## The Connection
 The USB to serial conversion is made possible thanks to an FTDI chip 
-[behind the board](/formix/RetroZ/blob/master/Documents/RetroZ-SBC-Back.png?raw=true) 
+[behind the board](https://raw.githubusercontent.com/formix/RetroZ/master/Documents/RetroZ-SBC-Back.png) 
 and is clocked at 115200 bauds by default. This speed can be changed 
 programmatically through the Z84C40 (Zilog SIO/2) registers. On a Windows
 machine the device can be accessed using **COM5**. I did not check for a 
