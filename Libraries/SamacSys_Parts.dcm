@@ -1,0 +1,23 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP ADM803TAKSZ-REEL7
+D Analog Devices ADM803TAKSZ-REEL7, Voltage Supervisor, 1.2  5.5 V, 3-Pin SC-70
+F https://www.mouser.ca/datasheet/2/609/ADM803_809_810-878720.pdf
+$ENDCMP
+#
+$CMP AS6C62256-55PCN
+D Alliance Memory AS6C62256-55PCN SRAM Memory, 256kbit, 2.7  5.5 V, 55ns 28-Pin PDIP
+F https://componentsearchengine.com/Datasheets/1/AS6C62256-55PCN.pdf
+$ENDCMP
+#
+$CMP AT28C256B-15PU
+D AT28C64B-15PU, Parallel EEPROM Memory 64kbit, Parallel, 150ns 4.5  5.5 V, 28-Pin PDIP
+F https://componentsearchengine.com/Datasheets/1/AT28C64B-15PU.pdf
+$ENDCMP
+#
+$CMP NE555D
+D NE555DG4, Timer, 4.5 To 16V, 8-Pin SOIC-8
+F http://www.ti.com/lit/ds/symlink/ne555.pdf
+$ENDCMP
+#
+#End Doc Library

@@ -1,3 +1,0 @@
-(fp_lib_table
-  (lib (name PJ-102A)(type Legacy)(uri "$(KIPRJMOD)/../Parts/PJ-102A.mod")(options "")(descr ""))
-)

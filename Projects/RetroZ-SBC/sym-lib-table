@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name RetroZ-SBC-rescue)(type Legacy)(uri ${KIPRJMOD}/RetroZ-SBC-rescue.lib)(options "")(descr ""))
+)

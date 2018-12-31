@@ -1,8 +1,0 @@
-EESchema-DOCLIB  Version 2.0
-#
-$CMP MCP2221-I_P
-D USB 2.0 to I2C/UART Converter GPIO DIP14 Microchip MCP2221-I/P, USB Converter, USB 2.0 at 12MBps, 3  5.5 V, 14-Pin PDIP
-F http://ww1.microchip.com/downloads/en/DeviceDoc/20005292B.pdf
-$ENDCMP
-#
-#End Doc Library
