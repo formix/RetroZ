@@ -30,7 +30,7 @@ The USB to serial conversion is made possible thanks to an FTDI chip
 and is clocked at 115200 bauds by default. This speed can be changed 
 programmatically through the Z84C40 (Zilog SIO/2) registers. On a Windows
 machine the device can be accessed using **COM5**. I did not check for a 
-Mac/Linux box but just do `ls /dev/tty\*` before and after plugin-in the board,
+Mac/Linux box but just do `ls /dev/tty*` before and after plugin-in the board,
 you should spot it quite easily. Hardware flow control CTS/RTS is fully 
 wired so feel free to flood the console with whatever you get, it should handle 
 it.
