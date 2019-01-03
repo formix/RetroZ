@@ -4,6 +4,7 @@ specifications.
 
 ![RetroZ SBC for S80 Architecture](https://raw.githubusercontent.com/formix/RetroZ/master/Documents/RetroZ-SBC-Front.png)
 *Front of the board*
+
 [Back of the board](https://raw.githubusercontent.com/formix/RetroZ/master/Documents/RetroZ-SBC-Back.png)
 
 You can find the board schematic as a PDF [here](https://github.com/formix/RetroZ/blob/master/Documents/RetroZ-SBC.pdf).
