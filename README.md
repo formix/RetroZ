@@ -3,6 +3,7 @@ A minimalist single board Z80 retro computer based on the S80 design
 specifications.
 
 ![RetroZ SBC for S80 Architecture](https://raw.githubusercontent.com/formix/RetroZ/master/Documents/RetroZ-SBC-Front.png)
+->*Front of the board*<-
 [Back of the board](https://raw.githubusercontent.com/formix/RetroZ/master/Documents/RetroZ-SBC-Back.png)
 
 You can find the board schematic as a PDF [here](https://github.com/formix/RetroZ/blob/master/Documents/RetroZ-SBC.pdf).
@@ -12,7 +13,7 @@ Go to
 [Github](/PaintedBlck/S80)
 for more informations on the S80 architecture and buses pinouts. There is 
 other modules compatible with this computer available on this page. Filip 
-Picknel and his son did an amazing design work and are doing great stuff!
+Pycknel and his son did an amazing design work and are doing great stuff!
 
 ## Development Note
 The project is currently in its final development stage. The board is still 
@@ -22,7 +23,7 @@ pending review from other retro-computer designers and the community.
 The computer is as minimal as it can be. It has a 7.3728 MHz Z80 CPU, 32kB of 
 ROM, 32kB of RAM and a dual port serial chip from which the port A is connected 
 to the USB connector. The whole computer is powered through the USB port and a 
-power-on reset monitor sets the computer to its initial state at power on.
+power-on reset monitor sets the computer to its initial state when powered.
 
 ## The Connection
 The USB to serial conversion is made possible thanks to an FTDI chip 
@@ -63,7 +64,8 @@ together. In practice I did not find any way to make that infinite chaining
 possible with a modular architecture. For that, we need to allocat one pin per
 device to the bus so I decided to allocate 5 pins of te User Port B to that end (PIN 1 to 4).
 
-The SIO/2 interrupt number have been set to 0 (INT0). This is done by connectiong the SIO/2 IEO pin to the User Port B (J3) PIN 1.
+The SIO/2 interrupt number have been set to 0 (INT0). This is done by 
+connecting the SIO/2 IEO pin to the User Port B (J3) PIN 1.
 
 The SIO/2 IEI pin is connected to the *PARENT INT. SEL.* dual pin header (J4).
 The other end of the jumper is either set to VCC (INT0\*) or to its matching 
@@ -71,7 +73,3 @@ reserved user pin on the User Port B. To set the SIO/2 device the highest
 interrupt priority (which should be the case wi no other interrupt enabled IO 
 device connected) set the jumper on the first position (INT0\*).
 
-### Power Switch
-I totally hate when a device is always on without any physical way to turn it 
-off (aka the great Raspberry PI family). But I still don't know what kind of switch I would like to have so the current version of the board have a simple two 
-pin header (J7) that should be jumped by default to power the board. This solution gives enough flexibility for now.
