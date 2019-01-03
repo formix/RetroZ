@@ -10,7 +10,7 @@
 _autosave-*
 *.tmp
 *-cache.lib
-*-rescue.lib
+#*-rescue.lib
 *-save.pro
 *-save.kicad_pcb
 
@@ -24,3 +24,6 @@ _autosave-*
 # Exported BOM files
 *.xml
 *.csv
+
+# unrelated cloud files
+.dropbox

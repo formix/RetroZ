@@ -1,5 +1,4 @@
 EESchema Schematic File Version 4
-LIBS:RetroZ-SBC-cache
 EELAYER 26 0
 EELAYER END
 $Descr USLedger 17000 11000
@@ -209,13 +208,13 @@ $EndComp
 $Comp
 L power:PWR_FLAG #FLG01
 U 1 1 5C206B07
-P 10325 1350
-F 0 "#FLG01" H 10325 1425 50  0001 C CNN
-F 1 "PWR_FLAG" V 10325 1478 50  0000 L CNN
-F 2 "" H 10325 1350 50  0001 C CNN
-F 3 "~" H 10325 1350 50  0001 C CNN
-	1    10325 1350
-	0    -1   -1   0   
+P 10925 1475
+F 0 "#FLG01" H 10925 1550 50  0001 C CNN
+F 1 "PWR_FLAG" V 10925 1603 50  0000 L CNN
+F 2 "" H 10925 1475 50  0001 C CNN
+F 3 "~" H 10925 1475 50  0001 C CNN
+	1    10925 1475
+	0    1    1    0   
 $EndComp
 $Comp
 L power:GND #PWR05
@@ -1291,12 +1290,12 @@ Wire Wire Line
 $Comp
 L power:VCC #PWR021
 U 1 1 5C44B15F
-P 10325 1275
-F 0 "#PWR021" H 10325 1125 50  0001 C CNN
-F 1 "VCC" H 10342 1448 50  0000 C CNN
-F 2 "" H 10325 1275 50  0001 C CNN
-F 3 "" H 10325 1275 50  0001 C CNN
-	1    10325 1275
+P 10925 1425
+F 0 "#PWR021" H 10925 1275 50  0001 C CNN
+F 1 "VCC" H 10942 1598 50  0000 C CNN
+F 2 "" H 10925 1425 50  0001 C CNN
+F 3 "" H 10925 1425 50  0001 C CNN
+	1    10925 1425
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
@@ -2527,24 +2526,6 @@ Wire Wire Line
 	12700 3725 12900 3725
 Text Label 12900 3725 2    50   ~ 0
 ~WAIT
-$Comp
-L Connector_Generic:Conn_01x02 J7
-U 1 1 5C2BA53D
-P 10525 1525
-F 0 "J7" H 10444 1200 50  0000 C CNN
-F 1 "PSW" H 10444 1291 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 10525 1525 50  0001 C CNN
-F 3 "~" H 10525 1525 50  0001 C CNN
-	1    10525 1525
-	1    0    0    1   
-$EndComp
-Connection ~ 10325 1350
-Wire Wire Line
-	10325 1350 10325 1425
-Wire Wire Line
-	10325 1525 10325 1650
-Wire Wire Line
-	10325 1275 10325 1350
 Wire Wire Line
 	6275 5275 6800 5275
 Wire Wire Line
@@ -2630,6 +2611,26 @@ Wire Wire Line
 	8475 7875 8800 7875
 Wire Wire Line
 	8475 7975 8800 7975
+Text Notes 8900 8400 0    50   ~ 0
+NOTE:\nWhen MEM_EXT is HIGH, \nthe onboard memory is \ndisabled. Otherwise, this \npin shall stay floating.
+$Comp
+L Switch:SW_DIP_x01 SW2
+U 1 1 5C306881
+P 10625 1575
+F 0 "SW2" H 10625 1308 50  0000 C CNN
+F 1 "POWER SWITCH" H 10625 1399 50  0000 C CNN
+F 2 "Buttons_Switches_THT:SW_DIP_x1_W7.62mm_Slide" H 10625 1575 50  0001 C CNN
+F 3 "" H 10625 1575 50  0001 C CNN
+	1    10625 1575
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	10925 1425 10925 1475
+Connection ~ 10925 1475
+Wire Wire Line
+	10925 1475 10925 1575
+Wire Wire Line
+	10325 1575 10325 1650
 Wire Wire Line
 	7325 8575 7825 8575
 Wire Wire Line
@@ -2664,6 +2665,4 @@ Wire Bus Line
 	8475 2900 8475 6650
 Wire Bus Line
 	3500 3425 3500 6500
-Text Notes 8900 8400 0    50   ~ 0
-NOTE:\nWhen MEM_EXT is HIGH, \nthe onboard memory is \ndisabled. Otherwise, this \npin shall stay floating.
 $EndSCHEMATC

@@ -1,3 +1,6 @@
 (sym_lib_table
   (lib (name RetroZ-SBC-rescue)(type Legacy)(uri ${KIPRJMOD}/RetroZ-SBC-rescue.lib)(options "")(descr ""))
+  (lib (name FT230XS-U)(type Legacy)(uri D:/Users/jeanp/Dropbox/documents/KiCad/RetroZ/Libraries/FT230XS-U.lib)(options "")(descr ""))
+  (lib (name SamacSys_Parts)(type Legacy)(uri D:/Users/jeanp/Dropbox/documents/KiCad/RetroZ/Libraries/SamacSys_Parts.lib)(options "")(descr ""))
+  (lib (name Z84C40-SIO2)(type Legacy)(uri D:/Users/jeanp/Dropbox/documents/KiCad/RetroZ/Libraries/Z84C40-SIO2.lib)(options "")(descr ""))
 )
