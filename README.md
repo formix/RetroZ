@@ -12,7 +12,7 @@ on the final board. We plan to have stacking headers with pins on the bottom.
 
 You can find the board schematic as a PDF [here](https://github.com/formix/RetroZ/blob/master/Documents/RetroZ-SBC.pdf).
 
-Go to
+This board is developped using the S80 specifications. Go to
 [S80 homepage project](http://users.telenet.be/pynckels/s80_retro.html) or on 
 [Github](/PaintedBlck/S80)
 for more informations on the S80 architecture and buses pinouts. There is 
