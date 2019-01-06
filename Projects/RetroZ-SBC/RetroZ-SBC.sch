@@ -1105,10 +1105,6 @@ Wire Wire Line
 Text Label 10775 5425 0    50   ~ 0
 ~INT
 Wire Wire Line
-	11100 5525 11000 5525
-Wire Wire Line
-	11000 5525 11000 5675
-Wire Wire Line
 	11100 4925 10925 4925
 Text Label 10925 4925 0    50   ~ 0
 A1
@@ -1583,7 +1579,7 @@ SIO2_SEL
 Wire Wire Line
 	11100 4125 10775 4125
 Text Notes 11250 6400 0    50   ~ 0
-DUAL SERIAL IO DEVICE \nINTERRUPT 0 (INT_0)\nDEVICE PORTS 0x00 to 0x03\n========================\n0x00 (00000000): Channel A, Control\n0x01 (00000001): Channel A, Data\n0x02 (00000010): Channel B, Control\n0x03 (00000011): Channel B, Data
+DUAL SERIAL IO DEVICE \nINTERRUPT 0 (INT_0)\nDEVICE PORTS 0x00 to 0x03\n==================\n0x00: Channel A, Control\n0x01: Channel A, Data\n0x02: Channel B, Control\n0x03: Channel B, Data
 Wire Wire Line
 	10350 5425 10350 5500
 Wire Wire Line
@@ -1787,7 +1783,7 @@ L Connector_Generic:Conn_01x08 J2
 U 1 1 5C8D6B58
 P 8275 7775
 F 0 "J2" H 8275 7275 50  0000 C CNN
-F 1 "01x08" H 8275 8175 50  0000 C CNN
+F 1 "User Port A" H 8175 8175 50  0000 C CNN
 F 2 "Socket_Strips:Socket_Strip_Straight_1x08_Pitch2.54mm" H 8275 7775 50  0001 C CNN
 F 3 "~" H 8275 7775 50  0001 C CNN
 	1    8275 7775
@@ -1798,7 +1794,7 @@ L Connector_Generic:Conn_01x08 J3
 U 1 1 5C8EBAE9
 P 8275 8975
 F 0 "J3" H 8275 8475 50  0000 C CNN
-F 1 "01x08" H 8275 9375 50  0000 C CNN
+F 1 "User Port B" H 8200 9375 50  0000 C CNN
 F 2 "Socket_Strips:Socket_Strip_Straight_1x08_Pitch2.54mm" H 8275 8975 50  0001 C CNN
 F 3 "~" H 8275 8975 50  0001 C CNN
 	1    8275 8975
@@ -2266,8 +2262,6 @@ Wire Wire Line
 	9050 8975 8475 8975
 Text Label 9750 8875 2    50   ~ 0
 IEI
-Wire Wire Line
-	9550 8875 9750 8875
 Text Label 8750 9175 2    50   ~ 0
 INT_1
 Text Label 8750 9075 2    50   ~ 0
@@ -2276,10 +2270,6 @@ Text Label 8750 8975 2    50   ~ 0
 INT_3
 Text Label 8750 9275 2    50   ~ 0
 INT_0
-Text Label 10875 5675 0    50   ~ 0
-IEI
-Wire Wire Line
-	10875 5675 11000 5675
 Text Notes 9075 9750 0    50   ~ 0
 Parent interrupt selection\nSelecting INT_0 (J1-2) as the parent (SELF)\nmeans that the current IO device is the \nfirst device of the dasy chain.
 Wire Wire Line
@@ -2301,7 +2291,7 @@ L Connector_Generic:Conn_02x05_Odd_Even J4
 U 1 1 5DA9A246
 P 9250 9075
 F 0 "J4" H 9225 8775 50  0000 C CNN
-F 1 "PARENT INT. SEL." H 9375 9400 50  0000 C CNN
+F 1 "IEI SELECT" H 9300 9375 50  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch2.54mm" H 9250 9075 50  0001 C CNN
 F 3 "~" H 9250 9075 50  0001 C CNN
 	1    9250 9075
@@ -2632,6 +2622,16 @@ Wire Wire Line
 	10925 1475 10925 1575
 Wire Wire Line
 	10325 1575 10325 1650
+Wire Wire Line
+	10650 7100 9950 7100
+Wire Wire Line
+	9950 7100 9950 8875
+Wire Wire Line
+	9550 8875 9950 8875
+Wire Wire Line
+	10650 5525 11100 5525
+Wire Wire Line
+	10650 5525 10650 7100
 Wire Wire Line
 	7325 8575 7825 8575
 Wire Wire Line
