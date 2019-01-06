@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:RetroZ-SBC-cache
 EELAYER 26 0
 EELAYER END
 $Descr USLedger 17000 11000
@@ -2612,7 +2613,7 @@ Wire Wire Line
 Wire Wire Line
 	8475 7975 8800 7975
 Text Notes 8900 8400 0    50   ~ 0
-NOTE:\nWhen MEM_EXT is HIGH, \nthe onboard memory is \ndisabled. Otherwise, this \npin shall stay floating.
+NOTE:\nWhen MEM_EXT is HIGH, \nthe onboard memory is \ndisabled. Otherwise, this \npin should be floating.
 $Comp
 L Switch:SW_DIP_x01 SW2
 U 1 1 5C306881

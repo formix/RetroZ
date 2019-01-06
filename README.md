@@ -60,17 +60,18 @@ low as 9600 bauds.
 ### Interrupt Chaining (approval pending)
 Since the S80 architecture interfaces all the Z80 processor control signals, I 
 though it would be nice to make sure that the interrupt chaining logic could 
-fit in as well. In theory, an infinite number of device could be chained 
+fit in as well. In theory, an infinite number of devices could be chained 
 together. In practice I did not find any way to make that infinite chaining
 possible with a modular architecture. For that, we need to allocat one pin per
-device to the bus so I decided to allocate 5 pins of te User Port B to that end (PIN 1 to 4).
+device to the bus so I decided to allocate 5 pins of te User Port B to that end 
+(PIN 1 to 5).
 
 The SIO/2 interrupt number have been set to 0 (INT0). This is done by 
 connecting the SIO/2 IEO pin to the User Port B (J3) PIN 1.
 
 The SIO/2 IEI pin is connected to the *PARENT INT. SEL.* dual pin header (J4).
 The other end of the jumper is either set to VCC (INT0\*) or to its matching 
-reserved user pin on the User Port B. To set the SIO/2 device the highest
-interrupt priority (which should be the case wi no other interrupt enabled IO 
-device connected) set the jumper on the first position (INT0\*).
+reserved user pin on the User Port B. To set the SIO/2 device to the highest
+interrupt priority (which should be the case with no other interrupt enabled
+IO device connected) set the jumper on the first position (INT0\*).
 
