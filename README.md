@@ -15,7 +15,7 @@ You can find the board schematic as a PDF [here](https://github.com/formix/Retro
 This board is developped using the S80 specifications. Go to
 [S80 homepage project](http://users.telenet.be/pynckels/s80_retro.html) or on 
 [Github](/PaintedBlck/S80)
-for more informations on the S80 architecture and buses pinouts. There is 
+for more informations on the S80 architecture and bus pinouts. There is 
 other modules compatible with this computer available on this page. Filip 
 Pycknel and his son did an amazing design work and are doing great stuff!
 
