@@ -26,7 +26,7 @@ F 3 "www.zilog.com/manage_directlink.php?filepath=docs/z80/um0080" H 4675 4925 5
 	1    0    0    -1  
 $EndComp
 $Comp
-L SamacSys_Parts:AS6C62256-55PCN IC3
+L RetroZ-SBC-rescue:AS6C62256-55PCN-SamacSys_Parts IC3
 U 1 1 5C204B18
 P 8800 3325
 F 0 "IC3" H 9300 3590 50  0000 C CNN
@@ -942,7 +942,7 @@ F 3 "" H 4350 2850 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L SamacSys_Parts:ADM803TAKSZ-REEL7 IC1
+L RetroZ-SBC-rescue:ADM803TAKSZ-REEL7-SamacSys_Parts IC1
 U 1 1 5C5EAF92
 P 3050 2850
 F 0 "IC1" H 3500 3115 50  0000 C CNN
@@ -981,7 +981,7 @@ $EndComp
 Wire Wire Line
 	3025 5750 3400 5750
 $Comp
-L Z84C40-SIO2:Z84C40 U5
+L RetroZ-SBC-rescue:Z84C40-Z84C40-SIO2 U5
 U 1 1 5C68DDF5
 P 11900 4375
 F 0 "U5" H 11900 5892 50  0000 C CNN
@@ -1132,7 +1132,7 @@ Wire Wire Line
 	1425 5350 1500 5350
 Connection ~ 1575 5350
 $Comp
-L FT230XS-U:FT230XS-U U6
+L RetroZ-SBC-rescue:FT230XS-U-FT230XS-U U6
 U 1 1 5C2D1048
 P 12375 1775
 F 0 "U6" H 12800 1962 60  0000 C CNN
@@ -1143,7 +1143,7 @@ F 3 "https://www.mouser.ca/datasheet/2/163/DS_FT230X-5395.pdf" H 12650 2125 60  
 	-1   0    0    -1  
 $EndComp
 $Comp
-L Connector:USB_OTG J5
+L RetroZ-SBC-rescue:USB_OTG-Connector J5
 U 1 1 5C2DE828
 P 10025 1850
 F 0 "J5" H 9795 1841 50  0000 R CNN
@@ -2053,11 +2053,6 @@ Text Label 8800 7975 2    50   ~ 0
 RxB
 Text Label 8800 7875 2    50   ~ 0
 TxB
-NoConn ~ 8475 7375
-NoConn ~ 8475 7475
-NoConn ~ 8475 7575
-NoConn ~ 8475 7675
-NoConn ~ 8475 7775
 NoConn ~ 8475 8575
 NoConn ~ 8475 8675
 NoConn ~ 8475 8775
@@ -2206,64 +2201,57 @@ INT_0
 $Comp
 L power:VCC #PWR019
 U 1 1 5D970B69
-P 8925 9550
-F 0 "#PWR019" H 8925 9400 50  0001 C CNN
-F 1 "VCC" H 8942 9723 50  0000 C CNN
-F 2 "" H 8925 9550 50  0001 C CNN
-F 3 "" H 8925 9550 50  0001 C CNN
-	1    8925 9550
+P 8950 7200
+F 0 "#PWR019" H 8950 7050 50  0001 C CNN
+F 1 "VCC" H 8967 7373 50  0000 C CNN
+F 2 "" H 8950 7200 50  0001 C CNN
+F 3 "" H 8950 7200 50  0001 C CNN
+	1    8950 7200
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	9050 9275 9050 9550
+	9050 7675 8475 7675
 Wire Wire Line
-	9050 9550 8925 9550
+	8475 7575 9050 7575
 Wire Wire Line
-	9050 9175 8475 9175
-Wire Wire Line
-	8475 9075 9050 9075
-Wire Wire Line
-	9050 8975 8475 8975
-Text Label 9750 8875 2    50   ~ 0
+	9050 7475 8475 7475
+Text Label 9750 7375 2    50   ~ 0
 IEI
-Text Label 8750 9175 2    50   ~ 0
+Text Label 8800 7675 2    50   ~ 0
 INT_1
-Text Label 8750 9075 2    50   ~ 0
+Text Label 8800 7575 2    50   ~ 0
 INT_2
-Text Label 8750 8975 2    50   ~ 0
+Text Label 8800 7475 2    50   ~ 0
 INT_3
-Text Label 8750 9275 2    50   ~ 0
+Text Label 8800 7775 2    50   ~ 0
 INT_0
-Text Notes 9075 9750 0    50   ~ 0
+Text Notes 9100 7200 0    50   ~ 0
 Parent interrupt selection\nSelecting INT_0 (J1-2) as the parent (SELF)\nmeans that the current IO device is the \nfirst device of the dasy chain.
 Wire Wire Line
-	8475 9275 8750 9275
+	9550 7475 9550 7375
+Connection ~ 9550 7475
 Wire Wire Line
-	9550 8975 9550 8875
-Connection ~ 9550 8975
+	9550 7575 9550 7475
+Connection ~ 9550 7575
 Wire Wire Line
-	9550 9075 9550 8975
-Connection ~ 9550 9075
+	9550 7675 9550 7575
 Wire Wire Line
-	9550 9175 9550 9075
-Wire Wire Line
-	9550 9275 9550 9175
-Connection ~ 9550 9175
-Connection ~ 9550 8875
+	9550 7775 9550 7675
+Connection ~ 9550 7675
 $Comp
 L Connector_Generic:Conn_02x05_Odd_Even J4
 U 1 1 5DA9A246
-P 9250 9075
-F 0 "J4" H 9225 8775 50  0000 C CNN
-F 1 "IEI SELECT" H 9300 9375 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch2.54mm" H 9250 9075 50  0001 C CNN
-F 3 "~" H 9250 9075 50  0001 C CNN
-	1    9250 9075
+P 9250 7575
+F 0 "J4" H 9225 7275 50  0000 C CNN
+F 1 "IEI SELECT" H 9300 7875 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x05_Pitch2.54mm" H 9250 7575 50  0001 C CNN
+F 3 "~" H 9250 7575 50  0001 C CNN
+	1    9250 7575
 	1    0    0    1   
 $EndComp
 Wire Wire Line
-	9050 8875 8475 8875
-Text Label 8750 8875 2    50   ~ 0
+	9050 7375 8475 7375
+Text Label 8800 7375 2    50   ~ 0
 INT_4
 Text Notes 10350 7600 0    50   ~ 0
 Stabilization Capacitors
@@ -2566,7 +2554,7 @@ Wire Wire Line
 	8475 7875 8800 7875
 Wire Wire Line
 	8475 7975 8800 7975
-Text Notes 8900 8400 0    50   ~ 0
+Text Notes 8825 8400 0    50   ~ 0
 NOTE:\nWhen MEM_EXT is HIGH, \nthe onboard memory is \ndisabled. Otherwise, this \npin should be floating.
 $Comp
 L Switch:SW_DIP_x01 SW2
@@ -2586,16 +2574,6 @@ Wire Wire Line
 	10925 1475 10925 1575
 Wire Wire Line
 	10325 1575 10325 1650
-Wire Wire Line
-	10650 7100 9950 7100
-Wire Wire Line
-	9950 7100 9950 8875
-Wire Wire Line
-	9550 8875 9950 8875
-Wire Wire Line
-	10650 5525 11100 5525
-Wire Wire Line
-	10650 5525 10650 7100
 Text Notes 2975 2500 0    50   ~ 0
 The ADM803TAKSZ-REEL7 chip is a \nlittle package that monitors the \npower line. When the device is \npowered, it pulls the ~RESET~ pin \nlow for 240ms then keep it open for\nas long as the device is powered. Still\nneed a pull-up resistor to keep ~RESET~\nhigh afterward.
 Wire Wire Line
@@ -2677,6 +2655,24 @@ Text Label 1275 6300 0    50   ~ 0
 ~BUSRQ
 Text Label 1125 6400 0    50   ~ 0
 ~BUSACK
+Wire Wire Line
+	9750 7375 9550 7375
+Connection ~ 9550 7375
+Text Label 11000 5525 0    50   ~ 0
+IEI
+Wire Wire Line
+	11100 5525 11000 5525
+Wire Wire Line
+	9050 7775 8950 7775
+Wire Wire Line
+	8950 7775 8950 7200
+Wire Wire Line
+	8475 7775 8800 7775
+NoConn ~ 8475 8875
+NoConn ~ 8475 8975
+NoConn ~ 8475 9075
+NoConn ~ 8475 9175
+NoConn ~ 8475 9275
 Wire Wire Line
 	7325 8575 7825 8575
 Wire Wire Line
