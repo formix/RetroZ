@@ -17,8 +17,8 @@ other modules compatible with this computer available on this page. Filip
 Pycknel and his son did an amazing design work and are doing great stuff!
 
 ## Development Note
-The project is currently in its final development stage. The board is still 
-pending review from other retro-computer designers and the community.
+The review phase is done! I just sent the board to production. I should get the
+finished board next week.
 
 ## What's Inside?
 The computer is as minimal as it can be. It has a 7.3728 MHz Z80 CPU, 32kB of 
@@ -43,7 +43,8 @@ This feature expects that PIN 1 of the user port A (J2) is floating if the
 memory child board is not present or HIGH when it is plugged-in. The pin is pulled-low with a 10k resistor on the RetroZ so no other current limiting device is
 needed from the memory board.
 
-**Approval pending**: This pin could change before I send the board to production. I'll update its value here once I have Filip P. feedback.
+After discussions, Filip agreed to have the user port A pin 1 set to HIGH on
+the S80 2M/4M memory board.
 
 ### Serial Communication
 As stated earlier, the board has an SIO/2 chip to handle serial communications.
@@ -71,7 +72,7 @@ connecting the SIO/2 IEO pin to the User Port B (J3) PIN 1.
 
 The SIO/2 IEI pin is connected to the *PARENT INT. SEL.* dual pin header (J4).
 The other end of the jumper is either set to VCC (INT0\*) or to its matching 
-reserved user pin on the User Port B. To set the SIO/2 device to the highest
+reserved user pin on the User Port A. To set the SIO/2 device to the highest
 interrupt priority (which should be the case with no other interrupt enabled
 IO device connected) set the jumper on the first position (INT0\*).
 
