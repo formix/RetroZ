@@ -2,6 +2,13 @@
 A minimalist single board Z80 retro computer based on the S80 design 
 specifications.
 
+This board is developped using the S80 specifications. Go to
+[S80 homepage project](http://users.telenet.be/pynckels/s80_retro.html) or on 
+[Github](/PaintedBlck/S80)
+for more informations on the S80 architecture and bus pinouts. There is 
+other modules compatible with this computer available on this page. Filip 
+Pycknel and his son did an amazing design work and are doing great stuff!
+
 ![RetroZ SBC for S80 Architecture](https://raw.githubusercontent.com/formix/RetroZ/master/Documents/RetroZ-SBC-Front.png)
 *Front of the board*
 
@@ -46,14 +53,6 @@ You can download the BOM [here](https://github.com/formix/RetroZ/blob/master/Pro
 | U6                         |          |               | FT230XS-U          | 1   | 
 | U7                         |          |               | 74LS92             | 1   | 
 | Y1                         |          |               | ECS-73-20-5PX-TR   | 1   | 
-
-
-This board is developped using the S80 specifications. Go to
-[S80 homepage project](http://users.telenet.be/pynckels/s80_retro.html) or on 
-[Github](/PaintedBlck/S80)
-for more informations on the S80 architecture and bus pinouts. There is 
-other modules compatible with this computer available on this page. Filip 
-Pycknel and his son did an amazing design work and are doing great stuff!
 
 ## Development Note
 
