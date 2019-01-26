@@ -25,9 +25,9 @@ The review phase is done! I just sent the board to production. I should get the
 finished board next week.
 
 ### 2019-01-26
-I recieved my parts yesterday. I just finished to create the BOM and sort 
-through my parts to order what is missing. I expect to recieve my order in 
-the coming week. I'll work on the NASCOM Basic once I got the computer 
+I recieved my boards (10 boards!) yesterday. I just finished to create the BOM 
+and sort through my parts to order what is missing. I expect to recieve my 
+order in the coming week. I'll work on the NASCOM Basic once I got the computer 
 assembled. Stay tuned!
 
 ## What's Inside?
