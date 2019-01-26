@@ -9,6 +9,8 @@ specifications.
 
 You can find the board schematic as a PDF [here](https://github.com/formix/RetroZ/blob/master/Documents/RetroZ-SBC.pdf).
 
+You can download the BOM [here](https://github.com/formix/RetroZ/blob/master/Projects/RetroZ-SBC/RetroZ-SBC-BOM.ods?raw=true). It is an Open Document Worksheet file and you should be able to open it with Open/Libre Office or MS Excel. If you have issue, contact me.
+
 This board is developped using the S80 specifications. Go to
 [S80 homepage project](http://users.telenet.be/pynckels/s80_retro.html) or on 
 [Github](/PaintedBlck/S80)
@@ -17,8 +19,16 @@ other modules compatible with this computer available on this page. Filip
 Pycknel and his son did an amazing design work and are doing great stuff!
 
 ## Development Note
+
+### 2019-01-15
 The review phase is done! I just sent the board to production. I should get the
 finished board next week.
+
+### 2019-01-26
+I recieved my parts yesterday. I just finished to create the BOM and sort 
+through my parts to order what is missing. I expect to recieve my order in 
+the coming week. I'll work on the NASCOM Basic once I got the computer 
+assembled. Stay tuned!
 
 ## What's Inside?
 The computer is as minimal as it can be. It has a 7.3728 MHz Z80 CPU, 32kB of 
