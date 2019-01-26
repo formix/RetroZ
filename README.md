@@ -20,39 +20,40 @@ You can find the board schematic as a PDF [here](https://github.com/formix/Retro
 
 You can download the BOM [here](https://github.com/formix/RetroZ/blob/master/Projects/RetroZ-SBC/RetroZ-SBC-BOM.ods?raw=true). It is an Open Document Worksheet file and you should be able to open it with Open/Libre Office or MS Excel. If you have issue, contact me.
 
-| Comp.                      | Mouser#  | Digikey#      | Mfr#               | Qty | 
-|----------------------------|----------|---------------|--------------------|-----| 
-| C1,C2                      |          |               | C317C200J5G5TA     | 2   | 
-| C3,C4                      |          |               | FG28C0G1H470JNT06  | 2   | 
-| C5,C6,C7,C8,C9,C10,C11,C12 |          |               | C322C104K5R5TA7301 | 8   | 
-| D1                         |          |               | 151051VS04000      | 1   | 
-| D2,D3                      |          |               | 151031SS06000      | 2   | 
-| IC1                        |          |               | ADM803TAKSZ-REEL7  | 1   | 
-| IC2                        |          |               | AT28C256-15PU      | 1   | 
-| IC2,IC3                    |          |               | 4828-6004-CP       | 2   | 
-| IC3                        |          |               | AS6C62256-55PCN    | 1   | 
-| J1                         | 485-2223 | 1528-1385-ND  | 2223               | 1   | 
-| J2,J3                      | 485-85   | 1528-1074-ND  | 85                 | 1   | 
-| J4                         |          |               | PRPC005DAAN-RC     | 1   | 
-| J4,J6                      |          |               | QPC02SXGN-RC       | 2   | 
-| J5                         |          |               | 629105150521       | 1   | 
-| J6                         |          |               | PRPC004DAAN-RC     | 1   | 
-| R1                         |          |               | RNF14FTD1M00       | 1   | 
-| R10,R11                    |          |               | RNF14FTD332R       | 2   | 
-| R2                         |          |               | RNF14FTD1K00       | 1   | 
-| R3,R4,R5,R6,R12,R13,R14    |          |               | RNF14FTD10K0       | 7   | 
-| R7                         |          |               | RNF14FTD221R       | 1   | 
-| R8,R9                      |          |               | RNF14FTD27R4       | 2   | 
-| SW2                        |          |               | BD01               | 1   | 
-| U1                         |          |               | 74LS32             | 1   | 
-| U2                         |          |               | 74HCT04            | 1   | 
-| U3                         |          |               | Z84C0008PEG        | 1   | 
-| U3,U5                      |          |               | 4840-6004-CP       | 1   | 
-| U4                         |          |               | SN74LS138N         | 1   | 
-| U5                         |          |               | Z84C4208PEG        | 1   | 
-| U6                         |          |               | FT230XS-U          | 1   | 
-| U7                         |          |               | 74LS92             | 1   | 
-| Y1                         |          |               | ECS-73-20-5PX-TR   | 1   | 
+| Comp.                      | Mouser#  | Digikey#      | Mfr#               | Qty | Description                        | 
+|----------------------------|----------|---------------|--------------------|-----|------------------------------------| 
+| C1,C2                      |          |               | C317C200J5G5TA     | 2   | 20pf Capacitor                     | 
+| C3,C4                      |          |               | FG28C0G1H470JNT06  | 2   | 47pF Capacitor                     | 
+| C5,C6,C7,C8,C9,C10,C11,C12 |          |               | C322C104K5R5TA7301 | 8   | 0,1uF Capacitors                   | 
+| D1                         |          |               | 151051VS04000      | 1   | Green Led 5mm                      | 
+| D2,D3                      |          |               | 151031SS06000      | 2   | Red Led 3mm Round, FwdV 2.2        | 
+| IC1                        |          |               | ADM803TAKSZ-REEL7  | 1   | Power-on Reset chip                | 
+| IC2                        |          |               | AT28C256-15PU      | 1   | EEPROM 256kbit 28-Pin PDIP         | 
+| IC2,IC3                    |          |               | 4828-6004-CP       | 2   | CONN IC DIP SOCKET 28POS TIN       | 
+| IC3                        |          |               | AS6C62256-55PCN    | 1   | IC SRAM 256K PARALLEL 28DIP        | 
+| J1                         | 485-2223 | 1528-1385-ND  | 2223               | 1   | Adafruit stacking header 2x20      | 
+| J2,J3                      | 485-85   | 1528-1074-ND  | 85                 | 1   | STACKING HEADER ARDUINO SHIELD     | 
+| J4                         |          |               | PRPC005DAAN-RC     | 1   | 5x2 Pin Connector                  | 
+| J4,J6                      |          |               | QPC02SXGN-RC       | 2   | 1x2 Shunt connector                | 
+| J5                         |          |               | 629105150521       | 1   | USB Microb B SMT Connector         | 
+| J6                         |          |               | PRPC004DAAN-RC     | 1   | 4x2 Pin Connector                  | 
+| R1                         |          |               | RNF14FTD1M00       | 1   | 1M Ohm Resistor                    | 
+| R10,R11                    |          |               | RNF14FTD332R       | 2   | 332 Ohm resistor                   | 
+| R2                         |          |               | RNF14FTD1K00       | 1   | 1k Ohm Resistor                    | 
+| R3,R4,R5,R6,R12,R13,R14    |          |               | RNF14FTD10K0       | 7   | 10k Ohm Resistor                   | 
+| R7                         |          |               | RNF14FTD221R       | 1   | 221 Ohm Resistor                   | 
+| R8,R9                      |          |               | RNF14FTD27R4       | 2   | 27 Ohm Resistors                   | 
+| SW2                        |          |               | BD01               | 1   | DIP Switch x1                      | 
+| U1                         |          |               | 74LS32             | 1   | Quand OR                           | 
+| U2                         |          |               | 74HCT04            | 1   | Hex Inverter Schmidt Trigger       | 
+| U3                         |          |               | Z84C0008PEG        | 1   | Z80 CPU                            | 
+| U3,U5                      |          |               | 4840-6004-CP       | 1   | 40 pin (2 x 20) DIP socket 15,24mm | 
+| U4                         |          |               | SN74LS138N         | 1   | 3 to 8 Decoder/Demux               | 
+| U5                         |          |               | Z84C4208PEG        | 1   | Z80 SIO/2                          | 
+| U6                         |          |               | FT230XS-U          | 1   | UART to USB                        | 
+| U7                         |          |               | 74LS92             | 1   | Dodecade counter (div. By 12)      | 
+| Y1                         |          |               | ECS-73-20-5PX-TR   | 1   | 7,3728 MHz Crystal                 | 
+ 
 
 ## Development Note
 
