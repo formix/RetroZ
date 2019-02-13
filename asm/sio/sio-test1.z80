@@ -1,0 +1,125 @@
+SIOA_C  EQU     $00
+SIOA_D  EQU     $01
+SIOB_C  EQU     $02
+SIOB_D  EQU     $03
+
+
+        ORG     $0000
+RESET:
+        JP      MAIN
+
+INT_VECT:
+        ORG     $0C
+        DEFW    RX_CHA_AVAILABLE
+        ORG     $0E
+        DEFW    SPEC_RX_CONDITION
+
+
+SIOA_RESET:
+        LD      A,00110000b     ;write into WR0: error reset; select WR0
+        OUT     (SIOA_C),A
+
+        LD      A,00011000b     ;write into WR0: channel reset
+        OUT     (SIOA_C),A
+
+        LD      A,$04           ;write into WR0: select WR4
+        OUT     (SIOA_C),A
+        LD      A,$C4           ;write into WR4: x64, 1 stop bit
+        OUT     (SIOA_C),A
+
+        LD      A,$05           ;write into WR0: select WR5
+        OUT     (SIOA_C),A
+        LD      A,$E8           ;DTR, TX 8bits, BREAK off, TX on, RTS off
+        OUT     (SIOA_C),A
+
+        LD      A,$02           ;write into WRO: select WR2
+        OUT     (SIOA_C),A
+        LD      A,$0C           ;write WR2: cmd line int vect (see int vect tbl)
+        OUT     (SIOA_C),A      
+
+        LD      A,$01           ;write WR0: select WR1
+        OUT     (SIOA_C),A
+        LD      A,00011000b     ;interrupt on all RX char, parity not spec cond
+        OUT     (SIOA_C),A      ;buffer overrun is a spec RX cond
+
+
+; ***** SIOA ENABLE INTERRUPTS *****
+SIOA_EI:
+        LD      A, $03          ;write into WR0: select WR3
+        OUT     (SIOA_C),A
+        LD      A,$C1           ;RX 8bits, auto enable off, RX on
+        OUT     (SIOA_C),A
+        RET
+
+
+; ***** SIOA DISABLE INTERRUPTS *****
+SIOA_DI:
+        LD      A,$03           ;write into WR0: select WR3
+        OUT     (SIOA_C),A
+        LD      A,$C0           ;RX 8bit, auto enable off, RX off
+        OUT     (SIOA_C),A
+        RET
+
+
+INT_INIT:
+        LD      A,0
+        LD      I,A             ;load I reg with zero
+        IM      2               ;interrupt mode 2
+        EI                      ;enable interrupts
+        RET
+
+
+A_RTS_OFF:
+        LD      A,$05           ;write into WR0: select WR5
+        OUT     (SIOA_C),A
+        LD      A,$E8           ;DTR active, TX 8bit, BREAK off, TX on, RTS off
+        OUT     (SIOA_C),A
+        RET
+
+
+A_RTS_ON:
+        LD      A,$05           ;write into WR0: select WR5
+        OUT     (SIOA_C),A
+        LD      A,$EA           ;DTR active, TX 8bit, BREAK off, TX on, RTS on
+        OUT     (SIOA_C),A
+        RET
+
+
+WAIT_TX_EMPTY:
+        SUB     A               ;clear a
+        INC     A               ;select RR1
+        OUT     (SIOA_C),A
+        IN      A,(SIOA_C)      ;read RR1
+        BIT     0,A             ;check if bit 'all sent' is set
+        JP      Z,WAIT_TX_EMPTY ;bit not set, check again
+        RET                     ;bit set, return
+
+
+RX_CHA_AVAILABLE:
+        PUSH    AF              ;backup AF
+        CALL    A_RTS_OFF
+        IN      A,(SIOA_D)
+
+        ; A holds recieved character
+        
+        ; do something with the character
+
+        OUT     (SIOA_D),A      ;echo character to host
+        CALL    WAIT_TX_EMPTY
+        EI
+        CALL    A_RTS_ON
+        POP     AF
+        RETI
+
+
+SPEC_RX_CONDITION:
+        JP      RESET
+
+
+MAIN:
+        CALL    SIOA_RESET
+        CALL    INT_INIT
+        CALL    A_RTS_OFF
+
+DO_NOTHING:
+        JR      DO_NOTHING
