@@ -103,8 +103,9 @@ RX_CHA_AVAILABLE:
         ; A holds recieved character
         
         ; do something with the character
+	CALL	KEY_PRESSED
 
-        OUT     (SIOA_D),A      ;echo character to host
+        ;OUT     (SIOA_D),A      ;echo character to host
         CALL    WAIT_TX_EMPTY
         EI
         CALL    A_RTS_ON
@@ -116,10 +117,8 @@ SPEC_RX_CONDITION:
         JP      RESET
 
 
-MAIN:
-        CALL    SIOA_RESET
-        CALL    INT_INIT
-        CALL    A_RTS_OFF
+;MAIN:
+;        CALL    SIOA_RESET
+;        CALL    INT_INIT
+;        CALL    A_RTS_ON
 
-DO_NOTHING:
-        JR      DO_NOTHING

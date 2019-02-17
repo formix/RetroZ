@@ -1,0 +1,17 @@
+
+; TETRIS FOR THE RetroZ-SBC
+; BY JEAN-PHILIPPE GRAVEL, (c) 2019
+
+#include "../sio/sio-init.z80"
+
+MAIN:
+        CALL    SIOA_RESET
+        CALL    INT_INIT
+        CALL    A_RTS_ON
+
+
+KEY_PRESSED:
+	OUT     (SIOA_D),A      ;echo character to host
+	RET
+
+
