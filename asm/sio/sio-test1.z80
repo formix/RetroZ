@@ -119,7 +119,10 @@ SPEC_RX_CONDITION:
 MAIN:
         CALL    SIOA_RESET
         CALL    INT_INIT
-        CALL    A_RTS_OFF
+        CALL    A_RTS_ON
 
 DO_NOTHING:
+        LD      A,'X'
+        OUT     (SIOA_D),A
+
         JR      DO_NOTHING
