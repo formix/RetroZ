@@ -103,8 +103,9 @@ RX_CHA_AVAILABLE:
         ; A holds recieved character
         
         ; do something with the character
+	CALL	KEY_PRESSED
 
-        OUT     (SIOA_D),A      ;echo character to host
+        ;OUT     (SIOA_D),A      ;echo character to host
         CALL    WAIT_TX_EMPTY
         EI
         CALL    A_RTS_ON
@@ -116,6 +117,7 @@ SPEC_RX_CONDITION:
         JP      RESET
 
 
+<<<<<<< HEAD:asm/sio/sio-test1.z80
 MAIN:
         CALL    SIOA_RESET
         CALL    INT_INIT
@@ -126,3 +128,10 @@ DO_NOTHING:
         OUT     (SIOA_D),A
 
         JR      DO_NOTHING
+=======
+;MAIN:
+;        CALL    SIOA_RESET
+;        CALL    INT_INIT
+;        CALL    A_RTS_ON
+
+>>>>>>> b0ff7a9ab27dcf05890423966fc5034fc95046c1:asm/sio/sio-init.z80
