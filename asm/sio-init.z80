@@ -117,21 +117,8 @@ SPEC_RX_CONDITION:
         JP      RESET
 
 
-<<<<<<< HEAD:asm/sio/sio-test1.z80
-MAIN:
-        CALL    SIOA_RESET
-        CALL    INT_INIT
-        CALL    A_RTS_ON
-
-DO_NOTHING:
-        LD      A,'X'
-        OUT     (SIOA_D),A
-
-        JR      DO_NOTHING
-=======
 ;MAIN:
 ;        CALL    SIOA_RESET
 ;        CALL    INT_INIT
 ;        CALL    A_RTS_ON
 
->>>>>>> b0ff7a9ab27dcf05890423966fc5034fc95046c1:asm/sio/sio-init.z80
