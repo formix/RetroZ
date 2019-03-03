@@ -1,3 +1,9 @@
+#target rom
+
+#code _INIT_SIO
+
+NULL	EQU	0
+
 SIOA_C  EQU     $00
 SIOA_D  EQU     $01
 SIOB_C  EQU     $02
@@ -6,6 +12,7 @@ SIOB_D  EQU     $03
 
         ORG     $0000
 RESET:
+	LD	SP,$FFFF
         JP      MAIN
 
 INT_VECT:
@@ -84,7 +91,10 @@ A_RTS_ON:
         OUT     (SIOA_C),A
         RET
 
-
+; Sends a character to the data port A and waits the end of the transmission.
+; after a call to PRINTC or WAIT_TX, the content of the A register is lost.
+PRINTC:
+	OUT	(SIOA_D),A
 WAIT_TX:
         SUB     A               ;clear a
         INC     A               ;select RR1
@@ -92,7 +102,7 @@ WAIT_TX:
         IN      A,(SIOA_C)      ;read RR1
         BIT     0,A             ;check if bit 'all sent' is set
         JP      Z,WAIT_TX       ;bit not set, check again
-        RET                     ;bit set, return
+	RET                     ;bit set, return
 
 
 RX_CHA_AVAILABLE:
@@ -119,50 +129,87 @@ SPEC_RX_CONDITION:
         JP      RESET
 
 
+KEY_PRESSED:
+        CALL	PRINTC	;the character value of the pressed key is already in A
+	RET
 
 
-MAIN:
+#data 	_HEAP,$8000
+COLOR	DEFS	3
+CURR_INDEX
+	DEFS	1
+
+
+#code 	_MAIN 
+
+SPACE_TABLE_SIZE EQU	32
+
+SPACE_TABLE:
+	DEFB    0,0,1,3,5,7,10,12,14,16,19,21,24,25,27,27
+	DEFB    27,27,25,24,21,19,16,14,12,10,7,5,3,1,0,0
+
+TRACK	DEFB	"#######",NULL
+VT100	DEFB	27,"[2;3",NULL
+COL_RED	DEFB	"1m",NULL
+
+MAIN:	; Initialize the SIO/2 chip
         CALL    SIOA_RESET
         CALL    INT_INIT
         CALL    A_RTS_ON
 
+	; Initializes the color variable
+	LD	HL,COL_RED	;copy from COL_RED addess
+	LD	DE,COLOR	;to COLOR address
+	LD	BC,3		;a total of 3 bytes
+	LDI			;do the copy
+
+	LD	IX,SPACE_TABLE	;initialize the space table index
+	LD	A,0
+	LD	(CURR_INDEX),A	;initialize the current index variable
 PROG:
-        LD      HL,RED
-        CALL    PRINT
-        LD      HL,HELLO1
-        CALL    PRINT
-        LD      HL,GRAY
-        CALL    PRINT
-        LD      HL,HELLO2
-        CALL    PRINT
-        JR      PROG
 
 
-HELLO1  DEFB    "Hello World 1!",10,13,0
-HELLO2  DEFB    "Hello World 2!",10,13,0
-RED     DEFB    27,"[2;31m",0
-GRAY    DEFB    27,"[1;33m",0
 
 
-; Print the string pointed by HL to SIOA_D until a character 0 is met.
-; Assumes HL has the address of the string to print.
+
+
+; ***************************************************************************
+; Prints a number of spaces to SIOA_D specified by the register B. Upon 
+; return, the value of B is 0.
+; ***************************************************************************
+PRINT_SPACES:
+	PUSH	AF		;saves AF
+PRINT_SPACES_START:
+	LD	A,0		;Checks if register b...
+	OR	B		;...is equal to 0.
+	JR	Z,PRINT_SPACES_END ;if it is zero, return
+	LD	A," "
+	CALL	PRINTC		;prints the space
+	DEC	B		;one less space to print.
+	JR	PRINT_SPACES_START ;continue printing spaces
+PRINT_SPACES_END:
+	POP 	AF
+	RET
+
+; ***************************************************************************
+; Prints the NULL terminated string pointed by HL to SIOA_D.
+; When this function returns, HL contains the address of the NULL character.
+; ***************************************************************************
 PRINT:  
-        PUSH    AF              ;Saves A
+        PUSH    AF              ;Saves AF
 PRINT_START:
         LD      A,(HL)          
-        OR      A,0             ;Checks if the content of A is 0
-        JR      Z,PRINT_END     ;If 0, then exit the function
-        OUT     (SIOA_D),A      ;Print the character and 
-        CALL    WAIT_TX
-        INC     HL              ;Move to the next char
+        OR      A,NULL          ;Checks if the content of A is null
+        JR      Z,PRINT_END     ;If null, then exit the function
+        CALL    PRINTC          ;Print the character and... 
+        INC     HL              ;...move to the next char
         JR      PRINT_START     ;Print the next char
 PRINT_END:
-        POP     AF              ;Restores A
+        POP     AF              ;Restores AF
         RET
         
 
 
-KEY_PRESSED:
-        OUT     (SIOA_D),A
-        CALL    WAIT_TX
-        RET
+
+
+#END
