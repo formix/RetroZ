@@ -135,22 +135,27 @@ KEY_PRESSED:
 
 
 #data 	_HEAP,$8000
-COLOR	DEFS	3
+
+TRACK	DEFS	TRACK_SZ
 CURR_INDEX
 	DEFS	1
+
+COLOR	EQU	TRACK + 5
+
+
 
 
 #code 	_MAIN 
 
-SPACE_TABLE_SIZE EQU	32
+SPACE_TABLE_SZ	EQU	32
 
 SPACE_TABLE:
 	DEFB    0,0,1,3,5,7,10,12,14,16,19,21,24,25,27,27
 	DEFB    27,27,25,24,21,19,16,14,12,10,7,5,3,1,0,0
 
-TRACK	DEFB	"#######",NULL
-VT100	DEFB	27,"[2;3",NULL
-COL_RED	DEFB	"1m",NULL
+TRACK_D	DEFB	27,"[2;31m#######",10,13,NULL
+TRACK_D_END:
+TRACK_SZ EQU	TRACK_D_END - TRACK_D
 
 MAIN:	; Initialize the SIO/2 chip
         CALL    SIOA_RESET
@@ -158,42 +163,75 @@ MAIN:	; Initialize the SIO/2 chip
         CALL    A_RTS_ON
 
 	; Initializes the color variable
-	LD	HL,COL_RED	;copy from COL_RED addess
-	LD	DE,COLOR	;to COLOR address
-	LD	BC,3		;a total of 3 bytes
-	LDI			;do the copy
+	LD	HL,TRACK_D	;copy from TRACK_D (data in ROM) addess
+	LD	DE,TRACK	;to the TRACK variable address (in RAM)
+	LD	BC,TRACK_SZ	;a total of TRACK_SZ bytes
+	LDIR			;do the copy
 
 	LD	IX,SPACE_TABLE	;initialize the space table index
 	LD	A,0
 	LD	(CURR_INDEX),A	;initialize the current index variable
 
 PROG_LOOP:
-
-	LD	B,10
-	CALL	PSPACES
-	LD	HL,TRACK
-	CALL	PRINT
+	CALL	PRINT_TRACK
+	CALL	INC_STATES
 	JR	PROG_LOOP 
 
 
 
+; ***************************************************************************
+; Increments the space table pointer address (IX) and the COLOR variable. 
+; Resets IX to SPACE_TABLE address if it overflows the SPACE_TABLE size.
+; Resets the COLOR variable to "1" when it reaches "8", making it loop from 
+; "1" to "7". 
+; ***************************************************************************
+INC_STATES:
+	INC 	IX		;Increments the SPACE_TABLE pointer address.
+	LD	HL,CURR_INDEX
+	INC 	(HL)		;Increment the matching index value.
+	LD	A,(CURR_INDEX)	;Loads the current SPACE_TABLE index into A
+	XOR	SPACE_TABLE_SZ	;to compare with the table size and jump to
+	JR	NZ,INC_COLOR	;increment color if the table end is not
+				;reached.
+	LD	A,0		
+	LD	(CURR_INDEX),A	;Resets the CURRENT_INDEX variable value to 0
+	LD	IX,SPACE_TABLE	;and bring back the SPACE_TABLE pointer to the 
+				;start of the space table.
+INC_COLOR:
+	LD	HL,COLOR
+	INC	(HL)		;Increments the color value of the VT100
+	LD	A,(COLOR)	;command and check if it reached the end
+	XOR	"8"		;of the available color values.
+	JR	NZ,COLOR_NOT_RESET ;Jumps if the color don't need reset.
+	LD	A,"1"
+	LD	(COLOR),A	;Resets the color to the first one.
+COLOR_NOT_RESET:
+	RET
+
+; ***************************************************************************
+; Prints the number of spaces indicated in IX and prints the track.
+; ***************************************************************************
+PRINT_TRACK:
+	LD	B,(IX)
+	CALL	PSPACES
+	LD	HL,TRACK
+	CALL	PRINT
+	RET
+
 
 ; ***************************************************************************
 ; Prints a number of spaces to SIOA_D specified by the register B. Upon 
-; return B contains 0..
+; return B, contains 0.
 ; ***************************************************************************
 PSPACES:
-	PUSH	AF		;saves AF
-PSPACES_START:
 	LD	A,0		;Checks if register b...
 	OR	B		;...is equal to 0.
 	JR	Z,PSPACES_END	;if it is zero, return
 	LD	A," "
-	CALL	PRINTC		;prints the space
+	CALL	PRINTC		;Print a space.	
 	DEC	B		;one less space to print.
-	JR	PSPACES_START	;continue printing spaces
+	JR	PSPACES		;continue printing spaces
 PSPACES_END:
-	POP 	AF
 	RET
 
 ; ***************************************************************************
@@ -201,16 +239,13 @@ PSPACES_END:
 ; When this function returns, HL contains the address of the NULL character.
 ; ***************************************************************************
 PRINT:  
-        PUSH    AF              ;Saves AF
-PRINT_START:
         LD      A,(HL)          
         OR      A,NULL          ;Checks if the content of A is null
         JR      Z,PRINT_END     ;If null, then exit the function
         CALL    PRINTC          ;Print the character and... 
         INC     HL              ;...move to the next char
-        JR      PRINT_START     ;Print the next char
+        JR      PRINT		;Print the next char
 PRINT_END:
-        POP     AF              ;Restores AF
         RET
         
 
