@@ -12,7 +12,7 @@ SIOB_D  EQU     $03
 
         ORG     $0000
 RESET:
-	LD	SP,$FFFF
+	LD	SP,$FFFF	;sets the stack starting address to 65535
         JP      MAIN
 
 INT_VECT:
@@ -166,28 +166,33 @@ MAIN:	; Initialize the SIO/2 chip
 	LD	IX,SPACE_TABLE	;initialize the space table index
 	LD	A,0
 	LD	(CURR_INDEX),A	;initialize the current index variable
-PROG:
 
+PROG_LOOP:
 
+	LD	B,10
+	CALL	PSPACES
+	LD	HL,TRACK
+	CALL	PRINT
+	JR	PROG_LOOP 
 
 
 
 
 ; ***************************************************************************
 ; Prints a number of spaces to SIOA_D specified by the register B. Upon 
-; return, the value of B is 0.
+; return B contains 0..
 ; ***************************************************************************
-PRINT_SPACES:
+PSPACES:
 	PUSH	AF		;saves AF
-PRINT_SPACES_START:
+PSPACES_START:
 	LD	A,0		;Checks if register b...
 	OR	B		;...is equal to 0.
-	JR	Z,PRINT_SPACES_END ;if it is zero, return
+	JR	Z,PSPACES_END	;if it is zero, return
 	LD	A," "
 	CALL	PRINTC		;prints the space
 	DEC	B		;one less space to print.
-	JR	PRINT_SPACES_START ;continue printing spaces
-PRINT_SPACES_END:
+	JR	PSPACES_START	;continue printing spaces
+PSPACES_END:
 	POP 	AF
 	RET
 
