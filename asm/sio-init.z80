@@ -1,3 +1,7 @@
+#code _INIT_SIO
+
+NULL	EQU	0
+
 SIOA_C  EQU     $00
 SIOA_D  EQU     $01
 SIOB_C  EQU     $02
@@ -6,6 +10,9 @@ SIOB_D  EQU     $03
 
         ORG     $0000
 RESET:
+	LD	SP,$FFFF	;sets the stack starting address to 65535
+        CALL    SIOA_RESET
+        CALL    INT_INIT
         JP      MAIN
 
 INT_VECT:
@@ -84,33 +91,36 @@ A_RTS_ON:
         OUT     (SIOA_C),A
         RET
 
-
-WAIT_TX_EMPTY:
+; Sends a character to the data port A and waits the end of the transmission.
+; after a call to PRINTC or WAIT_TX, the content of the A register is lost.
+PRINTC:
+	OUT	(SIOA_D),A
+WAIT_TX:
         SUB     A               ;clear a
         INC     A               ;select RR1
         OUT     (SIOA_C),A
         IN      A,(SIOA_C)      ;read RR1
         BIT     0,A             ;check if bit 'all sent' is set
-        JP      Z,WAIT_TX_EMPTY ;bit not set, check again
-        RET                     ;bit set, return
+        JP      Z,WAIT_TX       ;bit not set, check again
+	RET                     ;bit set, return
 
 
 RX_CHA_AVAILABLE:
+	DI
         PUSH    AF              ;backup AF
+        EXX
         CALL    A_RTS_OFF
         IN      A,(SIOA_D)
-
         ; A holds recieved character
         
         ; do something with the character
 	CALL	KEY_PRESSED
 
-        ;OUT     (SIOA_D),A      ;echo character to host
-        CALL    WAIT_TX_EMPTY
-        EI
         CALL    A_RTS_ON
+        EXX
         POP     AF
-        RETI
+        EI
+	RETI
 
 
 SPEC_RX_CONDITION:
