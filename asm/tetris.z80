@@ -6,49 +6,26 @@
 #include "sio-init.z80"
 
 
-#data	_HEAP,$8000
+#data	_HEAP,_SIO_VARIABLES_end
 
-BUFFER	DEFS	128
 
 
 #code	_MAIN
 
 HELLO	DEFB	"HELLO!",10,13,0
 
+
+
 MAIN:
-
-	LD	IX,BUFFER
-	LD	C,10
-
-PROG_LOOP:
-	LD	A,C
-	OR	A,0
-	JR	Z,PROG_LOOP
-        CALL    A_RTS_ON
-	LD	HL, HELLO
-	CALL 	PRINT
-	CALL	A_RTS_OFF
-	DEC	C
-	JR	PROG_LOOP
-
-	
-
-	LD	A,(BUFFER)
-	OR	0
-	JR	Z,PROG_LOOP
-	LD	HL,BUFFER
-	CALL	PRINT
+	EI
 	LD	A,0
-	LD	(BUFFER),A
-	LD	IX,BUFFER
-	JR  	PROG_LOOP
-
+	LD	(RTS),A		;Initialize the RTS counter
+	CALL	SIOA_EI
+LOOP:
+	JR	LOOP
 
 KEY_PRESSED:
-	LD	(IX),A
-	INC	IX
-	LD	A,0
-	LD	(IX),A
+	CALL	PUTCHAR
 	RET
 
 
@@ -57,12 +34,14 @@ KEY_PRESSED:
 ; When this function returns, HL contains the address of the NULL character.
 ; ***************************************************************************
 PRINT:  
+	CALL	A_RTS_ON
         LD      A,(HL)          
         OR      A,NULL          ;Checks if the content of A is null
         JR      Z,PRINT_END     ;If null, then exit the function
-        CALL    PRINTC          ;Print the character and... 
+        CALL    PUTCHAR         ;Print the character and... 
         INC     HL              ;...move to the next char
         JR      PRINT		;Print the next char
 PRINT_END:
+	CALL	A_RTS_OFF
         RET
 

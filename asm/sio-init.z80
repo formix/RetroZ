@@ -1,3 +1,8 @@
+#data	_SIO_VARIABLES,$8000
+RTS	DEFS	1
+
+
+
 #code _INIT_SIO
 
 NULL	EQU	0
@@ -36,7 +41,7 @@ SIOA_RESET:
 
         LD      A,$05           ;write into WR0: select WR5
         OUT     (SIOA_C),A
-        LD      A,$E8           ;DTR, TX 8bits, BREAK off, TX on, RTS off
+        LD      A,$EA           ;DTR, TX 8bits, BREAK off, TX on, RTS off
         OUT     (SIOA_C),A
 
         LD      A,$02           ;write into WRO: select WR2
@@ -46,7 +51,8 @@ SIOA_RESET:
 
         LD      A,$01           ;write WR0: select WR1
         OUT     (SIOA_C),A
-        LD      A,00011000b     ;interrupt on all RX char, parity not spec cond
+;        LD      A,00011000b     ;interrupt on all RX char, parity not spec cond
+	LD	A,$18
         OUT     (SIOA_C),A      ;buffer overrun is a spec RX cond
 
 
@@ -93,15 +99,17 @@ A_RTS_ON:
 
 ; Sends a character to the data port A and waits the end of the transmission.
 ; after a call to PRINTC or WAIT_TX, the content of the A register is lost.
-PRINTC:
+PUTCHAR:
+	CALL	A_RTS_ON
 	OUT	(SIOA_D),A
+	CALL	A_RTS_OFF
 WAIT_TX:
-        SUB     A               ;clear a
+        SUB     A               ;clears a
         INC     A               ;select RR1
         OUT     (SIOA_C),A
         IN      A,(SIOA_C)      ;read RR1
         BIT     0,A             ;check if bit 'all sent' is set
-        JP      Z,WAIT_TX       ;bit not set, check again
+        JR      Z,WAIT_TX       ;bit not set, check again
 	RET                     ;bit set, return
 
 
@@ -109,14 +117,19 @@ RX_CHA_AVAILABLE:
 	DI
         PUSH    AF              ;backup AF
         EXX
-        CALL    A_RTS_OFF
+;WAIT_RX:
+;	SUB	A		;Clears A
+;	OUT	(SIOA_C),A	;Select RR0
+;	IN	A,(SIOA_C)	;Read RR0
+;	BIT	0,A		;Check if character is available
+;	JR	Z,WAIT_RX	;Character not recieved yet, check again
+
         IN      A,(SIOA_D)
         ; A holds recieved character
         
         ; do something with the character
 	CALL	KEY_PRESSED
 
-        CALL    A_RTS_ON
         EXX
         POP     AF
         EI
