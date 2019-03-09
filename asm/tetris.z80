@@ -6,7 +6,7 @@
 #include "sio-init.z80"
 
 
-#data	_HEAP,_SIO_VARIABLES_end
+#data	_HEAP,$8000
 
 
 
@@ -18,8 +18,6 @@ HELLO	DEFB	"HELLO!",10,13,0
 
 MAIN:
 	EI
-	LD	A,0
-	LD	(RTS),A		;Initialize the RTS counter
 	CALL	SIOA_EI
 LOOP:
 	JR	LOOP

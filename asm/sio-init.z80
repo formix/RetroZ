@@ -1,8 +1,3 @@
-#data	_SIO_VARIABLES,$8000
-RTS	DEFS	1
-
-
-
 #code _INIT_SIO
 
 NULL	EQU	0
@@ -28,32 +23,61 @@ INT_VECT:
 
 
 SIOA_RESET:
-        LD      A,00110000b     ;write into WR0: error reset; select WR0
-        OUT     (SIOA_C),A
+	LD      A,$00            ; write 0
+	OUT     (SIOA_C),A
+	LD      A,$18            ; reset ext/status interrupts
+	OUT     (SIOA_C),A
 
-        LD      A,00011000b     ;write into WR0: channel reset
-        OUT     (SIOA_C),A
+	LD      A,$04            ; write 4
+	OUT     (SIOA_C),A
+	LD      A,$C4            ; X64, no parity, 1 stop
+	OUT     (SIOA_C),A
 
-        LD      A,$04           ;write into WR0: select WR4
-        OUT     (SIOA_C),A
-        LD      A,$C4           ;write into WR4: x64, 1 stop bit
-        OUT     (SIOA_C),A
+	LD      A,$01            ; write 1
+	OUT     (SIOA_C),A
+	LD      A,$18            ; interrupt on all recv
+	OUT     (SIOA_C),A
 
-        LD      A,$05           ;write into WR0: select WR5
-        OUT     (SIOA_C),A
-        LD      A,$EA           ;DTR, TX 8bits, BREAK off, TX on, RTS off
-        OUT     (SIOA_C),A
+	LD      A,$03            ; write 3
+	OUT     (SIOA_C),A
+	LD      A,$E1            ; 8 bits, auto enable, rcv enab
+	OUT     (SIOA_C),A
 
-        LD      A,$02           ;write into WRO: select WR2
-        OUT     (SIOA_C),A
-        LD      A,$0C           ;write WR2: cmd line int vect (see int vect tbl)
-        OUT     (SIOA_C),A      
+	LD      A,$05           ; write 5
+	OUT     (SIOA_C),A
+	LD      A,$EA		; dtr enable, 8 bits, tx enable, rts
+	OUT     (SIOA_C),A
 
-        LD      A,$01           ;write WR0: select WR1
-        OUT     (SIOA_C),A
-;        LD      A,00011000b     ;interrupt on all RX char, parity not spec cond
-	LD	A,$18
-        OUT     (SIOA_C),A      ;buffer overrun is a spec RX cond
+	LD      A,$00
+	OUT     (SIOB_C),A
+	LD      A,$18
+	OUT     (SIOB_C),A
+
+	LD      A,$04            ; write 4
+	OUT     (SIOB_C),A
+	LD      A,$44            ; X16, no parity, 1 stop
+	OUT     (SIOB_C),A
+
+	LD      A,$01
+	OUT     (SIOB_C),A
+	LD      A,$18
+	OUT     (SIOB_C),A
+
+	LD      A,$02           ; write reg 2
+	OUT     (SIOB_C),A
+	;LD      A,$E0           ; INTERRUPT VECTOR ADDRESS
+	LD      A,$0C           ; INTERRUPT VECTOR ADDRESS
+	OUT     (SIOB_C),A
+
+	LD      A,$03
+	OUT     (SIOB_C),A
+	LD      A,$E1
+	OUT     (SIOB_C),A
+
+	LD      A,$05
+	OUT     (SIOB_C),A
+	LD      A,$EA
+	OUT     (SIOB_C),A
 
 
 ; ***** SIOA ENABLE INTERRUPTS *****
@@ -85,7 +109,7 @@ INT_INIT:
 A_RTS_OFF:
         LD      A,$05           ;write into WR0: select WR5
         OUT     (SIOA_C),A
-        LD      A,$E8           ;DTR active, TX 8bit, BREAK off, TX on, RTS off
+        LD      A,$EA           ;DTR active, TX 8bit, BREAK off, TX on, RTS off
         OUT     (SIOA_C),A
         RET
 
@@ -93,16 +117,10 @@ A_RTS_OFF:
 A_RTS_ON:
         LD      A,$05           ;write into WR0: select WR5
         OUT     (SIOA_C),A
-        LD      A,$EA           ;DTR active, TX 8bit, BREAK off, TX on, RTS on
+        LD      A,$E8           ;DTR active, TX 8bit, BREAK off, TX on, RTS on
         OUT     (SIOA_C),A
         RET
 
-; Sends a character to the data port A and waits the end of the transmission.
-; after a call to PRINTC or WAIT_TX, the content of the A register is lost.
-PUTCHAR:
-	CALL	A_RTS_ON
-	OUT	(SIOA_D),A
-	CALL	A_RTS_OFF
 WAIT_TX:
         SUB     A               ;clears a
         INC     A               ;select RR1
@@ -113,16 +131,29 @@ WAIT_TX:
 	RET                     ;bit set, return
 
 
+PUTCHAR:
+                PUSH     AF              ; Store character
+conout1:        SUB      A
+                OUT      (SIOA_C),A
+                IN       A,(SIOA_C)
+                RRCA
+                BIT      1,A             ; Set Zero flag if still transmitting character
+                JR       Z,conout1       ; Loop until flag signals ready
+                POP      AF              ; Retrieve character
+                OUT      (SIOA_D),A      ; Output the character
+                RET
+
+
+
 RX_CHA_AVAILABLE:
-	DI
         PUSH    AF              ;backup AF
         EXX
-;WAIT_RX:
-;	SUB	A		;Clears A
-;	OUT	(SIOA_C),A	;Select RR0
-;	IN	A,(SIOA_C)	;Read RR0
-;	BIT	0,A		;Check if character is available
-;	JR	Z,WAIT_RX	;Character not recieved yet, check again
+WAIT_RX:
+	SUB	A		;Clears A
+	OUT	(SIOA_C),A	;Select RR0
+	IN	A,(SIOA_C)	;Read RR0
+	BIT	0,A		;Check if character is available
+	JR	Z,WAIT_RX	;Character not recieved yet, check again
 
         IN      A,(SIOA_D)
         ; A holds recieved character
