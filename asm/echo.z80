@@ -12,20 +12,13 @@
 
 #code	_MAIN
 
-START	DEFB	"WAIT START",10,13,0
-STOP	DEFB	"WAIT STOP",10,13,0
+HELLO	DEFB	"HELLO!",10,13,0
+
 
 
 MAIN:
 	EI
 	CALL	SIOA_EI
-
-	LD	HL,START
-	CALL	PRINT
-	LD	BC,$FFFF
-	LD	HL,STOP
-	CALL	PRINT
-
 LOOP:
 	JR	LOOP
 
@@ -35,31 +28,20 @@ KEY_PRESSED:
 
 
 
-WAIT:
-	DEC	BC
-	LD	A,C
-	OR	B
-	JR	NZ,WAIT
-	RET
-	
-
-
-
 
 ; ***************************************************************************
 ; Prints the NULL terminated string pointed by HL to SIOA_D.
 ; When this function returns, HL contains the address of the NULL character.
 ; ***************************************************************************
-PRINT: 
+PRINT:  
+	CALL	A_RTS_ON
         LD      A,(HL)          
-        OR      A		;Checks if the content of A is null
-        JR	Z,PRINT_END	;If null, then exit the function
-        CALL    PUTCHAR         ;Print the character and 
-        INC     HL              ;move to the next char.
-	LD	A,H		;Checks if HL is equal to zero. If this is
-	OR	L		;the case, means that we never met the term-
-	JR	Z,PRINT_END	;inating NULL char and we are better to GTFO.
+        OR      A,NULL          ;Checks if the content of A is null
+        JR      Z,PRINT_END     ;If null, then exit the function
+        CALL    PUTCHAR         ;Print the character and... 
+        INC     HL              ;...move to the next char
         JR      PRINT		;Print the next char
 PRINT_END:
-	RET
+	CALL	A_RTS_OFF
+        RET
 

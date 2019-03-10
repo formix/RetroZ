@@ -65,7 +65,6 @@ SIOA_RESET:
 
 	LD      A,$02           ; write reg 2
 	OUT     (SIOB_C),A
-	;LD      A,$E0           ; INTERRUPT VECTOR ADDRESS
 	LD      A,$0C           ; INTERRUPT VECTOR ADDRESS
 	OUT     (SIOB_C),A
 
@@ -109,7 +108,7 @@ INT_INIT:
 A_RTS_OFF:
         LD      A,$05           ;write into WR0: select WR5
         OUT     (SIOA_C),A
-        LD      A,$EA           ;DTR active, TX 8bit, BREAK off, TX on, RTS off
+        LD      A,$E8           ;DTR active, TX 8bit, BREAK off, TX on, RTS off
         OUT     (SIOA_C),A
         RET
 
@@ -117,31 +116,35 @@ A_RTS_OFF:
 A_RTS_ON:
         LD      A,$05           ;write into WR0: select WR5
         OUT     (SIOA_C),A
-        LD      A,$E8           ;DTR active, TX 8bit, BREAK off, TX on, RTS on
+        LD      A,$EA           ;DTR active, TX 8bit, BREAK off, TX on, RTS on
         OUT     (SIOA_C),A
         RET
 
-WAIT_TX:
-        SUB     A               ;clears a
-        INC     A               ;select RR1
-        OUT     (SIOA_C),A
-        IN      A,(SIOA_C)      ;read RR1
-        BIT     0,A             ;check if bit 'all sent' is set
-        JR      Z,WAIT_TX       ;bit not set, check again
-	RET                     ;bit set, return
+;WAIT_TX:
+;        SUB     A               ;clears a
+;        INC     A               ;select RR1
+;        OUT     (SIOA_C),A
+;        IN      A,(SIOA_C)      ;read RR1
+;        BIT     0,A             ;check if bit 'all sent' is set
+;        JR      Z,WAIT_TX       ;bit not set, check again
+;	RET                      ;bit set, return
 
 
 PUTCHAR:
-                PUSH     AF              ; Store character
-conout1:        SUB      A
-                OUT      (SIOA_C),A
-                IN       A,(SIOA_C)
-                RRCA
-                BIT      1,A             ; Set Zero flag if still transmitting character
-                JR       Z,conout1       ; Loop until flag signals ready
-                POP      AF              ; Retrieve character
-                OUT      (SIOA_D),A      ; Output the character
-                RET
+	PUSH	AF              ; Store character
+conout1:        
+	SUB     A		;Wait for previous transmission to end
+	OUT     (SIOA_C),A
+	IN      A,(SIOA_C)
+	BIT     2,A             ; Set Zero flag if still transmitting character
+	JR      Z,conout1       ; Loop until flag signals ready
+	BIT	3,A		; Set zero flag if data carrier is detected
+	JR	Z,conout1	; Loop if no carrier detected.
+	BIT	5,A		; Set zero flag if clear to send
+	JR	Z,conout1	; Loop if not clear.
+	POP     AF              ; Retrieve character
+	OUT     (SIOA_D),A      ; Output the character
+	RET
 
 
 
@@ -169,10 +172,4 @@ WAIT_RX:
 
 SPEC_RX_CONDITION:
         JP      RESET
-
-
-;MAIN:
-;        CALL    SIOA_RESET
-;        CALL    INT_INIT
-;        CALL    A_RTS_ON
 
