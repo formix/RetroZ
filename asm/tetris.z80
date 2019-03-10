@@ -40,6 +40,13 @@ KEY_PRESSED:
 ; Wait for BC milliseconds. Timed according to RetroZ/RC2014 clock speed
 ; at 7.3728MHz. When the function exits, BC is 0.
 ; 
+; Core code taken from Mr. Eric Carr's article titled Z80 DELAY LOOPS at 
+;
+;               http://www.paleotechnologist.net/?p=2589 
+;
+; I did some adjustments to fit my needs.
+;
+;
 ; Remarks:
 ;
 ; Adjust DE in the function to account for your clock speed.
@@ -51,7 +58,7 @@ KEY_PRESSED:
 ; would be a serious mind fuck to adjust the last DE value to make a perfect 
 ; timing.
 ;
-; I calculated an imprecision of 0.1244 second on a period of 65.535 seconds,
+; I calculated an imprecision of 0.1671 second on a period of 65.535 seconds,
 ; which is the maximum wait time of that function. Good enough I guess...
 ; ***************************************************************************
 WAIT:
