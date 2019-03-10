@@ -120,33 +120,6 @@ A_RTS_ON:
         OUT     (SIOA_C),A
         RET
 
-;WAIT_TX:
-;        SUB     A               ;clears a
-;        INC     A               ;select RR1
-;        OUT     (SIOA_C),A
-;        IN      A,(SIOA_C)      ;read RR1
-;        BIT     0,A             ;check if bit 'all sent' is set
-;        JR      Z,WAIT_TX       ;bit not set, check again
-;	RET                      ;bit set, return
-
-
-PUTCHAR:
-	PUSH	AF              ; Store character
-conout1:        
-	SUB     A		;Wait for previous transmission to end
-	OUT     (SIOA_C),A
-	IN      A,(SIOA_C)
-	BIT     2,A             ; Set Zero flag if still transmitting character
-	JR      Z,conout1       ; Loop until flag signals ready
-	BIT	3,A		; Set zero flag if data carrier is detected
-	JR	Z,conout1	; Loop if no carrier detected.
-	BIT	5,A		; Set zero flag if clear to send
-	JR	Z,conout1	; Loop if not clear.
-	POP     AF              ; Retrieve character
-	OUT     (SIOA_D),A      ; Output the character
-	RET
-
-
 
 RX_CHA_AVAILABLE:
         PUSH    AF              ;backup AF
@@ -172,4 +145,38 @@ WAIT_RX:
 
 SPEC_RX_CONDITION:
         JP      RESET
+
+
+; ***************************************************************************
+; Sends the content of register A to SIOA_D.
+; ***************************************************************************
+PUTCHAR:
+	PUSH	AF              ; Store character
+conout1:        
+	SUB     A		; Wait for previous transmission to end
+	OUT     (SIOA_C),A
+	IN      A,(SIOA_C)
+	BIT     2,A             ; Set Zero flag if transmitting a character
+	JR      Z,conout1       ; Loop if still transmitting character
+	BIT	3,A		; Set zero flag if no data carrier is detected
+	JR	Z,conout1	; Loop if no carrier detected.
+	BIT	5,A		; Set zero flag if not clear to send
+	JR	Z,conout1	; Loop if not clear to send.
+	POP     AF              ; Retrieve character
+	OUT     (SIOA_D),A      ; Output the character
+	RET
+
+
+; ***************************************************************************
+; Prints the NULL terminated string pointed by HL to SIOA_D.
+; When this function returns, HL contains the address of the NULL character.
+; ***************************************************************************
+PRINT: 
+        LD      A,(HL)          ;Reads the next character
+        OR      A		;Check if that character is null.
+        RET	Z		;If null, exit the function
+        CALL    PUTCHAR         ;Print the character and 
+        INC     HL              ;move to the next char.
+        JR      PRINT		;Print the next char
+
 

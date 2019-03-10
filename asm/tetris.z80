@@ -22,7 +22,8 @@ MAIN:
 
 	LD	HL,START
 	CALL	PRINT
-	LD	BC,$FFFF
+	LD	BC,2000
+	CALL	WAIT
 	LD	HL,STOP
 	CALL	PRINT
 
@@ -35,31 +36,44 @@ KEY_PRESSED:
 
 
 
+; ***************************************************************************
+; Wait for BC milliseconds. Timed according to RetroZ/RC2014 clock speed
+; at 7.3728MHz. When the function exits, BC is 0.
+; 
+; Remarks:
+;
+; Adjust DE in the function to account for your clock speed.
+;
+; At 7.3728, it takes 307.2 inner loops to reach 1ms. The outer loop takes 
+; 34 clock ticks, thus by removing 2.2 pass in the inner loop (305) it adds 
+; up to a little under 1ms per outer loop. I do not account for the 
+; CALL WAIT, the two PUSHs,  POPs and the RET instruction timings since that 
+; would be a serious mind fuck to adjust the last DE value to make a perfect 
+; timing.
+;
+; I calculated an imprecision of 0.1244 second on a period of 65.535 seconds,
+; which is the maximum wait time of that function. Good enough I guess...
+; ***************************************************************************
 WAIT:
+	PUSH	DE
+	PUSH	AF
+WAIT_OUTER:			; 34 clock ticks to execute the outer loop.
+	LD	DE,305		; Approx. 1ms for the inner loop to complete,
+				; adjust that value according to your clk spd.
+WAIT_INNER:			; 24 clock ticks required for a signle pass 
+	DEC	DE
+	LD	A,D
+	OR	E
+	JP	NZ,WAIT_INNER
 	DEC	BC
-	LD	A,C
-	OR	B
-	JR	NZ,WAIT
+	LD	A,B
+	OR	C
+	JP	NZ,WAIT_OUTER
+	POP	AF
+	POP	DE
 	RET
 	
 
 
 
-
-; ***************************************************************************
-; Prints the NULL terminated string pointed by HL to SIOA_D.
-; When this function returns, HL contains the address of the NULL character.
-; ***************************************************************************
-PRINT: 
-        LD      A,(HL)          
-        OR      A		;Checks if the content of A is null
-        JR	Z,PRINT_END	;If null, then exit the function
-        CALL    PUTCHAR         ;Print the character and 
-        INC     HL              ;move to the next char.
-	LD	A,H		;Checks if HL is equal to zero. If this is
-	OR	L		;the case, means that we never met the term-
-	JR	Z,PRINT_END	;inating NULL char and we are better to GTFO.
-        JR      PRINT		;Print the next char
-PRINT_END:
-	RET
 
