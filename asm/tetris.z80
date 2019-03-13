@@ -7,31 +7,51 @@
 
 
 #data	_HEAP,$8000
-
+SCORE	DEFS	6	;The human readable score null teminated string
 
 
 #code	_MAIN
 
-START	DEFB	"WAIT START",10,13,0
-STOP	DEFB	"WAIT STOP",10,13,0
+EOL	DEFB	10,13,0
+EOLP	DEFB	10,13,">",0	;End of line and prompt
+BOOTMSG	DEFB	"Experimental Tetris Game for the-RetroZ SBC v1.0, (c) 2019",10,13
+	DEFB	"By J.P. Gravel, P. Eng., PSEM",10,13
+	DEFB	"Welcome!",10,13,10,13,">",0
 
 
 MAIN:
+	LD	HL,59999
+	LD	IX,SCORE
+	CALL	ITOA
+	LD	HL,SCORE
+	CALL	PRINT
+	LD	HL,EOL
+	CALL	PRINT
+
 	EI
 	CALL	SIOA_EI
-
-	LD	HL,START
+	LD	HL,BOOTMSG
 	CALL	PRINT
-	LD	BC,2000
-	CALL	WAIT
-	LD	HL,STOP
-	CALL	PRINT
-
+	
 LOOP:
 	JR	LOOP
 
+
+
+
+
 KEY_PRESSED:
-	CALL	PUTCHAR
+	CP	10		;Check if the char in A is \r or \n
+	JR	Z,PRINT_EOLP
+	CP	13
+	JR	Z,PRINT_EOLP
+	CALL	PUTCHAR		;If not, just print the recieved char in A 
+	RET
+PRINT_EOLP:
+	PUSH	HL		;Otherwise, print the end of line and prompt
+	LD	HL,EOLP
+	CALL 	PRINT
+	POP	HL
 	RET
 
 
@@ -40,16 +60,14 @@ KEY_PRESSED:
 ; Wait for BC milliseconds. Timed according to RetroZ/RC2014 clock speed
 ; at 7.3728MHz. When the function exits, BC is 0.
 ; 
-; Core code taken from Mr. Eric Carr's article titled Z80 DELAY LOOPS at 
-;
+; Source from Mr. Eric Carr: 
 ;               http://www.paleotechnologist.net/?p=2589 
 ;
-; I did some adjustments to fit my needs.
-;
+; I made some adjustments to fit my needs.
 ;
 ; Remarks:
 ;
-; Adjust DE in the function to account for your clock speed.
+; Adjust DE in the subroutine to account for your clock speed.
 ;
 ; At 7.3728, it takes 307.2 inner loops to reach 1ms. The outer loop takes 
 ; 34 clock ticks, thus by removing 2.2 pass in the inner loop (305) it adds 
@@ -81,6 +99,64 @@ WAIT_INNER:			; 24 clock ticks required for a signle pass
 	RET
 	
 
+; ***************************************************************************
+; 16 Bits division. Performs BC=HL/DE
+; 
+; Source from Mr. Gergely Patai: 
+;	at http://sgate.emt.bme.hu/patai/publications/z80guide/part4.html
+;
+; I made some adjustments to fit my needs.
+;
+; At the end of this subroutine, BC contains the integral division and HL
+; contains the remainder.
+; ***************************************************************************
+DIVIDE:
+	LD 	A,D		; checking the divisor; returning if it is zero
+	OR	E		; from this time on the carry is cleared
+  	RET	Z
+	LD	BC,-1		; BC is used to accumulate the result
+DIVLOOP:			; subtracting DE from HL until the first overflow
+	SBC	HL,DE		; carry is zero, SBC works as if it was a SUB
+	INC	BC		; this instruction does not alter the flags
+	JR	NC,DIVLOOP	; no carry means that there was no overflow
+	ADD	HL,DE		; adds back DE to have the remainder in HL.
+	RET
 
 
-
+; ***************************************************************************
+; Convert the value in HL to a zero terminated numeric string in (IX). 
+; The memory block pointed by IX is expected to be large enough to hold the 
+; number plus the terminating 0. For this 16 bits unsigned subroutine, the 
+; reserved memory size should be betwen 2 and 6 bytes.
+;
+; Remark:
+;
+; The algorithm pushes AF on the stack even if only A interest us. I don't 
+; want to optimize the logic to only have A stored in memory. Every time I
+; save the next character on the stack, I save the F value with it even if I 
+; don't care about it. KISS principle prime over optimization.
+; ***************************************************************************
+ITOA:
+	LD	A,0
+	PUSH	AF		; Loads a terminating char on the stack.
+	LD	DE,10		; We are converting to base 10
+ITOA_DIV:
+	CALL	DIVIDE		; After that call, L contains the digit value
+	PUSH	BC		; Save BC on the stack
+	PUSH	HL		; Save HL
+	LD	A,"0"		; Do the conversion to the appropriate digit
+	ADD	L		; A now holds the right digit.
+	POP	BC		; Exchange BC with HL: remainder is in BC...
+	POP	HL		; and result is in HL
+	PUSH	AF		; Store the character on the stack
+	LD	A,H		; Preparing A to check if HL contains zero
+	OR	L		; Check if HL is is zero
+	JR	Z,ITOA_WRITE	; If HL is zero then write the string in mem
+	JR	ITOA_DIV
+ITOA_WRITE:
+	POP	AF		; Get the next character
+	LD	(IX),A		; Write that char into the current position
+	OR	0		; Check if A contains 0
+	RET	Z		; if A contains the NULL char, GTFO
+	INC	IX		; Set the pointer to the next char position
+	JR	ITOA_WRITE

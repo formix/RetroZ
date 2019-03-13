@@ -169,7 +169,7 @@ conout1:
 
 ; ***************************************************************************
 ; Prints the NULL terminated string pointed by HL to SIOA_D.
-; When this function returns, HL contains the address of the NULL character.
+; When this function returns, no register is modified.
 ; ***************************************************************************
 PRINT: 
         LD      A,(HL)          ;Reads the next character
@@ -178,5 +178,3 @@ PRINT:
         CALL    PUTCHAR         ;Print the character and 
         INC     HL              ;move to the next char.
         JR      PRINT		;Print the next char
-
-
