@@ -20,8 +20,9 @@ BOOTMSG	DEFB	"Experimental Tetris Game for the-RetroZ SBC v1.0, (c) 2019",10,13
 
 
 MAIN:
-	LD	HL,59999
+	LD	HL,65535
 	LD	IX,SCORE
+	LD	DE,10
 	CALL	ITOA
 	LD	HL,SCORE
 	CALL	PRINT
@@ -124,7 +125,7 @@ DIVLOOP:			; subtracting DE from HL until the first overflow
 
 
 ; ***************************************************************************
-; Convert the value in HL to a zero terminated numeric string in (IX). 
+; Convert the value in HL to a null terminated string of base DE.
 ; The memory block pointed by IX is expected to be large enough to hold the 
 ; number plus the terminating 0. For this 16 bits unsigned subroutine, the 
 ; reserved memory size should be betwen 2 and 6 bytes.
@@ -132,20 +133,23 @@ DIVLOOP:			; subtracting DE from HL until the first overflow
 ; Remark:
 ;
 ; The algorithm pushes AF on the stack even if only A interest us. I don't 
-; want to optimize the logic to only have A stored in memory. Every time I
-; save the next character on the stack, I save the F value with it even if I 
-; don't care about it. KISS principle prime over optimization.
+; want to optimize the logic to only have A on the stack. KISS principle 
+; prime over optimization... for now.
 ; ***************************************************************************
+HEXA	DEFB	"0123456789ABCDEF"
 ITOA:
+	LD	A,D
+	OR	E		; Check if DE is 0.
+	RET	Z		; Return if DE contains 0.
 	LD	A,0
 	PUSH	AF		; Loads a terminating char on the stack.
-	LD	DE,10		; We are converting to base 10
 ITOA_DIV:
-	CALL	DIVIDE		; After that call, L contains the digit value
+	CALL	DIVIDE		; After that call, HL contains the digit value
 	PUSH	BC		; Save BC on the stack
 	PUSH	HL		; Save HL
-	LD	A,"0"		; Do the conversion to the appropriate digit
-	ADD	L		; A now holds the right digit.
+	LD	BC,HEXA		; BC contains the HEXA address.
+	ADD	HL,BC		; Make HL point to the right "number"
+	LD	A,(HL)		; Loads the matching number in A
 	POP	BC		; Exchange BC with HL: remainder is in BC...
 	POP	HL		; and result is in HL
 	PUSH	AF		; Store the character on the stack
