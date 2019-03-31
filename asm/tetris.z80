@@ -8,9 +8,15 @@
 
 #data	_HEAP,$8000
 SCORE	DEFS	6	;The human readable score null teminated string
+DISPLAY	DEFS	13	;The terminal display attribute
 
+TMP_S	DEFS	80	;A temporary memory area by string operations
 
 #code	_MAIN
+
+HSCORE	DEFB	0	;High score binary value.
+
+HIGH_SCORE_TEXT	DEFB	"HIGH SCORE: ",0
 
 EOL	DEFB	10,13,0
 EOLP	DEFB	10,13,">",0	;End of line and prompt
@@ -19,8 +25,52 @@ BOOTMSG	DEFB	"Experimental Tetris Game for the-RetroZ SBC v1.0, (c) 2019",10,13
 	DEFB	"Welcome!",10,13,10,13,">",0
 
 
+CLS_I	DEFB	27,"[2J"
+DISP_I	DEFB	27,"[0;2;37;40m",0
+
+
 MAIN:
-	LD	HL,65535
+	; Initialize the terminal display attributes.
+	LD	HL,DISP_I
+	LD	DE,DISPLAY
+	LD	BC,13
+	LDIR	
+
+	; Increments the score from EEPROM
+	;LD	A,(HSCORE)
+	;INC	A
+	;LD	(HSCORE),A
+
+	;LD	BC,100
+	;CALL	WAIT
+
+	; Wait 2 seconds at startup
+	LD	BC,2000
+	CALL	WAIT
+	LD	HL,CLS_I
+	CALL	PRINT
+
+	
+	LD	BC,0103h
+	CALL	SET_POS
+
+	; Set the color to yellow
+	LD	C,2
+	LD	DE,0300h
+	CALL	SET_COLOR
+	
+	LD	HL,HIGH_SCORE_TEXT
+	CALL	PRINT
+
+	; Set the color to yellow
+	LD	C,1
+	LD	DE,0300h
+	CALL	SET_COLOR
+
+	; Print the score
+	LD	H,0
+	LD	A,(HSCORE)
+	LD	L,A
 	LD	IX,SCORE
 	LD	DE,10
 	CALL	ITOA
@@ -28,7 +78,13 @@ MAIN:
 	CALL	PRINT
 	LD	HL,EOL
 	CALL	PRINT
+	
+	; Set the color to dim white (terminal gray)
+	LD	C,2
+	LD	DE,0700h
+	CALL	SET_COLOR
 
+	; Enable interrupts and print the boot message
 	EI
 	CALL	SIOA_EI
 	LD	HL,BOOTMSG
@@ -115,7 +171,7 @@ DIVIDE:
 	LD 	A,D		; checking the divisor; returning if it is zero
 	OR	E		; from this time on the carry is cleared
   	RET	Z
-	LD	BC,-1		; BC is used to accumulate the result
+	LD	BC,-1		; BC accumulate the answer by
 DIVLOOP:			; subtracting DE from HL until the first overflow
 	SBC	HL,DE		; carry is zero, SBC works as if it was a SUB
 	INC	BC		; this instruction does not alter the flags
@@ -127,8 +183,7 @@ DIVLOOP:			; subtracting DE from HL until the first overflow
 ; ***************************************************************************
 ; Convert the value in HL to a null terminated string of base DE.
 ; The memory block pointed by IX is expected to be large enough to hold the 
-; number plus the terminating 0. For this 16 bits unsigned subroutine, the 
-; reserved memory size should be betwen 2 and 6 bytes.
+; number plus the terminating NULL character.
 ;
 ; Remark:
 ;
@@ -164,3 +219,91 @@ ITOA_WRITE:
 	RET	Z		; if A contains the NULL char, GTFO
 	INC	IX		; Set the pointer to the next char position
 	JR	ITOA_WRITE
+
+
+; ***************************************************************************
+; Sets the VT102 display attribute then call the PRINT subroutine to change
+; the color of the next print calls.
+;
+; Register C contains the attribute:
+;   0 Reset all attributes
+;   1 Bright
+;   2 Dim
+;   4 Underscore
+;   5 Blink
+;   7 Reverse
+;   8 Hidden
+;
+; Register D contains the foreground color and E the background color:
+;   0 Black
+;   1 Red
+;   2 Green
+;   3 Yellow
+;   4 Blue
+;   5 Magenta
+;   6 Cyan
+;   7 White
+;
+; ***************************************************************************
+SET_COLOR:
+	PUSH	AF
+	PUSH	IX
+	LD	IX,DISPLAY	;Loads the index of the VT100 cmd in RAM.
+	LD	A,C		;Get the command attribute.
+	ADD	"0"		;Converts to ASCII.
+	LD	(IX+4),A	;Sets the value at the right spot in the cmd.
+	LD	A,D		;Loads the foreground color.
+	ADD	"0"		;Converts to ASCII.
+	LD	(IX+7),A	;Sets the value at the right spot in the cmd.
+	LD	A,E		;Loads the background color.
+	ADD	"0"		;Converts it to ASCII.
+	LD	(IX+10),A	;Loads the value at the right spot in the cmd.
+	LD	HL,DISPLAY	;Initialize HL to print the display command.
+	CALL	PRINT		;print the display command to the teminal.
+	POP	IX
+	POP	AF
+	RET
+
+
+; ***************************************************************************
+; Sets the cursor position to (B,C) where B is the row and C the column.
+; Both row and column values must be zero based.
+; ***************************************************************************
+SET_POS:
+	PUSH	HL
+	PUSH	DE
+	PUSH	AF
+	PUSH	IX
+
+	LD	A,27
+	CALL	PUTCHAR
+	LD	A,"["
+	CALL	PUTCHAR
+	
+	INC	B		;The VT102 command is 1 based.
+	LD	H,0		;Reset H.
+	LD	L,B		;Sets L to B.
+	LD	DE,10		;ITOA base 10.
+	LD	IX,TMP_S	;ITOA output in the TMP_S ram address.
+	CALL	ITOA		;Executes ITOA.
+	LD	HL,TMP_S
+	CALL	PRINT
+	LD	A,";"
+	CALL	PUTCHAR
+	
+	INC	C		;The VT102 command is 1 based.
+	LD	H,0		;Reset H.
+	LD	L,C		;Sets L to C.
+	LD	DE,10		;ITOA base 10.
+	LD	IX,TMP_S	;ITOA output in the TMP_S ram address.
+	CALL	ITOA		;Executes ITOA.
+	LD	HL,TMP_S
+	CALL	PRINT
+	LD	A,"H"
+	CALL	PUTCHAR
+
+	POP	IX
+	POP	AF
+	POP	DE
+	POP	HL
+	RET
