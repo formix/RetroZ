@@ -172,9 +172,18 @@ conout1:
 ; When this function returns, no register is modified.
 ; ***************************************************************************
 PRINT: 
+	PUSH	AF
+	PUSH	HL
+
+PRINT_NEXT_CHAR:
         LD      A,(HL)          ;Reads the next character
         OR      A		;Check if that character is null.
-        RET	Z		;If null, exit the function
+	JR	Z,PRINT_EXIT	;If the null char is reached, exit.
         CALL    PUTCHAR         ;Print the character and 
         INC     HL              ;move to the next char.
-        JR      PRINT		;Print the next char
+        JR      PRINT_NEXT_CHAR	;Print the next char
+
+PRINT_EXIT:
+	POP	HL
+	POP	AF
+	RET

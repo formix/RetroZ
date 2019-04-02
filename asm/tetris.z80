@@ -51,7 +51,8 @@ MAIN:
 	CALL	PRINT
 
 	
-	LD	BC,0103h
+	LD	B,1
+	LD	C,3
 	CALL	SET_POS
 
 	; Set the color to yellow
@@ -89,7 +90,22 @@ MAIN:
 	CALL	SIOA_EI
 	LD	HL,BOOTMSG
 	CALL	PRINT
-	
+
+	LD	D,10
+	LD	E,20
+	LD	L,20
+	CALL	DRAW_LINE
+	INC	D
+	CALL	DRAW_ROW
+	INC	D
+	CALL	DRAW_LINE
+
+	LD	D,7
+	LD	E,15
+	LD	H,9
+	LD	L,30
+	CALL	DRAW_RECT
+
 LOOP:
 	JR	LOOP
 
@@ -193,6 +209,11 @@ DIVLOOP:			; subtracting DE from HL until the first overflow
 ; ***************************************************************************
 HEXA	DEFB	"0123456789ABCDEF"
 ITOA:
+	PUSH	AF
+	PUSH	DE
+	PUSH	BC
+	PUSH	HL
+
 	LD	A,D
 	OR	E		; Check if DE is 0.
 	RET	Z		; Return if DE contains 0.
@@ -216,10 +237,16 @@ ITOA_WRITE:
 	POP	AF		; Get the next character
 	LD	(IX),A		; Write that char into the current position
 	OR	0		; Check if A contains 0
-	RET	Z		; if A contains the NULL char, GTFO
+	JR	Z,ITOA_EXIT	; if A contains the NULL char, GTFO
 	INC	IX		; Set the pointer to the next char position
 	JR	ITOA_WRITE
 
+ITOA_EXIT:
+	POP	HL
+	POP	BC
+	POP	DE
+	POP	AF
+	RET
 
 ; ***************************************************************************
 ; Sets the VT102 display attribute then call the PRINT subroutine to change
@@ -274,6 +301,7 @@ SET_POS:
 	PUSH	DE
 	PUSH	AF
 	PUSH	IX
+	PUSH	BC
 
 	LD	A,27
 	CALL	PUTCHAR
@@ -302,8 +330,99 @@ SET_POS:
 	LD	A,"H"
 	CALL	PUTCHAR
 
+	POP	BC
 	POP	IX
 	POP	AF
 	POP	DE
 	POP	HL
 	RET
+
+
+; ***************************************************************************
+; Draws a rectangle at row (D) and col (E) of height (H) and length (L).
+; ***************************************************************************
+DRAW_RECT:
+	PUSH	AF
+	PUSH	BC
+
+	CALL	DRAW_LINE	;Draws the top line.
+	LD	A,H
+	DEC	A
+	LD	C,A		;C=H-1 (minus one line).
+
+DRAW_RECT_NEXT_ROW:
+	INC	D
+	CALL	DRAW_ROW	;Draws the current row.
+	DEC	C
+	JR	NZ,DRAW_RECT_NEXT_ROW	;loop to cover the total height
+	
+	CALL	DRAW_LINE	;Draws the bottom row.
+
+	POP	BC
+	POP	AF
+	RET
+
+
+; ***************************************************************************
+; Draws a line surrounded by plus signs (+-----+) at row (D) and col (E) 
+; of length (L).
+; ***************************************************************************
+DRAW_LINE:
+	PUSH	AF
+	PUSH	BC
+
+	LD	B,D
+	LD	C,E		;Moved DE into BC.
+	CALL	SET_POS
+	LD	A,"+"
+	CALL	PUTCHAR
+	LD	A,L
+	SUB	2
+	LD	C,A
+	LD	A,"-"
+
+DRAW_LINE_CORE:
+	CALL	PUTCHAR
+	DEC	C
+	JP	NZ,DRAW_LINE_CORE	;Loop to do the next "-".
+	LD	A,"+"		;Draw the last corner char.
+	CALL	PUTCHAR
+
+	POP	BC
+	POP	AF
+	RET
+
+
+; ***************************************************************************
+; Draws a framed row (|     |) at row (D) and col (E) of length (L). Note
+; that the content of the row between the pipes (|) is not erased.
+; ***************************************************************************
+DRAW_ROW:
+	PUSH	AF
+	PUSH	BC
+	
+	LD	B,D
+	LD	C,E		;Moved DE into BC.
+	CALL	SET_POS		;Sets the cursor position to (B,C)	
+	LD	A,"|"
+	CALL	PUTCHAR		;Draws the left hand pipe.
+	LD	A,E
+	ADD	L
+	DEC	A
+	LD	C,A		;C=E+L-1
+	CALL	SET_POS		;Sets the cursor position to (b,E+L-1).
+	LD	A,"|"
+	CALL	PUTCHAR		;Draws the right hand pipe.
+	
+	POP	BC
+	POP	AF
+	RET
+
+
+
+
+
+
+
+
+
