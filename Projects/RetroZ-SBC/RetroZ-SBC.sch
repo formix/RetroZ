@@ -2720,10 +2720,26 @@ NoConn ~ 8475 8975
 NoConn ~ 8475 9075
 NoConn ~ 8475 9175
 NoConn ~ 8475 9275
+Wire Notes Line
+	1675 4950 2525 4950
+Wire Notes Line
+	2525 4950 2525 4700
+Wire Notes Line
+	2525 4700 3175 4700
+Wire Notes Line
+	3175 4700 3175 3200
+Wire Notes Line
+	3175 3200 2700 3200
+Wire Notes Line
+	2700 3200 2700 2725
+Wire Notes Line
+	2700 2725 1675 2725
 Wire Wire Line
 	7325 8575 7825 8575
 Wire Wire Line
 	7325 8175 7975 8175
+Wire Notes Line
+	1675 2725 1675 4950
 Wire Bus Line
 	7925 5925 7925 9550
 Wire Bus Line
@@ -2754,4 +2770,6 @@ Wire Bus Line
 	6175 2900 6175 5175
 Wire Bus Line
 	8475 2900 8475 6650
+Text Notes 1725 2825 0    50   ~ 0
+Clock Circuit
 $EndSCHEMATC

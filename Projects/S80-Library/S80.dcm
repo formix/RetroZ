@@ -1,0 +1,14 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP S80_Interface
+D S80 Interface for Z80
+K S80 Interface
+$ENDCMP
+#
+$CMP Z80CPU
+D 8-bit General Purpose Microprocessor, DIP-40
+K Z80 CPU uP
+F www.zilog.com/manage_directlink.php?filepath=docs/z80/um0080
+$ENDCMP
+#
+#End Doc Library
