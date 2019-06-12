@@ -1,0 +1,100 @@
+#include "sio-init.z80"
+
+SPACE_TABLE:
+	DEFB    0,0,1,3,5,7,10,12,14,16,19,21,24,25,27,27
+	DEFB    27,27,25,24,21,19,16,14,12,10,7,5,3,1,0,0
+
+VT100: 
+	DEFB    27,"[2;3"               ;VT100 command to set character color
+VT100_END:
+TRACK_WIDTH:
+        DEFB    7
+TRACK_CHAR:     
+        DEFB    "#"
+
+RAM_START:
+CURRENT_COLOR:
+	DEFW    8000h
+
+CURRENT_INDEX:
+        DEFW    8000h + 2
+
+
+MAIN:
+        CALL    SIOA_RESET
+        CALL    INT_INIT
+        CALL    A_RTS_ON
+
+        LD      A, "X"
+        OUT     (SIOA_D), A
+        OUT     (SIOA_D), A
+        OUT     (SIOA_D), A
+
+        LD      IX, SPACE_TABLE         ;Init. the SPACE_TABLE index
+        LD      A, "1"
+        LD      (CURRENT_COLOR), A      ;Loads the color "1" in RAM.
+
+; *** Print leading spaces ***
+PRINT_SPACES:
+        LD      B, (IX)                 ;Loads the number of spaces to print in B
+NEXT_SPACE:
+        LD      A, 0                    ;If...
+        OR      B                       ;...the space counter is zero then...
+        JR      Z, PRINT_COLOR          ;...print the color.
+        LD      A, " "                  ;Loads a space and...
+        OUT     (SIOA_D), A             ;...outputs it. 
+        DEC     B                       ;Decrement the space counter...
+        JR      NEXT_SPACE              ;...and jump to print the next space.
+
+PRINT_COLOR:
+        LD      B, VT100_END - VT100    ;Loads VT100 header command size in B.
+        LD      IY, VT100               ;Loads the VT100 command pointer.
+NEXT_CMD_CHAR:
+        LD      A, 0                    ;If...
+        OR      B                       ;...the command is done printing then...
+        JR      Z, PRINT_COL_VAL        ;...print the color value...
+        LD      A, (IY)                 ;...else load the current character to print...
+        OUT     (SIOA_D),A              ;...and outputs it.
+        INC     IY                      ;Moves the VT100 command pointer forward.
+        DEC     B                       ;One less character to print.
+        JR      NEXT_CMD_CHAR           ;Print the next command character.
+PRINT_COL_VAL:
+        LD      A, (CURRENT_COLOR)      ;Loads the current color...
+        OUT     (SIOA_D), A             ;...and outputs it.
+        INC     A                       ;Increments the color...
+        LD      (CURRENT_COLOR),A       ;...and saves it in memory.
+        OR      "8"                     ;Checks if the current color is valid.
+        JR      NZ, PRINT_CMD_END       ;If valid, print the command's ending character...
+        LD      A, "1"                  ;...else reset the color to the first one...
+        LD      (CURRENT_COLOR),A       ;...and saves it in RAM.
+PRINT_CMD_END:
+        LD      A, "m"                  ;Loads the command's ending char...
+        OUT     (SIOA_D), A             ;...and outputs it.
+
+PRINT_TRACK:
+        LD      HL, TRACK_WIDTH
+        LD      B, (HL)                 ;Loads the track width counter.
+NEXT_TRACK_CHAR:
+        LD      A, 0                    ;If...
+        OR      B                       ;...the track width counter is zero then...
+        JR      NZ, PRINT_NEW_LINE      ;...print a new line...
+        
+PRINT_NEW_LINE:
+        LD      A, 10                   ;Loads a line feed...
+        OUT     (SIOA_D), A             ;...and prints it and...
+        LD      A, 13                   ;...loads a carriage return
+        OUT     (SIOA_D), A             ;...and prints it.
+
+        INC     IX                      ;Increments the SPACE_TABLE index
+        LD      (CURRENT_INDEX), IX     ;Using the current index value...
+        LD      HL, CURRENT_INDEX       ;...check if...
+        LD      A, 32                   ;...it did not reach the end of the SPACE_TABLE...
+        XOR     (HL)                    ;...then...
+        JP      NZ, PRINT_SPACES        ;...go back to printing spaces for the new line...
+        LD      IX, SPACE_TABLE         ;...else reinitialize the space table pointer...
+        JP      PRINT_SPACES            ;...and go back to printing spaces for the new line...
+
+           
+KEY_PRESSED:
+        RET
+

@@ -1,0 +1,47 @@
+#target rom
+
+; TETRIS FOR THE RetroZ-SBC
+; BY JEAN-PHILIPPE GRAVEL, (c) 2019
+
+#include "sio-init.z80"
+
+
+#data	_HEAP,$8000
+
+
+
+#code	_MAIN
+
+HELLO	DEFB	"HELLO!",10,13,0
+
+
+
+MAIN:
+	EI
+	CALL	SIOA_EI
+LOOP:
+	JR	LOOP
+
+KEY_PRESSED:
+	CALL	PUTCHAR
+	RET
+
+
+
+
+; ***************************************************************************
+; Prints the NULL terminated string pointed by HL to SIOA_D.
+; When this function returns, HL contains the address of the NULL character.
+; ***************************************************************************
+PRINT:  
+	CALL	A_RTS_ON
+        LD      A,(HL)          
+        OR      A,NULL          ;Checks if the content of A is null
+        JR      Z,PRINT_END     ;If null, then exit the function
+        CALL    PUTCHAR         ;Print the character and... 
+        INC     HL              ;...move to the next char
+        JR      PRINT		;Print the next char
+PRINT_END:
+	CALL	A_RTS_OFF
+        RET
+

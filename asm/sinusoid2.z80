@@ -1,0 +1,255 @@
+#target rom
+
+#code _INIT_SIO
+
+NULL	EQU	0
+
+SIOA_C  EQU     $00
+SIOA_D  EQU     $01
+SIOB_C  EQU     $02
+SIOB_D  EQU     $03
+
+
+        ORG     $0000
+RESET:
+	LD	SP,$FFFF	;sets the stack starting address to 65535
+        JP      MAIN
+
+INT_VECT:
+        ORG     $0C
+        DEFW    RX_CHA_AVAILABLE
+        ORG     $0E
+        DEFW    SPEC_RX_CONDITION
+
+
+SIOA_RESET:
+        LD      A,00110000b     ;write into WR0: error reset; select WR0
+        OUT     (SIOA_C),A
+
+        LD      A,00011000b     ;write into WR0: channel reset
+        OUT     (SIOA_C),A
+
+        LD      A,$04           ;write into WR0: select WR4
+        OUT     (SIOA_C),A
+        LD      A,$C4           ;write into WR4: x64, 1 stop bit
+        OUT     (SIOA_C),A
+
+        LD      A,$05           ;write into WR0: select WR5
+        OUT     (SIOA_C),A
+        LD      A,$E8           ;DTR, TX 8bits, BREAK off, TX on, RTS off
+        OUT     (SIOA_C),A
+
+        LD      A,$02           ;write into WRO: select WR2
+        OUT     (SIOA_C),A
+        LD      A,$0C           ;write WR2: cmd line int vect (see int vect tbl)
+        OUT     (SIOA_C),A      
+
+        LD      A,$01           ;write WR0: select WR1
+        OUT     (SIOA_C),A
+        LD      A,00011000b     ;interrupt on all RX char, parity not spec cond
+        OUT     (SIOA_C),A      ;buffer overrun is a spec RX cond
+
+
+; ***** SIOA ENABLE INTERRUPTS *****
+SIOA_EI:
+        LD      A, $03          ;write into WR0: select WR3
+        OUT     (SIOA_C),A
+        LD      A,$C1           ;RX 8bits, auto enable off, RX on
+        OUT     (SIOA_C),A
+        RET
+
+
+; ***** SIOA DISABLE INTERRUPTS *****
+SIOA_DI:
+        LD      A,$03           ;write into WR0: select WR3
+        OUT     (SIOA_C),A
+        LD      A,$C0           ;RX 8bit, auto enable off, RX off
+        OUT     (SIOA_C),A
+        RET
+
+
+INT_INIT:
+        LD      A,0
+        LD      I,A             ;load I reg with zero
+        IM      2               ;interrupt mode 2
+        EI                      ;enable interrupts
+        RET
+
+
+A_RTS_OFF:
+        LD      A,$05           ;write into WR0: select WR5
+        OUT     (SIOA_C),A
+        LD      A,$E8           ;DTR active, TX 8bit, BREAK off, TX on, RTS off
+        OUT     (SIOA_C),A
+        RET
+
+
+A_RTS_ON:
+        LD      A,$05           ;write into WR0: select WR5
+        OUT     (SIOA_C),A
+        LD      A,$EA           ;DTR active, TX 8bit, BREAK off, TX on, RTS on
+        OUT     (SIOA_C),A
+        RET
+
+; Sends a character to the data port A and waits the end of the transmission.
+; after a call to PRINTC or WAIT_TX, the content of the A register is lost.
+PRINTC:
+	OUT	(SIOA_D),A
+WAIT_TX:
+        SUB     A               ;clear a
+        INC     A               ;select RR1
+        OUT     (SIOA_C),A
+        IN      A,(SIOA_C)      ;read RR1
+        BIT     0,A             ;check if bit 'all sent' is set
+        JP      Z,WAIT_TX       ;bit not set, check again
+	RET                     ;bit set, return
+
+
+RX_CHA_AVAILABLE:
+        PUSH    AF              ;backup AF
+        EXX
+        CALL    A_RTS_OFF
+        IN      A,(SIOA_D)
+
+        ; A holds recieved character
+        
+        ; do something with the character
+	CALL	KEY_PRESSED
+
+        ;OUT     (SIOA_D),A      ;echo character to host
+        ;CALL    WAIT_TX
+        EI
+        CALL    A_RTS_ON
+        EXX
+        POP     AF
+        RETI
+
+
+SPEC_RX_CONDITION:
+        JP      RESET
+
+
+KEY_PRESSED:
+        CALL	PRINTC	;the character value of the pressed key is already in A
+	RET
+
+
+#data 	_HEAP,$8000
+
+TRACK	DEFS	TRACK_SZ
+CURR_INDEX
+	DEFS	1
+
+COLOR	EQU	TRACK + 5
+
+
+
+
+#code 	_MAIN 
+
+SPACE_TABLE_SZ	EQU	32
+
+SPACE_TABLE:
+	DEFB    0,0,1,3,5,7,10,12,14,16,19,21,24,25,27,27
+	DEFB    27,27,25,24,21,19,16,14,12,10,7,5,3,1,0,0
+
+TRACK_D	DEFB	27,"[2;31m#######",10,13,NULL
+TRACK_D_END:
+TRACK_SZ EQU	TRACK_D_END - TRACK_D
+
+MAIN:	; Initialize the SIO/2 chip
+        CALL    SIOA_RESET
+        CALL    INT_INIT
+        CALL    A_RTS_ON
+
+	; Initializes the color variable
+	LD	HL,TRACK_D	;copy from TRACK_D (data in ROM) addess
+	LD	DE,TRACK	;to the TRACK variable address (in RAM)
+	LD	BC,TRACK_SZ	;a total of TRACK_SZ bytes
+	LDIR			;do the copy
+
+	LD	IX,SPACE_TABLE	;initialize the space table index
+	LD	A,0
+	LD	(CURR_INDEX),A	;initialize the current index variable
+
+PROG_LOOP:
+	CALL	PRINT_TRACK
+	CALL	INC_STATES
+	JR	PROG_LOOP 
+
+
+
+; ***************************************************************************
+; Increments the space table pointer address (IX) and the COLOR variable. 
+; Resets IX to SPACE_TABLE address if it overflows the SPACE_TABLE size.
+; Resets the COLOR variable to "1" when it reaches "8", making it loop from 
+; "1" to "7". 
+; ***************************************************************************
+INC_STATES:
+	INC 	IX		;Increments the SPACE_TABLE pointer address.
+	LD	HL,CURR_INDEX
+	INC 	(HL)		;Increment the matching index value.
+	LD	A,(CURR_INDEX)	;Loads the current SPACE_TABLE index into A
+	XOR	SPACE_TABLE_SZ	;to compare with the table size and jump to
+	JR	NZ,INC_COLOR	;increment color if the table end is not
+				;reached.
+	LD	A,0		
+	LD	(CURR_INDEX),A	;Resets the CURRENT_INDEX variable value to 0
+	LD	IX,SPACE_TABLE	;and bring back the SPACE_TABLE pointer to the 
+				;start of the space table.
+INC_COLOR:
+	LD	HL,COLOR
+	INC	(HL)		;Increments the color value of the VT100
+	LD	A,(COLOR)	;command and check if it reached the end
+	XOR	"8"		;of the available color values.
+	JR	NZ,COLOR_NOT_RESET ;Jumps if the color don't need reset.
+	LD	A,"1"
+	LD	(COLOR),A	;Resets the color to the first one.
+COLOR_NOT_RESET:
+	RET
+
+; ***************************************************************************
+; Prints the number of spaces indicated in IX and prints the track.
+; ***************************************************************************
+PRINT_TRACK:
+	LD	B,(IX)
+	CALL	PSPACES
+	LD	HL,TRACK
+	CALL	PRINT
+	RET
+
+
+; ***************************************************************************
+; Prints a number of spaces to SIOA_D specified by the register B. Upon 
+; return B, contains 0.
+; ***************************************************************************
+PSPACES:
+	LD	A,0		;Checks if register b...
+	OR	B		;...is equal to 0.
+	JR	Z,PSPACES_END	;if it is zero, return
+	LD	A," "
+	CALL	PRINTC		;Print a space.	
+	DEC	B		;one less space to print.
+	JR	PSPACES		;continue printing spaces
+PSPACES_END:
+	RET
+
+; ***************************************************************************
+; Prints the NULL terminated string pointed by HL to SIOA_D.
+; When this function returns, HL contains the address of the NULL character.
+; ***************************************************************************
+PRINT:  
+        LD      A,(HL)          
+        OR      A,NULL          ;Checks if the content of A is null
+        JR      Z,PRINT_END     ;If null, then exit the function
+        CALL    PRINTC          ;Print the character and... 
+        INC     HL              ;...move to the next char
+        JR      PRINT		;Print the next char
+PRINT_END:
+        RET
+        
+
+
+
+
+#END

@@ -1,0 +1,428 @@
+#target rom
+
+; TETRIS FOR THE RetroZ-SBC
+; BY JEAN-PHILIPPE GRAVEL, (c) 2019
+
+#include "sio-init.z80"
+
+
+#data	_HEAP,$8000
+SCORE	DEFS	6	;The human readable score null teminated string
+DISPLAY	DEFS	13	;The terminal display attribute
+
+TMP_S	DEFS	80	;A temporary memory area by string operations
+
+#code	_MAIN
+
+HSCORE	DEFB	0	;High score binary value.
+
+HIGH_SCORE_TEXT	DEFB	"HIGH SCORE: ",0
+
+EOL	DEFB	10,13,0
+EOLP	DEFB	10,13,">",0	;End of line and prompt
+BOOTMSG	DEFB	"Experimental Tetris Game for the-RetroZ SBC v1.0, (c) 2019",10,13
+	DEFB	"By J.P. Gravel, P. Eng., PSEM",10,13
+	DEFB	"Welcome!",10,13,10,13,">",0
+
+
+CLS_I	DEFB	27,"[2J"
+DISP_I	DEFB	27,"[0;2;37;40m",0
+
+
+MAIN:
+	; Initialize the terminal display attributes.
+	LD	HL,DISP_I
+	LD	DE,DISPLAY
+	LD	BC,13
+	LDIR	
+
+	; Increments the score from EEPROM
+	;LD	A,(HSCORE)
+	;INC	A
+	;LD	(HSCORE),A
+
+	;LD	BC,100
+	;CALL	WAIT
+
+	; Wait 2 seconds at startup
+	LD	BC,2000
+	CALL	WAIT
+	LD	HL,CLS_I
+	CALL	PRINT
+
+	
+	LD	B,1
+	LD	C,3
+	CALL	SET_POS
+
+	; Set the color to yellow
+	LD	C,2
+	LD	DE,0300h
+	CALL	SET_COLOR
+	
+	LD	HL,HIGH_SCORE_TEXT
+	CALL	PRINT
+
+	; Set the color to yellow
+	LD	C,1
+	LD	DE,0300h
+	CALL	SET_COLOR
+
+	; Print the score
+	LD	H,0
+	LD	A,(HSCORE)
+	LD	L,A
+	LD	IX,SCORE
+	LD	DE,10
+	CALL	ITOA
+	LD	HL,SCORE
+	CALL	PRINT
+	LD	HL,EOL
+	CALL	PRINT
+	
+	; Set the color to dim white (terminal gray)
+	LD	C,2
+	LD	DE,0700h
+	CALL	SET_COLOR
+
+	; Enable interrupts and print the boot message
+	EI
+	CALL	SIOA_EI
+	LD	HL,BOOTMSG
+	CALL	PRINT
+
+	LD	D,10
+	LD	E,20
+	LD	L,20
+	CALL	DRAW_LINE
+	INC	D
+	CALL	DRAW_ROW
+	INC	D
+	CALL	DRAW_LINE
+
+	LD	D,7
+	LD	E,15
+	LD	H,9
+	LD	L,30
+	CALL	DRAW_RECT
+
+LOOP:
+	JR	LOOP
+
+
+
+
+
+KEY_PRESSED:
+	CP	10		;Check if the char in A is \r or \n
+	JR	Z,PRINT_EOLP
+	CP	13
+	JR	Z,PRINT_EOLP
+	CALL	PUTCHAR		;If not, just print the recieved char in A 
+	RET
+PRINT_EOLP:
+	PUSH	HL		;Otherwise, print the end of line and prompt
+	LD	HL,EOLP
+	CALL 	PRINT
+	POP	HL
+	RET
+
+
+
+; ***************************************************************************
+; Wait for BC milliseconds. Timed according to RetroZ/RC2014 clock speed
+; at 7.3728MHz. When the function exits, BC is 0.
+; 
+; Source from Mr. Eric Carr: 
+;               http://www.paleotechnologist.net/?p=2589 
+;
+; I made some adjustments to fit my needs.
+;
+; Remarks:
+;
+; Adjust DE in the subroutine to account for your clock speed.
+;
+; At 7.3728, it takes 307.2 inner loops to reach 1ms. The outer loop takes 
+; 34 clock ticks, thus by removing 2.2 pass in the inner loop (305) it adds 
+; up to a little under 1ms per outer loop. I do not account for the 
+; CALL WAIT, the two PUSHs,  POPs and the RET instruction timings since that 
+; would be a serious mind fuck to adjust the last DE value to make a perfect 
+; timing.
+;
+; I calculated an imprecision of 0.1671 second on a period of 65.535 seconds,
+; which is the maximum wait time of that function. Good enough I guess...
+; ***************************************************************************
+WAIT:
+	PUSH	DE
+	PUSH	AF
+WAIT_OUTER:			; 34 clock ticks to execute the outer loop.
+	LD	DE,305		; Approx. 1ms for the inner loop to complete,
+				; adjust that value according to your clk spd.
+WAIT_INNER:			; 24 clock ticks required for a signle pass 
+	DEC	DE
+	LD	A,D
+	OR	E
+	JP	NZ,WAIT_INNER
+	DEC	BC
+	LD	A,B
+	OR	C
+	JP	NZ,WAIT_OUTER
+	POP	AF
+	POP	DE
+	RET
+	
+
+; ***************************************************************************
+; 16 Bits division. Performs BC=HL/DE
+; 
+; Source from Mr. Gergely Patai: 
+;	at http://sgate.emt.bme.hu/patai/publications/z80guide/part4.html
+;
+; I made some adjustments to fit my needs.
+;
+; At the end of this subroutine, BC contains the integral division and HL
+; contains the remainder.
+; ***************************************************************************
+DIVIDE:
+	LD 	A,D		; checking the divisor; returning if it is zero
+	OR	E		; from this time on the carry is cleared
+  	RET	Z
+	LD	BC,-1		; BC accumulate the answer by
+DIVLOOP:			; subtracting DE from HL until the first overflow
+	SBC	HL,DE		; carry is zero, SBC works as if it was a SUB
+	INC	BC		; this instruction does not alter the flags
+	JR	NC,DIVLOOP	; no carry means that there was no overflow
+	ADD	HL,DE		; adds back DE to have the remainder in HL.
+	RET
+
+
+; ***************************************************************************
+; Convert the value in HL to a null terminated string of base DE.
+; The memory block pointed by IX is expected to be large enough to hold the 
+; number plus the terminating NULL character.
+;
+; Remark:
+;
+; The algorithm pushes AF on the stack even if only A interest us. I don't 
+; want to optimize the logic to only have A on the stack. KISS principle 
+; prime over optimization... for now.
+; ***************************************************************************
+HEXA	DEFB	"0123456789ABCDEF"
+ITOA:
+	PUSH	AF
+	PUSH	DE
+	PUSH	BC
+	PUSH	HL
+
+	LD	A,D
+	OR	E		; Check if DE is 0.
+	RET	Z		; Return if DE contains 0.
+	LD	A,0
+	PUSH	AF		; Loads a terminating char on the stack.
+ITOA_DIV:
+	CALL	DIVIDE		; After that call, HL contains the digit value
+	PUSH	BC		; Save BC on the stack
+	PUSH	HL		; Save HL
+	LD	BC,HEXA		; BC contains the HEXA address.
+	ADD	HL,BC		; Make HL point to the right "number"
+	LD	A,(HL)		; Loads the matching number in A
+	POP	BC		; Exchange BC with HL: remainder is in BC...
+	POP	HL		; and result is in HL
+	PUSH	AF		; Store the character on the stack
+	LD	A,H		; Preparing A to check if HL contains zero
+	OR	L		; Check if HL is is zero
+	JR	Z,ITOA_WRITE	; If HL is zero then write the string in mem
+	JR	ITOA_DIV
+ITOA_WRITE:
+	POP	AF		; Get the next character
+	LD	(IX),A		; Write that char into the current position
+	OR	0		; Check if A contains 0
+	JR	Z,ITOA_EXIT	; if A contains the NULL char, GTFO
+	INC	IX		; Set the pointer to the next char position
+	JR	ITOA_WRITE
+
+ITOA_EXIT:
+	POP	HL
+	POP	BC
+	POP	DE
+	POP	AF
+	RET
+
+; ***************************************************************************
+; Sets the VT102 display attribute then call the PRINT subroutine to change
+; the color of the next print calls.
+;
+; Register C contains the attribute:
+;   0 Reset all attributes
+;   1 Bright
+;   2 Dim
+;   4 Underscore
+;   5 Blink
+;   7 Reverse
+;   8 Hidden
+;
+; Register D contains the foreground color and E the background color:
+;   0 Black
+;   1 Red
+;   2 Green
+;   3 Yellow
+;   4 Blue
+;   5 Magenta
+;   6 Cyan
+;   7 White
+;
+; ***************************************************************************
+SET_COLOR:
+	PUSH	AF
+	PUSH	IX
+	LD	IX,DISPLAY	;Loads the index of the VT100 cmd in RAM.
+	LD	A,C		;Get the command attribute.
+	ADD	"0"		;Converts to ASCII.
+	LD	(IX+4),A	;Sets the value at the right spot in the cmd.
+	LD	A,D		;Loads the foreground color.
+	ADD	"0"		;Converts to ASCII.
+	LD	(IX+7),A	;Sets the value at the right spot in the cmd.
+	LD	A,E		;Loads the background color.
+	ADD	"0"		;Converts it to ASCII.
+	LD	(IX+10),A	;Loads the value at the right spot in the cmd.
+	LD	HL,DISPLAY	;Initialize HL to print the display command.
+	CALL	PRINT		;print the display command to the teminal.
+	POP	IX
+	POP	AF
+	RET
+
+
+; ***************************************************************************
+; Sets the cursor position to (B,C) where B is the row and C the column.
+; Both row and column values must be zero based.
+; ***************************************************************************
+SET_POS:
+	PUSH	HL
+	PUSH	DE
+	PUSH	AF
+	PUSH	IX
+	PUSH	BC
+
+	LD	A,27
+	CALL	PUTCHAR
+	LD	A,"["
+	CALL	PUTCHAR
+	
+	INC	B		;The VT102 command is 1 based.
+	LD	H,0		;Reset H.
+	LD	L,B		;Sets L to B.
+	LD	DE,10		;ITOA base 10.
+	LD	IX,TMP_S	;ITOA output in the TMP_S ram address.
+	CALL	ITOA		;Executes ITOA.
+	LD	HL,TMP_S
+	CALL	PRINT
+	LD	A,";"
+	CALL	PUTCHAR
+	
+	INC	C		;The VT102 command is 1 based.
+	LD	H,0		;Reset H.
+	LD	L,C		;Sets L to C.
+	LD	DE,10		;ITOA base 10.
+	LD	IX,TMP_S	;ITOA output in the TMP_S ram address.
+	CALL	ITOA		;Executes ITOA.
+	LD	HL,TMP_S
+	CALL	PRINT
+	LD	A,"H"
+	CALL	PUTCHAR
+
+	POP	BC
+	POP	IX
+	POP	AF
+	POP	DE
+	POP	HL
+	RET
+
+
+; ***************************************************************************
+; Draws a rectangle at row (D) and col (E) of height (H) and length (L).
+; ***************************************************************************
+DRAW_RECT:
+	PUSH	AF
+	PUSH	BC
+
+	CALL	DRAW_LINE	;Draws the top line.
+	LD	A,H
+	DEC	A
+	LD	C,A		;C=H-1 (minus one line).
+
+DRAW_RECT_NEXT_ROW:
+	INC	D
+	CALL	DRAW_ROW	;Draws the current row.
+	DEC	C
+	JR	NZ,DRAW_RECT_NEXT_ROW	;loop to cover the total height
+	
+	CALL	DRAW_LINE	;Draws the bottom row.
+
+	POP	BC
+	POP	AF
+	RET
+
+
+; ***************************************************************************
+; Draws a line surrounded by plus signs (+-----+) at row (D) and col (E) 
+; of length (L).
+; ***************************************************************************
+DRAW_LINE:
+	PUSH	AF
+	PUSH	BC
+
+	LD	B,D
+	LD	C,E		;Moved DE into BC.
+	CALL	SET_POS
+	LD	A,"+"
+	CALL	PUTCHAR
+	LD	A,L
+	SUB	2
+	LD	C,A
+	LD	A,"-"
+
+DRAW_LINE_CORE:
+	CALL	PUTCHAR
+	DEC	C
+	JP	NZ,DRAW_LINE_CORE	;Loop to do the next "-".
+	LD	A,"+"		;Draw the last corner char.
+	CALL	PUTCHAR
+
+	POP	BC
+	POP	AF
+	RET
+
+
+; ***************************************************************************
+; Draws a framed row (|     |) at row (D) and col (E) of length (L). Note
+; that the content of the row between the pipes (|) is not erased.
+; ***************************************************************************
+DRAW_ROW:
+	PUSH	AF
+	PUSH	BC
+	
+	LD	B,D
+	LD	C,E		;Moved DE into BC.
+	CALL	SET_POS		;Sets the cursor position to (B,C)	
+	LD	A,"|"
+	CALL	PUTCHAR		;Draws the left hand pipe.
+	LD	A,E
+	ADD	L
+	DEC	A
+	LD	C,A		;C=E+L-1
+	CALL	SET_POS		;Sets the cursor position to (b,E+L-1).
+	LD	A,"|"
+	CALL	PUTCHAR		;Draws the right hand pipe.
+	
+	POP	BC
+	POP	AF
+	RET
+
+
+
+
+
+
+
+
+
