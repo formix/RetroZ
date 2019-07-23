@@ -1,0 +1,14 @@
+#target rom
+#data           _HEAP,$8000
+#code           _MAIN,$0000
+                JP MAIN
+
+
+#include        "vt102.z80"
+
+
+
+
+#code           _MAIN
+
+MAIN:           JR MAIN
