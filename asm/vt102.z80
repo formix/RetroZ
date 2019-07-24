@@ -1,5 +1,4 @@
-#if !defined(__VT102)
-__VT102         EQU     1
+#if !defined(VT102)
 
 ;Display attribute definitions
 ATT_RESET       EQU     "0"
@@ -21,7 +20,7 @@ COL_CYAN        EQU     "6"
 COL_WHITE       EQU     "7"
 
 
-#data   _HEAP
+#data   HEAP
 
 DISPLAY         DS 13           ;The terminal display attribute
 DISPATT         EQU DISPLAY+4   ;The display attribute
@@ -30,7 +29,7 @@ BGCOLOR         EQU DISPLAY+10  ;The background color attribute
 DISPLAY_DIRTY   DS 1            ;Variable telling if the DISPLAY changed 
                                 ;  without being applied.
 
-#code   _MAIN
+#code   VT102
 DISPLAY_COMMAND DEFB    27,"[0;2;37;40m",0
 
 
@@ -39,12 +38,13 @@ DISPLAY_COMMAND DEFB    27,"[0;2;37;40m",0
 ;
 ;  On exit: A=0, BC=0, HL and DE are changed.
 ;*****************************************************************************
-VT102_INIT:     LD      HL,DISPLAY_COMMAND  ;Moves the display command in RAM
-                LD      DE,DISPLAY
-                LD      BC,13
-                LDIR
-                LD      A,0                 ;Loads 0 (false) into the 
-                LD      (DISPLAY_DIRTY),A   ;DISPLAY_DIRTY variable.
+VT102_INIT:     
+        LD      HL,DISPLAY_COMMAND  ;Moves the display command in RAM
+        LD      DE,DISPLAY
+        LD      BC,13
+        LDIR
+        LD      A,0                 ;Loads 0 (false) into the 
+        LD      (DISPLAY_DIRTY),A   ;DISPLAY_DIRTY variable.
 
 ;*****************************************************************************
 ;Sets the display attribute to &ATT.
@@ -54,12 +54,12 @@ VT102_INIT:     LD      HL,DISPLAY_COMMAND  ;Moves the display command in RAM
 ;
 ;  On exit: register A contains the &ATT value
 ;*****************************************************************************
-SET_DISPATT:    MACRO ATT
-                LD A,1
-                LD (DISPLAY_DIRTY),A
-                LD A,&ATT
-                LD (DISPATT),A
-                ENDM
+SET_DISPATT MACRO ATT
+        LD A,1
+        LD (DISPLAY_DIRTY),A
+        LD A,&ATT
+        LD (DISPATT),A
+        ENDM
 
 ;*****************************************************************************
 ;Gets the display attribute value into register A.
@@ -68,9 +68,9 @@ SET_DISPATT:    MACRO ATT
 ;           ATT_RESET, ATT_BRIGHT, ATT_DIM, ATT_UNDERSCORE, ATT_BLINK, 
 ;           ATT_REVERSE or ATT_HIDDEN
 ;*****************************************************************************
-GET_DISPATT:    MACRO
-                LD A,(DISPATT)
-                ENDM
+GET_DISPATT MACRO
+        LD A,(DISPATT)
+        ENDM
 
 ;*****************************************************************************
 ;Sets the foreground color to &COL.
@@ -80,12 +80,12 @@ GET_DISPATT:    MACRO
 ; 
 ;  On exit, register A contains the &COL value
 ;*****************************************************************************
-SET_FGCOLOR     MACRO COL
-                LD A,1
-                LD (DISPLAY_DIRTY),A
-                LD A,&COL
-                LD (FGCOLOR),A
-                ENDM
+SET_FGCOLOR MACRO COL
+        LD A,1
+        LD (DISPLAY_DIRTY),A
+        LD A,&COL
+        LD (FGCOLOR),A
+        ENDM
 
 ;*****************************************************************************
 ;Gets the foreground color value into register A.
@@ -93,9 +93,9 @@ SET_FGCOLOR     MACRO COL
 ;  On exit: Register A contains the current color value: COL_BLACK, COL_RED,
 ;           COL_GREEN, COL_YELLOW, COL_BLUE, COL_MAGENTA, COL_CYAN, COL_WHITE
 ;*****************************************************************************
-GET_FGCOLOR     MACRO
-                LD A,(FGCOLOR)
-                ENDM
+GET_FGCOLOR MACRO
+        LD A,(FGCOLOR)
+        ENDM
 
 
 ;*****************************************************************************
@@ -106,12 +106,12 @@ GET_FGCOLOR     MACRO
 ; 
 ;  On exit, register A contains the &COL value
 ;*****************************************************************************
-SET_BGCOLOR     MACRO COL
-                LD A,1
-                LD (DISPLAY_DIRTY),A
-                LD A,&COL
-                LD (BGCOLOR),A
-                ENDM
+SET_BGCOLOR MACRO COL
+        LD A,1
+        LD (DISPLAY_DIRTY),A
+        LD A,&COL
+        LD (BGCOLOR),A
+        ENDM
 
 ;*****************************************************************************
 ;Gets the background color value into register A.
@@ -119,9 +119,9 @@ SET_BGCOLOR     MACRO COL
 ;  On exit: Register A contains the current color value: COL_BLACK, COL_RED,
 ;           COL_GREEN, COL_YELLOW, COL_BLUE, COL_MAGENTA, COL_CYAN, COL_WHITE
 ;*****************************************************************************
-GET_BGCOLOR     MACRO
-                LD A,(BGCOLOR)
-                ENDM
+GET_BGCOLOR MACRO
+        LD A,(BGCOLOR)
+        ENDM
 
 
 ;*****************************************************************************
@@ -132,9 +132,9 @@ GET_BGCOLOR     MACRO
 ;           1 if dirty).
 ;*****************************************************************************
 IS_DISPLAY_DIRTY MACRO
-                LD A,(DISPLAY_DIRTY)
-                CP 1
-                ENDM
+        LD A,(DISPLAY_DIRTY)
+        CP 1
+        ENDM
 
 
 #endif

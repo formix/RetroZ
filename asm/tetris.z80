@@ -25,7 +25,7 @@ COL_CYAN        EQU     "6"
 COL_WHITE       EQU     "7"
 
 
-#data   _HEAP,$8000
+#data   HEAP,$8000
 SCORE   DS 6    ;The human readable score null teminated string
 DISPLAY DS 13   ;The terminal display attribute
 TMP_S   DS 80   ;A temporary memory area by string operations
@@ -36,7 +36,7 @@ FGCOLOR EQU DISPLAY+7
 BGCOLOR EQU DISPLAY+10
 
 
-#code   _MAIN
+#code   MAIN
 HSCORE  DEFB    0       ;High score binary value.
 
 HIGH_SCORE_TEXT DEFB    "HIGH SCORE: ",0
