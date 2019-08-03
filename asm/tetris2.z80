@@ -2,22 +2,37 @@
 
 #data   HEAP,$8000
 
-#code   MAIN,$0000
+#code   CODE,$0000
         LD SP,$FFFF     ;sets the stack starting address to 65535
         JP MAIN
 
 
 #include "sio2.z80"
 #include "vt102.z80"
+#include "serial.z80"
 
 
 
 
-#code   MAIN
+MAIN:
         CALL SIO2_INIT
         CALL VT102_INIT
-        JR MAIN
+        
+
+HELLO   DEFB "Salut!!!",10,13,0
+        
+        LD B,10
+        LD HL, HELLO
+SAY:    CALL PRINT
+        DJNZ SAY
+
+MAIN_LOOP:
+        JR MAIN_LOOP
 
 
 KEY_PRESSED:
+        ;The A register contains the character
+        LD HL,HELLO
+        CALL PRINT
+        ;CALL PUTCHAR
         RET

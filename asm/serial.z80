@@ -1,0 +1,41 @@
+
+#if !defined(_SERIAL_Z80)
+_SERIAL_Z80:
+
+#code CODE
+
+
+; ***************************************************************************
+; Sends the content of register A to SIOA_D.
+; ***************************************************************************
+PUTCHAR:
+	PUSH	AF              ; Store character
+        WAIT_TXA_READY          ; Loop until port A transmit line is ready
+	POP     AF              ; Retrieve character
+	OUT     (SIOA_D),A      ; Output the character
+	RET
+
+
+; ***************************************************************************
+; Prints the NULL terminated string pointed by HL to SIOA_D.
+; When this function returns, no register is modified.
+; ***************************************************************************
+PRINT: 
+	PUSH	AF
+	PUSH	HL
+
+PRINT_NEXT_CHAR:
+        LD      A,(HL)          ;Reads the next character
+        OR      A		;Check if that character is null.
+	JR	Z,PRINT_EXIT	;If the null char is reached, exit.
+        CALL    PUTCHAR         ;Print the character and 
+        INC     HL              ;move to the next char.
+        JR      PRINT_NEXT_CHAR	;Print the next char
+
+PRINT_EXIT:
+	POP	HL
+	POP	AF
+	RET
+
+
+#endif

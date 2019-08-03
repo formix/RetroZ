@@ -1,4 +1,5 @@
-#if !defined(VT102)
+#if !defined(_VT102_Z80)
+_VT102_Z80:
 
 ;Display attribute definitions
 ATT_RESET       EQU     "0"
@@ -29,7 +30,7 @@ BGCOLOR         EQU DISPLAY+10  ;The background color attribute
 DISPLAY_DIRTY   DS 1            ;Variable telling if the DISPLAY changed 
                                 ;  without being applied.
 
-#code   VT102
+#code   CODE
 DISPLAY_COMMAND DEFB    27,"[0;2;37;40m",0
 
 

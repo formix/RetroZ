@@ -1,0 +1,168 @@
+#if !defined(_SIO2_Z80)
+_SIO2_Z80:
+
+SIOA_C  EQU     $00
+SIOA_D  EQU     $01
+SIOB_C  EQU     $02
+SIOB_D  EQU     $03
+
+
+#code   INT_VECTOR,$000C,10
+        DEFW    RX_CHA_AVAILABLE
+        DEFW    SPEC_RX_CONDITION
+
+#code   CODE
+        ORG     INT_VECTOR + 10
+
+SIO2_INIT:
+        ; SIOA init
+	LD      A,$00            ; write 0
+	OUT     (SIOA_C),A
+	LD      A,$18            ; reset ext/status interrupts
+	OUT     (SIOA_C),A
+
+	LD      A,$04            ; write 4
+	OUT     (SIOA_C),A
+	LD      A,$C4            ; X64, no parity, 1 stop
+	OUT     (SIOA_C),A
+
+	LD      A,$01            ; write 1
+	OUT     (SIOA_C),A
+	LD      A,$18            ; interrupt on all recv
+	OUT     (SIOA_C),A
+
+	LD      A,$03            ; write 3
+	OUT     (SIOA_C),A
+	LD      A,$E1            ; 8 bits, auto enable, rcv enab
+	OUT     (SIOA_C),A
+
+	LD      A,$05           ; write 5
+	OUT     (SIOA_C),A
+	LD      A,$EA		; dtr enable, 8 bits, tx enable, rts
+	OUT     (SIOA_C),A
+
+        ; SIOB init
+	LD      A,$00
+	OUT     (SIOB_C),A
+	LD      A,$18
+	OUT     (SIOB_C),A
+
+	LD      A,$04            ; write 4
+	OUT     (SIOB_C),A
+	LD      A,$C4            ; X64, no parity, 1 stop
+	OUT     (SIOB_C),A
+
+	LD      A,$01
+	OUT     (SIOB_C),A
+	LD      A,$18
+	OUT     (SIOB_C),A
+
+	LD      A,$02           ; write reg 2
+	OUT     (SIOB_C),A
+	LD      A,$0C           ; INTERRUPT VECTOR ADDRESS
+	OUT     (SIOB_C),A
+
+	LD      A,$03
+	OUT     (SIOB_C),A
+	LD      A,$E1
+	OUT     (SIOB_C),A
+
+	LD      A,$05
+	OUT     (SIOB_C),A
+	LD      A,$EA
+	OUT     (SIOB_C),A
+        
+        CALL    INT_INIT
+
+
+; ***** SIOA ENABLE INTERRUPTS *****
+SIOA_EI:
+        LD      A, $03          ;write into WR0: select WR3
+        OUT     (SIOA_C),A
+        LD      A,$C1           ;RX 8bits, auto enable off, RX on
+        OUT     (SIOA_C),A
+        RET
+
+
+; ***** SIOA DISABLE INTERRUPTS *****
+SIOA_DI:
+        LD      A,$03           ;write into WR0: select WR3
+        OUT     (SIOA_C),A
+        LD      A,$C0           ;RX 8bit, auto enable off, RX off
+        OUT     (SIOA_C),A
+        RET
+
+
+INT_INIT:
+        LD      A,0
+        LD      I,A             ;load I reg with zero
+        IM      2               ;interrupt mode 2
+        EI                      ;enable interrupts
+        RET
+
+
+A_RTS_OFF:
+        LD      A,$05           ;write into WR0: select WR5
+        OUT     (SIOA_C),A
+        LD      A,$E8           ;DTR active, TX 8bit, BREAK off, TX on, RTS off
+        OUT     (SIOA_C),A
+        RET
+
+
+A_RTS_ON:
+        LD      A,$05           ;write into WR0: select WR5
+        OUT     (SIOA_C),A
+        LD      A,$EA           ;DTR active, TX 8bit, BREAK off, TX on, RTS on
+        OUT     (SIOA_C),A
+        RET
+
+
+RX_CHA_AVAILABLE:
+        PUSH    AF              ;backup AF
+        EXX
+WAIT_RX:
+	SUB	A		;Clears A
+	OUT	(SIOA_C),A	;Select RR0
+	IN	A,(SIOA_C)	;Read RR0
+	BIT	0,A		;Check if character is available
+	JR	Z,WAIT_RX	;Character not recieved yet, check again
+
+        IN      A,(SIOA_D)
+        ; A holds recieved character
+        
+        ; do something with the character
+	CALL	KEY_PRESSED
+
+        EXX
+        POP     AF
+        EI
+	RETI
+
+
+SPEC_RX_CONDITION:
+        JP      SIO2_INIT
+
+
+;*****************************************************************************
+; Waits until SIOA port is ready to transmit. Wait for ongoing transmission
+; to finish, then waits for a data carrier to be detected and finally, waits 
+; for the clear to send signal to be on.
+;
+;  On exit: Register A contains the status bits of the SIOA port.
+;*****************************************************************************
+WAIT_TXA_READY MACRO
+conout1:
+	SUB     A		; Clears A to select port A READ REGISTER 0
+	OUT     (SIOA_C),A      ; Selects port A READ REGISTER
+	IN      A,(SIOA_C)      ; Reads the content of RR0 (recieve status)
+	BIT     2,A             ; Set Zero flag if transmitting a character
+	JR      Z,conout1       ; Loop if still transmitting character
+	BIT	3,A		; Set zero flag if no data carrier is detected
+	JR	Z,conout1	; Loop if no carrier detected.
+	BIT	5,A		; Set zero flag if not clear to send
+	JR	Z,conout1	; Loop if not clear to send.
+        ; end of WAIT_TXA_READY macro
+        ENDM
+
+
+#endif
