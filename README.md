@@ -71,16 +71,16 @@ with my working RetroZ SBC computer to update the front documentation. It is
 time to fix that, continue reading to get the full update.
 
 ## What's Inside?
-The RetroZ-SBC computer has a 7.3728 MHz Z80 CPU. It supports up to 32kB of 
-ROM and 32kB of RAM. An SIO/2 chip is connected to the USB Micro B socket 
-using an FTDI serial converter. Rx and Tx leds let you know when the computer 
-communicates over USB. The whole computer is powered through the same USB port
-and a power-on reset monitor resets the computer at startup. A Reset button 
-allows warm computer restart. An On/Off DIP switch controls the power state of
-the computer and a power led indicator let you know that the beast is powered.
-All the Z80 processor pins are available through the 40 pins stacking header 
-plus some other on the User Port A. User Port B stacking header is fully 
-available (8 pins) for child boards future projects.
+The RetroZ-SBC computer is a 8MHz Z80 CPU clocked at 7.3728 MHz. It supports 
+up to 32kB of ROM and 32kB of RAM. An SIO/2 chip is connected to the USB 
+Micro B socket using an FTDI serial converter. Rx and Tx leds let you know 
+when the computer communicates over USB. The whole computer is powered through
+the same USB port and a power-on reset monitor resets the computer at startup.
+A Reset button allows warm computer restart. An On/Off DIP switch controls the
+power state of the computer and a power led indicator let you know that the 
+beast is powered. All the Z80 processor pins are available through the 40 pins
+stacking header plus some other on the User Port A. User Port B stacking
+header is fully available (8 pins) for child boards future projects.
 
 ## The Connection
 The USB to serial conversion is made possible thanks to an FTDI chip 
