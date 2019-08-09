@@ -2620,7 +2620,7 @@ Wire Wire Line
 Wire Wire Line
 	10325 1575 10325 1650
 Text Notes 2975 2500 0    50   ~ 0
-The ADM803TAKSZ-REEL7 chip is a \nlittle package that monitors the \npower line. When the device is \npowered, it pulls the ~RESET~ pin \nlow for 240ms then keep it open for\nas long as the device is powered. Still\nneed a pull-up resistor to keep ~RESET~\nhigh afterward.
+The ADM803TAKSZ-REEL7 chip is a \nlittle package that monitors the \npower line. When the device is \npowered, it pulls the ~RESET~ pin \nlow for 240ms then keeps it open for\nas long as the device is powered. Still\nneed a pull-up resistor to keep ~RESET~\nhigh afterward.
 Wire Wire Line
 	3600 3325 3950 3325
 Wire Wire Line
@@ -2734,12 +2734,14 @@ Wire Notes Line
 	2700 3200 2700 2725
 Wire Notes Line
 	2700 2725 1675 2725
+Wire Notes Line
+	1675 2725 1675 4950
+Text Notes 1725 2825 0    50   ~ 0
+Clock Circuit
 Wire Wire Line
 	7325 8575 7825 8575
 Wire Wire Line
 	7325 8175 7975 8175
-Wire Notes Line
-	1675 2725 1675 4950
 Wire Bus Line
 	7925 5925 7925 9550
 Wire Bus Line
@@ -2770,6 +2772,4 @@ Wire Bus Line
 	6175 2900 6175 5175
 Wire Bus Line
 	8475 2900 8475 6650
-Text Notes 1725 2825 0    50   ~ 0
-Clock Circuit
 $EndSCHEMATC
