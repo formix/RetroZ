@@ -376,7 +376,7 @@ INIT_SIO:      LD        HL,TEMPSTACK    ; Temp stack
 
                 LD      A,$04            ; write 4
                 OUT     (SIOB_C),A
-                LD      A,$44            ; X16, no parity, 1 stop
+                LD      A,$C4            ; X64, no parity, 1 stop
                 OUT     (SIOB_C),A
 
                 LD      A,$01

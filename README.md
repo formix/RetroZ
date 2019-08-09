@@ -2,12 +2,9 @@
 A minimalist single board Z80 retro computer based on the S80 design 
 specifications.
 
-This board is developped using the S80 specifications. Go to
-[S80 homepage project](http://users.telenet.be/pynckels/s80_retro.html) or on 
-[Github](/PaintedBlck/S80)
-for more informations on the S80 architecture and bus pinouts. There is 
-other modules compatible with this computer available on this page. Filip 
-Pycknel and his son did an amazing design work and are doing great stuff!
+This board is developped using the S80 physical specifications. The 
+specifications are not currently available online but I plan to fix that in a 
+future revision.
 
 ![RetroZ SBC for S80 Architecture](https://raw.githubusercontent.com/formix/RetroZ/master/Documents/RetroZ-SBC-Front.png)
 *Front of the board*
@@ -62,64 +59,85 @@ The review phase is done! I just sent the board to production. I should get the
 finished board next week.
 
 ### 2019-01-26
-I recieved my boards (10 boards!) yesterday. I just finished to create the BOM 
-and sort through my parts to order what is missing. I expect to recieve my 
-order in the coming week. I'll work on the NASCOM Basic once I got the computer 
-assembled. Stay tuned!
+I recieved my boards (10 boards!) yesterday. I just finished creating the BOM 
+and sorted through my parts to order what is missing. I expect to recieve my 
+order in the coming week. I'll work on the NASCOM Basic once I got the 
+computer assembled. Stay tuned!
+
+### 2019-08-03
+It's been a while since I updated that README file but as you can see,
+I'm committing regularily on the project. Simply put, I'm too busy playing 
+with my working RetroZ SBC computer to update the front documentation. It is 
+time to fix that, continue reading to get the full update.
 
 ## What's Inside?
-The computer is as minimal as it can be. It has a 7.3728 MHz Z80 CPU, 32kB of 
-ROM, 32kB of RAM and a dual port serial chip from which the port A is connected 
-to the USB connector. The whole computer is powered through the USB port and a 
-power-on reset monitor sets the computer to its initial state when powered.
+The RetroZ-SBC computer is a 8MHz Z80 CPU clocked at 7.3728 MHz. It supports 
+up to 32kB of ROM and 32kB of RAM. An SIO/2 chip is connected to the USB 
+Micro B socket using an FTDI serial converter. Rx and Tx leds let you know 
+when the computer communicates over USB. The whole computer is powered through
+the same USB port and a power-on reset monitor resets the computer at startup.
+A Reset button allows warm computer restart. An On/Off DIP switch controls the
+power state of the computer and a power led indicator let you know that the 
+beast is powered. All the Z80 processor pins are available through the 40 pins
+stacking header plus some other on the User Port A. User Port B stacking
+header is fully available (8 pins) for child boards future projects.
 
 ## The Connection
 The USB to serial conversion is made possible thanks to an FTDI chip 
 [behind the board](https://raw.githubusercontent.com/formix/RetroZ/master/Documents/RetroZ-SBC-Back.png) 
 and is clocked at 115200 bauds by default. This speed can be changed 
 programmatically through the Z84C40 (Zilog SIO/2) registers. On a Windows
-machine the device can be accessed using **COM5**. I did not check for a 
-Mac/Linux box but just do `ls /dev/tty*` before and after plugin-in the board,
-you should spot it quite easily. Hardware flow control CTS/RTS is fully 
-wired so feel free to flood the console with whatever you get, it should handle 
-it.
+machine the device can be accessed using **COM5**. For a 
+Mac/Linux box it is **/dev/ttyUSB0**. Hardware flow control CTS/RTS is fully 
+wired so feel free to flood the console with whatever you get, it should 
+handle it.
 
 ## Technical Reference
-### 2Mb/4Mb Memory Board Auto Detection (approval pending)
-This feature expects that PIN 1 of the user port A (J2) is floating if the 
-memory child board is not present or HIGH when it is plugged-in. The pin is pulled-low with a 10k resistor on the RetroZ so no other current limiting device is
-needed from the memory board.
-
-After discussions, Filip agreed to have the user port A pin 1 set to HIGH on
-the S80 2M/4M memory board.
+### Power and commnunication over USB
+Using a single USB Micro-B wire, it is possible to power-up and communicate 
+with the computer. There is a DIP switch to set the computer on or off and a 
+power indicator led indicates when the computer is powered on. There is also
+a power line monitor chip (IC1) that pull the /RESET line LOW for 240 ms 
+after power on.
 
 ### Serial Communication
-As stated earlier, the board has an SIO/2 chip to handle serial communications.
-This chip has two ports. The serial port A is connected to the USB jack through
-an FTDI UART to USB 2.0 converter. The serial port B is connected back into the User Port A (J2) PIN 2 (RxB) and Pin 3 (TxB) for onboard serial device communications.
+Serial communication is achieved using a Z84C42 SIO/2 chip. The serial port A 
+is connected to the USB jack through an FTDI UART to USB 2.0 converter. Rx 
+and Tx leds indicate when communication occurs on that port. The serial port 
+B is connected back into the User Port A (J2) PIN 2 (RxB) and Pin 3 (TxB) for 
+slave cards serial communications.
 
-The serial port A clock is directly tied to the clock and can only changed programmatically from the SIO/2 registers.
+**The serial port A clock** is directly tied to the clock and can be changed 
+programmatically from the SIO/2 registers. In the NASCOM Basic provided, it is 
+set to 115200 by default.
 
-The serial port B clock have an additional physical divider that can be selected
-using the jumper J6. The division could be either by 1 (direct clock connection)
-2, 6 or 12. Combined to the internal divider, its speed can be reduced to as
-low as 9600 bauds.
+**The serial port B clock** The default speed is set to 115200 bauds as well. 
+Again, that speed can be programmatically changed. The serial clock on port B 
+goes through a dodecade counter and can be further adjusted using the 
+`Clock div.` (J6) jumper that offers another set of 1,2,6 and 12 dividers. 
+That gives a wide variety of standard baud rates down to 9600 bauds.
 
-### Interrupt Chaining (approval pending)
-Since the S80 architecture interfaces all the Z80 processor control signals, I 
-though it would be nice to make sure that the interrupt chaining logic could 
-fit in as well. In theory, an infinite number of devices could be chained 
-together. In practice I did not find any way to make that infinite chaining
-possible with a modular architecture. For that, we need to allocat one pin per
-device to the bus so I decided to allocate 5 pins of te User Port B to that end 
-(PIN 1 to 5).
+### Onboard memory control
+The PIN 1 of the User Port A is pulled low with a 2k resistor. This is the 
+on-board memory enable input pin (/ME). To disable onboard memory, an 
+expansion card can set that pin HIGH. This would be the case with a memory 
+expansion board. It can be hardwired to 5V to disable the onboard memory 
+completely or it can be tied to some logic to leverage the on-board memory as 
+needed.
 
-The SIO/2 interrupt number have been set to 0 (INT0). This is done by 
-connecting the SIO/2 IEO pin to the User Port B (J3) PIN 1.
+### Interrupt Chaining
+The RetroZ SBC design allows chaining interrupts of up to 4 slave boards. The
+onboard SIO/2 IEO pin is hardwired to the User Port A INT0 (PIN 4). Its 
+Interrupt Enable In pin can be tied to any of the other INT pins using the 
+IEI Select jumper (J4). Selecting the first position of that jumper (INT0) 
+sets the on-board SIO/2 as the Master. On slave boards, the Interrupt Enable 
+In will have 6 positions. Also, a 4 positions IEO jumper header should be 
+provided to select the right User Port A IEO position (pins 5-8). More on 
+that on the slave board design document.
 
-The SIO/2 IEI pin is connected to the *PARENT INT. SEL.* dual pin header (J4).
-The other end of the jumper is either set to VCC (INT0\*) or to its matching 
-reserved user pin on the User Port A. To set the SIO/2 device to the highest
-interrupt priority (which should be the case with no other interrupt enabled
-IO device connected) set the jumper on the first position (INT0\*).
+**WARNING** User Port A pins 4-8 (interrupts) are not protected. If you 
+connect a daughter board without checking jumper settings first, you could 
+short an IO pin on your stack and damage a chip! Looking into a solution to 
+that in a future revision.
+ 
 
