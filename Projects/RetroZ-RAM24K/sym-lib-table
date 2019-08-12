@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name S80)(type Legacy)(uri D:/Users/jeanp/Dropbox/documents/KiCad/RetroZ/Projects/S80-Library/S80.lib)(options "")(descr ""))
+  (lib (name IS62C256AL-45ULI-TR)(type Legacy)(uri ${KIPRJMOD}/libs/IS62C256AL-45ULI-TR.lib)(options "")(descr ""))
+)
