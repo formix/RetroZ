@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:RetroZ-RAM24K-cache
 EELAYER 26 0
 EELAYER END
 $Descr USLetter 11000 8500
@@ -63,18 +64,18 @@ $EndComp
 $Comp
 L power:GND #PWR?
 U 1 1 5D51A75D
-P 2675 2625
-F 0 "#PWR?" H 2675 2375 50  0001 C CNN
-F 1 "GND" H 2680 2452 50  0000 C CNN
-F 2 "" H 2675 2625 50  0001 C CNN
-F 3 "" H 2675 2625 50  0001 C CNN
-	1    2675 2625
+P 2675 2650
+F 0 "#PWR?" H 2675 2400 50  0001 C CNN
+F 1 "GND" H 2680 2477 50  0000 C CNN
+F 2 "" H 2675 2650 50  0001 C CNN
+F 3 "" H 2675 2650 50  0001 C CNN
+	1    2675 2650
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	2875 2725 2875 2625
+	2875 2750 2875 2650
 Wire Wire Line
-	2875 2625 2675 2625
+	2875 2650 2675 2650
 Wire Wire Line
 	2475 2750 2475 2675
 $Comp
@@ -94,28 +95,17 @@ Connection ~ 2475 2675
 $Comp
 L power:PWR_FLAG #FLG?
 U 1 1 5D51AA85
-P 2875 2625
-F 0 "#FLG?" H 2875 2700 50  0001 C CNN
-F 1 "PWR_FLAG" H 2875 2799 50  0000 C CNN
-F 2 "" H 2875 2625 50  0001 C CNN
-F 3 "~" H 2875 2625 50  0001 C CNN
-	1    2875 2625
+P 2875 2650
+F 0 "#FLG?" H 2875 2725 50  0001 C CNN
+F 1 "PWR_FLAG" H 2875 2824 50  0000 C CNN
+F 2 "" H 2875 2650 50  0001 C CNN
+F 3 "~" H 2875 2650 50  0001 C CNN
+	1    2875 2650
 	1    0    0    -1  
 $EndComp
-Connection ~ 2875 2625
+Connection ~ 2875 2650
 Text Label 1400 5850 0    50   ~ 0
 MEXT
-$Comp
-L Transistor_BJT:2N2219 Q?
-U 1 1 5D521379
-P 8725 3750
-F 0 "Q?" H 8916 3796 50  0000 L CNN
-F 1 "2N2219" H 8916 3705 50  0000 L CNN
-F 2 "Package_TO_SOT_THT:TO-39-3" H 8925 3675 50  0001 L CIN
-F 3 "http://www.onsemi.com/pub_link/Collateral/2N2219-D.PDF" H 8725 3750 50  0001 L CNN
-	1    8725 3750
-	1    0    0    -1  
-$EndComp
 $Comp
 L power:VCC #PWR?
 U 1 1 5D521904
@@ -129,7 +119,7 @@ F 3 "" H 8825 3550 50  0001 C CNN
 $EndComp
 Text Label 8525 4125 0    50   ~ 0
 MEXT
-Text Notes 8925 3625 0    50   Italic 0
+Text Notes 8900 4075 0    50   Italic 0
 Common\nCollector
 $Comp
 L Device:R R?
@@ -155,8 +145,9 @@ U 1 1 5D526C27
 P 7425 3200
 F 0 "U?" H 7175 3650 50  0000 C CNN
 F 1 "74LS138" H 7600 3650 50  0000 C CNN
-F 2 "" H 7425 3200 50  0001 C CNN
-F 3 "http://www.ti.com/lit/gpn/sn74LS138" H 7425 3200 50  0001 C CNN
+F 2 "Housings_SSOP:TSSOP-16_4.4x5mm_Pitch0.65mm" H 7425 3200 50  0001 C CNN
+F 3 "https://www.mouser.ca/datasheet/2/308/MC74HCT138A-D-108259.pdf" H 7425 3200 50  0001 C CNN
+F 4 "MC74HCT138ADTR2G" H 7425 3200 50  0001 C CNN "Mfr#"
 	1    7425 3200
 	1    0    0    -1  
 $EndComp
@@ -233,8 +224,8 @@ U 1 1 5D529277
 P 8225 3100
 F 0 "U?" H 8225 3425 50  0000 C CNN
 F 1 "74HCT10D" H 8225 3334 50  0000 C CNN
-F 2 "" H 8225 3100 50  0001 C CNN
-F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4011bms-12bms-23bms.pdf" H 8225 3100 50  0001 C CNN
+F 2 "Housings_SOIC:SOIC-14_3.9x8.7mm_Pitch1.27mm" H 8225 3100 50  0001 C CNN
+F 3 "https://www.mouser.ca/datasheet/2/916/74HC_HCT10-1319509.pdf" H 8225 3100 50  0001 C CNN
 	1    8225 3100
 	1    0    0    -1  
 $EndComp
@@ -244,8 +235,8 @@ U 2 1 5D52943E
 P 8825 3100
 F 0 "U?" H 8825 3425 50  0000 C CNN
 F 1 "74HCT10D" H 8825 3334 50  0000 C CNN
-F 2 "" H 8825 3100 50  0001 C CNN
-F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4011bms-12bms-23bms.pdf" H 8825 3100 50  0001 C CNN
+F 2 "Housings_SOIC:SOIC-14_3.9x8.7mm_Pitch1.27mm" H 8825 3100 50  0001 C CNN
+F 3 "https://www.mouser.ca/datasheet/2/916/74HC_HCT10-1319509.pdf" H 8825 3100 50  0001 C CNN
 	2    8825 3100
 	1    0    0    -1  
 $EndComp
@@ -266,9 +257,9 @@ L 4xxx:4023 U?
 U 3 1 5D529D4B
 P 9175 5000
 F 0 "U?" H 9175 5325 50  0000 C CNN
-F 1 "4023" H 9175 5234 50  0000 C CNN
-F 2 "" H 9175 5000 50  0001 C CNN
-F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4011bms-12bms-23bms.pdf" H 9175 5000 50  0001 C CNN
+F 1 "74HCT10D" H 9175 5234 50  0000 C CNN
+F 2 "Housings_SOIC:SOIC-14_3.9x8.7mm_Pitch1.27mm" H 9175 5000 50  0001 C CNN
+F 3 "https://www.mouser.ca/datasheet/2/916/74HC_HCT10-1319509.pdf" H 9175 5000 50  0001 C CNN
 	3    9175 5000
 	1    0    0    -1  
 $EndComp
@@ -321,7 +312,7 @@ U 1 1 5D52EA88
 P 4225 3050
 F 0 "IC?" H 4775 3325 50  0000 C CNN
 F 1 "IS62C256AL-45ULI-TR" H 4775 3234 50  0000 C CNN
-F 2 "SOIC127P1210X305-28N" H 4425 4150 50  0001 L CNN
+F 2 "IS62C256AL-45ULI-TR:SOIC127P1210X305-28N" H 4425 4150 50  0001 L CNN
 F 3 "https://www.mouser.ca/datasheet/2/198/62-65C256AL-258444.pdf" H 4425 4050 50  0001 L CNN
 F 4 "SRAM Chip Async Single 5V 256K-bit 32K x 8 45ns 28-Pin SOP T/R" H 4425 3950 50  0001 L CNN "Description"
 F 5 "3.05" H 4425 3850 50  0001 L CNN "Height"
@@ -468,7 +459,18 @@ Wire Notes Line
 	1225 1950 1225 5950
 Wire Notes Line
 	6075 1950 6075 5950
-Text Notes 1275 2100 0    75   ~ 15
-S80 Bus Interfaced with 32K of RAM
+Text Notes 1275 2225 0    75   ~ 15
+S80 Bus Interfaced with 32K of RAM\nOnly 24K is visible since the first 8k block is hidden
 NoConn ~ 9475 5000
+$Comp
+L Transistor_BJT:2N3055 Q?
+U 1 1 5D5211A6
+P 8725 3750
+F 0 "Q?" H 8916 3796 50  0000 L CNN
+F 1 "2SC2712-Y,LF" H 8916 3705 50  0000 L CNN
+F 2 "TO_SOT_Packages_SMD:SC-59_Handsoldering" H 8925 3675 50  0001 L CIN
+F 3 "https://toshiba.semicon-storage.com/info/docget.jsp?did=19227&prodName=2SC2712" H 8725 3750 50  0001 L CNN
+	1    8725 3750
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
