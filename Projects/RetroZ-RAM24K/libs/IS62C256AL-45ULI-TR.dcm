@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP IS62C256AL-45ULI-TR
+D SRAM Chip Async Single 5V 256K-bit 32K x 8 45ns 28-Pin SOP T/R
+F https://www.mouser.ca/datasheet/2/198/62-65C256AL-258444.pdf
+$ENDCMP
+#
+#End Doc Library

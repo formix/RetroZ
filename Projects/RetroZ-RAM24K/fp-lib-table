@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name S80)(type KiCad)(uri ${KIPRJMOD}/S80.pretty)(options "")(descr ""))
+  (lib (name IS62C256AL-45ULI-TR)(type KiCad)(uri ${KIPRJMOD}/IS62C256AL-45ULI-TR.pretty)(options "")(descr ""))
+)
