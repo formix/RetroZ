@@ -97,8 +97,8 @@ RST28            JP      SETBAUDB
 ;------------------------------------------------------------------------------
 ; Check serial status on port B
 
-;                .ORG 0030H
-;RST30            JP      CKINCHARB
+                .ORG 0030H
+RST30            JP      CKINCHARB
 
 ;------------------------------------------------------------------------------
 ; RST 38 - INTERRUPT VECTOR [ for IM 1 ]
@@ -301,7 +301,7 @@ CKINCHARB:      LD       A,(ser2BufUsed)
 
                 ; Baud set routine
                 ; Assumes trigger is connected to system clock of 7.3728 Mhz
-                ; Assumes SIO/2 is configured with divide-by-16 clock
+                ; Assumes SIO/2 is configured with divide-by-64 clock
 
 SETBAUDB:       CP       1
                 JR       NZ, NOT1200
@@ -841,7 +841,7 @@ WORDTB: .WORD   PEND
         .WORD   DEF
         .WORD   POKE
         .WORD   DOKE
-        .WORD   REM
+        .WORD   SCREEN
         .WORD   LINES
         .WORD   CLS
         .WORD   WIDTH
@@ -4750,6 +4750,32 @@ DOKE:   CALL    GETNUM          ; Get a number
         INC     HL
         LD      (HL),D          ; Save MSB of value
         POP     HL              ; Restore code string address
+        RET
+
+SCREEN: PUSH    AF
+        CALL    GETNUM
+        CALL    DEINT
+        PUSH    HL
+        PUSH    DE
+        CALL    CHKSYN
+        .BYTE   ','
+        CALL    GETNUM
+        CALL    DEINT
+        LD      A,27
+        CALL    OUTC
+        LD      A,'['
+        CALL    OUTC
+        EX      DE,HL
+        CALL    PRNTHL
+        LD      A,';'
+        CALL    OUTC
+        POP     HL
+        CALL    PRNTHL
+        LD      A,'H'
+        CALL    OUTC
+        POP     HL
+        POP     AF
+        JP      REM
         RET
 
 
