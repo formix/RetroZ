@@ -4752,18 +4752,18 @@ DOKE:   CALL    GETNUM          ; Get a number
         POP     HL              ; Restore code string address
         RET
 
-SCREEN: PUSH    AF
-        CALL    GETNUM
-        CALL    DEINT
-        PUSH    HL
-        PUSH    DE
-        CALL    CHKSYN
+SCREEN: PUSH    AF              ; Moves the cursor
+        CALL    GETNUM          ; Get the ROW value number
+        CALL    DEINT           ; Get integer -32768 to 32767
+        PUSH    HL              ; Save HL
+        PUSH    DE              ; Save DE
+        CALL    CHKSYN          ; Make sure ',' follows
         .BYTE   ','
-        CALL    GETNUM
-        CALL    DEINT
+        CALL    GETNUM          ; Get the COL value number
+        CALL    DEINT           ; Get integer -32768 to 32767
         LD      A,27
-        CALL    OUTC
-        LD      A,'['
+        CALL    OUTC            ; Outputs the VT102 Cursor Home command
+        LD      A,'['           
         CALL    OUTC
         EX      DE,HL
         CALL    PRNTHL
@@ -4773,10 +4773,9 @@ SCREEN: PUSH    AF
         CALL    PRNTHL
         LD      A,'H'
         CALL    OUTC
-        POP     HL
+        POP     HL              ; Restores HL and AF
         POP     AF
-        JP      REM
-        RET
+        JP      REM             ; Patch to avoid the ?SN Error
 
 
 ; HEX$(nn) Convert 16 bit number to Hexadecimal string
