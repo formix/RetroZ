@@ -4760,21 +4760,20 @@ SCREEN:                         ; Sets the cursor position at COL,ROW
         .BYTE   ','
         CALL    GETNUM          ; Get the ROW value number
         CALL    DEINT           ; Get integer -32768 to 32767
-        EX      (SP),HL         ; Save code string address
-        PUSH    HL              ; Exchanged saved DE and code address
+        EX      (SP),HL         ; Exchange the COL value with code address
+        PUSH    HL              ; Save the code address on the stack
         LD      A,27
         CALL    OUTC            ; Outputs the VT102 Cursor Home command
         LD      A,'['           
         CALL    OUTC
-        PUSH    DE              ; Exchanges HL and DE
-        POP     HL
+        EX      DE,HL           ; Put the ROW value into HL
         CALL    PRNTHL          ; Prints the ROW value
         LD      A,';'
         CALL    OUTC
-        POP     HL
+        POP     HL              ; Put the COL value into HL
         CALL    PRNTHL          ; Prints the COL value
         LD      A,'H'
-        CALL    OUTC
+        CALL    OUTC            ; Terminate the VT102 set cursor command
         POP     HL              ; Restore code string address
         RET
 
