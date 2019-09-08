@@ -4752,7 +4752,7 @@ DOKE:   CALL    GETNUM          ; Get a number
         POP     HL              ; Restore code string address
         RET
 
-SCREEN:                         ; Moves the cursor
+SCREEN:                         ; Sets the cursor position at COL,ROW
         CALL    GETNUM          ; Get the COL value number
         CALL    DEINT           ; Get integer -32768 to 32767
         PUSH    DE              ; Save the COL value
