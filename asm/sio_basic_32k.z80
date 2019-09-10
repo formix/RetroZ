@@ -746,6 +746,7 @@ WORDS:  .BYTE   'E'+80H,"ND"
         .BYTE   'P'+80H,"OKE"
         .BYTE   'D'+80H,"OKE"
         .BYTE   'S'+80H,"CREEN"
+        .BYTE   'C'+80H,"OLOR"
         .BYTE   'L'+80H,"INES"
         .BYTE   'C'+80H,"LS"
         .BYTE   'W'+80H,"IDTH"
@@ -762,7 +763,7 @@ WORDS:  .BYTE   'E'+80H,"ND"
         .BYTE   'B'+80H,"AUD"
         .BYTE   'D'+80H,"READ"
         .BYTE   'D'+80H,"WRITE"
-        .BYTE   'D'+80H,"INIT"
+;        .BYTE   'D'+80H,"INIT"
         .BYTE   'N'+80H,"EW"
 
         .BYTE   'T'+80H,"AB("
@@ -842,6 +843,7 @@ WORDTB: .WORD   PEND
         .WORD   POKE
         .WORD   DOKE
         .WORD   SCREEN
+        .WORD   COLOR
         .WORD   LINES
         .WORD   CLS
         .WORD   WIDTH
@@ -858,7 +860,7 @@ WORDTB: .WORD   PEND
         .WORD   BAUD
         .WORD   DREAD
         .WORD   DWRITE
-        .WORD   DINIT
+;        .WORD   DINIT
         .WORD   NEW
 
 ; RESERVED WORD TOKEN VALUES
@@ -4762,8 +4764,8 @@ SCREEN:                         ; Sets the cursor position at COL,ROW
         CALL    DEINT           ; Get integer -32768 to 32767
         EX      (SP),HL         ; Put code str address on the stack, COL into HL
         PUSH    HL              ; Save COL on the stack at the right place
-        LD      A,27
-        CALL    OUTC            ; Outputs the VT102 Cursor Home command
+        LD      A,ESC           ; Output the VT102 Cursor Home command
+        CALL    OUTC 
         LD      A,'['           
         CALL    OUTC
         EX      DE,HL           ; Put the ROW value into HL
@@ -4775,6 +4777,42 @@ SCREEN:                         ; Sets the cursor position at COL,ROW
         LD      A,'H'
         CALL    OUTC            ; Terminate the VT102 cursor home command
         POP     HL              ; Restore code string address
+        RET
+
+
+COLOR:                          ; Sets the foreground and background color
+        CALL    GETNUM          ; Get the FG color value
+        CALL    DEINT           ; Get integer -32768 to 32767
+        PUSH    DE
+        CALL    CHKSYN          ; Make sure ',' follows
+        .BYTE   ','
+        CALL    GETNUM          ; Get the BG color value
+        CALL    DEINT           ; Get integer -32768 to 32767
+        EX      (SP),HL         ; Put code str address on the stack, FG into HL
+        PUSH    HL              ; Save FG on the stack at the right place
+        EX      DE,HL           ; Put the BG value in HL
+        LD      A,ESC           ; Print the display attribute command
+        CALL    OUTC
+        LD      A,'['
+        CALL    OUTC
+        LD      H,0
+        LD      A,L
+        AND     07H
+        ADD     40
+        LD      L,A
+        CALL    PRNTHL          ; Print the background value
+        LD      A,';'
+        CALL    OUTC
+        POP     HL
+        LD      H,0
+        LD      A,L
+        AND     07H
+        ADD     30
+        LD      L,A
+        CALL    PRNTHL          ; Print the foreground value
+        LD      A,'m'
+        CALL    OUTC
+        POP     HL
         RET
 
 ; HEX$(nn) Convert 16 bit number to Hexadecimal string
