@@ -33,15 +33,15 @@ KEY_PRESSED:
 ; Prints the NULL terminated string pointed by HL to SIOA_D.
 ; When this function returns, HL contains the address of the NULL character.
 ; ***************************************************************************
-PRINT:  
-	CALL	A_RTS_ON
-        LD      A,(HL)          
-        OR      A,NULL          ;Checks if the content of A is null
-        JR      Z,PRINT_END     ;If null, then exit the function
-        CALL    PUTCHAR         ;Print the character and... 
-        INC     HL              ;...move to the next char
-        JR      PRINT		;Print the next char
-PRINT_END:
-	CALL	A_RTS_OFF
-        RET
+;PRINT:  
+;	CALL	A_RTS_ON
+;        LD      A,(HL)          
+;        OR      A,NULL          ;Checks if the content of A is null
+;        JR      Z,PRINT_END     ;If null, then exit the function
+;        CALL    PUTCHAR         ;Print the character and... 
+;        INC     HL              ;...move to the next char
+;        JR      PRINT		;Print the next char
+;PRINT_END:
+;	CALL	A_RTS_OFF
+;        RET
 
