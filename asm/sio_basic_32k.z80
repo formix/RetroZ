@@ -4680,17 +4680,16 @@ COLOR:                          ; Sets the foreground and background color
         PUSH    AF              ; Save it
         CALL    CHKSYN          ; Make sure ',' follows
         .BYTE   ','
-        CALL    GETNUM          ; Get the BG color value
-        CALL    DEINT           ; Get integer -32768 to 32767
+        CALL    GETINT          ; Get the BG color value into A
         EX      (SP),HL         ; Put code str address on the stack, FG into HL
-        PUSH    HL              ; Save FG on the stack at the right place
-        EX      DE,HL           ; Put the BG value in HL
+        PUSH    HL              ; Save FG color on the stack at the right place
+        PUSH    AF              ; Save BG color ont the stack after FG
         LD      A,ESC           ; Print the display attribute command
         CALL    OUTC
         LD      A,'['
         CALL    OUTC
+        POP     AF              ; Restore BG color into A
         LD      H,0
-        LD      A,L
         AND     07H
         ADD     40
         LD      L,A
