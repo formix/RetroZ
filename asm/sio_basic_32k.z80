@@ -4676,9 +4676,8 @@ SCREEN:                         ; Sets the cursor position at COL,ROW
 
 
 COLOR:                          ; Sets the foreground and background color
-        CALL    GETNUM          ; Get the FG color value
-        CALL    DEINT           ; Get integer -32768 to 32767
-        PUSH    DE
+        CALL    GETINT          ; Get the 0-255 FG color value
+        PUSH    AF              ; Save it
         CALL    CHKSYN          ; Make sure ',' follows
         .BYTE   ','
         CALL    GETNUM          ; Get the BG color value
@@ -4698,9 +4697,8 @@ COLOR:                          ; Sets the foreground and background color
         CALL    PRNTHL          ; Print the background value
         LD      A,';'
         CALL    OUTC
-        POP     HL
+        POP     AF
         LD      H,0
-        LD      A,L
         AND     07H
         ADD     30
         LD      L,A
