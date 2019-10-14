@@ -36,6 +36,9 @@ SIOB_C          .EQU     $02
 RTS_HIGH        .EQU    0E8H
 RTS_LOW         .EQU    0EAH
 
+COLOR_BRIGHT    .EQU    1
+COLOR_DIM       .EQU    2
+
 serBuf          .EQU     $8000
 serInPtr        .EQU     serBuf+SER_BUFSIZE
 serRdPtr        .EQU     serInPtr+2
@@ -4688,6 +4691,15 @@ COLOR:                          ; Sets the foreground and background color
         CALL    OUTC
         LD      A,'['
         CALL    OUTC
+        LD      A,'0'           ; Resets previous display attributes
+        CALL    OUTC
+        LD      A,';'
+        CALL    OUTC
+;        BG color is always DARK!!
+;        LD      HL,1            ; Sets HL to the FG address value
+;        ADD     HL,SP           ; Sets HL to the SP address value
+;        BIT     3,(HL)          ; Checks if the color is bright or dim        
+;        CALL    PRINT_INTENSITY
         POP     AF              ; Restore BG color into A
         LD      H,0
         AND     07H
@@ -4696,6 +4708,10 @@ COLOR:                          ; Sets the foreground and background color
         CALL    PRNTHL          ; Print the background value
         LD      A,';'
         CALL    OUTC
+        LD      HL,1            ; Sets HL to the BG address value
+        ADD     HL,SP           ; Sets HL to the SP address value
+        BIT     3,(HL)          ; Checks if the color is bright or dim        
+        CALL    PRINT_INTENSITY
         POP     AF
         LD      H,0
         AND     07H
@@ -4706,6 +4722,22 @@ COLOR:                          ; Sets the foreground and background color
         CALL    OUTC
         POP     HL
         RET
+
+
+; Ouputs bright or dim color value
+; Expects Z to be set (Color DIM) or reset (color bright)
+PRINT_INTENSITY:
+        JR      Z,COL_DIM       ; if value >= 8
+        LD      HL,COLOR_BRIGHT ; then set HL to the bright color value
+        JR      COL_PATTR
+COL_DIM:
+        LD      HL,COLOR_DIM    ; else set HL to the dim color value
+COL_PATTR:
+        CALL    PRNTHL          ; Print the brightness attribute        
+        LD      A,';'
+        CALL    OUTC
+        RET
+
 
 ; HEX$(nn) Convert 16 bit number to Hexadecimal string
 
