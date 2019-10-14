@@ -4645,24 +4645,29 @@ DOKE:   CALL    GETNUM          ; Get a number
         RET
 
 SCREEN:                         ; Sets the cursor position at COL,ROW
-        CALL    GETNUM          ; Get the COL value number
-        CALL    DEINT           ; Get integer -32768 to 32767
-        PUSH    DE              ; Save the COL value
+        CALL    GETINT          ; Get the 0-255 COL value
+        PUSH    AF              ; save it
         CALL    CHKSYN          ; Make sure ',' follows
         .BYTE   ','
-        CALL    GETNUM          ; Get the ROW value number
-        CALL    DEINT           ; Get integer -32768 to 32767
+        CALL    GETINT          ; Get the 0-255 ROW value in A
         EX      (SP),HL         ; Put code str address on the stack, COL into HL
         PUSH    HL              ; Save COL on the stack at the right place
+        PUSH    AF              ; Save the ROW value after thr COL value.
         LD      A,ESC           ; Output the VT102 Cursor Home command
         CALL    OUTC 
         LD      A,'['           
         CALL    OUTC
-        EX      DE,HL           ; Put the ROW value into HL
+        LD      A,0
+        LD      H,A             ; Sets H to 0
+        POP     AF              ; Get the ROW value into A
+        LD      L,A
         CALL    PRNTHL          ; Prints the ROW value
         LD      A,';'
         CALL    OUTC
-        POP     HL              ; Put the COL value into HL
+        LD      A,0
+        LD      H,A             ; Sets H to 0
+        POP     AF              ; Get the ROW value into A
+        LD      L,A
         CALL    PRNTHL          ; Prints the COL value
         LD      A,'H'
         CALL    OUTC            ; Terminate the VT102 cursor home command
