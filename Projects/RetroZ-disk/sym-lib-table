@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name atmel)(type Legacy)(uri ${KICAD_SYMBOL_DIR}/atmel.lib)(options "")(descr ""))
+  (lib (name texas)(type Legacy)(uri ${KICAD_SYMBOL_DIR}/texas.lib)(options "")(descr ""))
+)
