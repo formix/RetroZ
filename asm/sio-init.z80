@@ -10,7 +10,7 @@ SIOB_D  EQU     $03
 
         ORG     $0000
 RESET:
-	LD	SP,$FFFF	;sets the stack starting address to 65535
+	LD	SP,$0000	;sets the stack starting address to 65535
         CALL    SIOA_RESET
         CALL    INT_INIT
         JP      MAIN

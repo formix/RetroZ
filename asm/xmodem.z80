@@ -1,0 +1,34 @@
+
+NULL	EQU	0
+
+SIOA_C  EQU     $00
+SIOA_D  EQU     $01
+SIOB_C  EQU     $02
+SIOB_D  EQU     $03
+
+CH0     EQU     $00
+
+TEMP0   EQU     $1015   ;holds numbers of unsuccessfull blockduring download.
+
+INT_VEC:
+        ORG     $1C
+        DEFW    BYTE_AVAILABLE
+        DEFW    SPEC_BYTE_COND
+
+
+;Setup Rx and Tx
+	LD      A,$00            ; write 0
+	OUT     (SIOA_C),A
+	LD      A,$18            ; reset ext/status interrupts
+	OUT     (SIOA_C),A
+
+	LD      A,$04            ; write 4
+	OUT     (SIOA_C),A
+	LD      A,$C4            ; X64, no parity, 1 stop
+	OUT     (SIOA_C),A
+
+        LD      A,$05           ; write 5
+	OUT     (SIOA_C),A
+        LD      A,$E8           ;DTR on, TX 8bit, BREAK off, TX on, RTS off
+	OUT     (SIOA_C),A      
+        

@@ -51,6 +51,10 @@ BOOTMSG DEFB    "Experimental Tetris Game for the-RetroZ SBC v1.0, (c) 2019",10,
 CLS_I   DEFB    27,"[2J"
 DISP_I  DEFB    27,"[0;2;37;40m",0
 
+COLORS:
+BGC     DEFB    0
+FGC     DEFB    7
+DAT     DEFB    1
 
 MAIN:
         ; Initialize the terminal display attributes.
@@ -298,7 +302,7 @@ SET_DISPATT:
 SET_FG_COLOR:
         PUSH    AF
         LD      A,(BGC)
-        LD      E,A
+       LD      E,A
         JR      SET_COLOR_1
 SET_BG_COLOR:
         PUSH    AF
