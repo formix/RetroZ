@@ -159,7 +159,6 @@ Wire Wire Line
 	2425 775  2650 775 
 NoConn ~ 1175 1400
 NoConn ~ 1175 1700
-NoConn ~ 1175 1800
 NoConn ~ 1175 2200
 NoConn ~ 1175 2400
 NoConn ~ 1175 3000
@@ -703,7 +702,6 @@ Wire Wire Line
 Connection ~ 2250 5975
 Text Label 9900 5175 2    50   ~ 0
 ~WAIT
-NoConn ~ 7800 1550
 Text Label 8100 2800 2    50   ~ 0
 ~CS
 $Comp
@@ -740,7 +738,7 @@ U 1 1 5E34E3AC
 P 9975 3425
 F 0 "U5" V 10021 3245 50  0000 R CNN
 F 1 "74LS02" V 9930 3245 50  0000 R CNN
-F 2 "Package_DIP:DIP-14_W7.62mm_LongPads" H 9975 3425 50  0001 C CNN
+F 2 "Housings_DIP:DIP-14_W7.62mm_Socket_LongPads" H 9975 3425 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74ls02" H 9975 3425 50  0001 C CNN
 F 4 "SN74HC02NE4" V 9975 3425 50  0001 C CNN "Mfr#"
 	1    9975 3425
@@ -1054,6 +1052,40 @@ F 4 "SN74HC02NE4" V 9050 3375 50  0001 C CNN "Mfr#"
 	3    9050 3375
 	0    1    1    0   
 $EndComp
+$Comp
+L Device:Q_PNP_ECB Q?
+U 1 1 5E6AC7AF
+P 8475 1200
+F 0 "Q?" H 8400 1075 50  0000 C CNN
+F 1 "2SA933" H 8800 1225 50  0000 C CNN
+F 2 "Package_TO_SOT_THT:TO-92S_Wide" H 8675 1300 50  0001 C CNN
+F 3 "https://media.digikey.com/pdf/Data%20Sheets/Micro%20Commercial%20PDFs/2SA933AS-x.pdf" H 8475 1200 50  0001 C CNN
+	1    8475 1200
+	1    0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5E6C653E
+P 8575 1400
+F 0 "#PWR?" H 8575 1150 50  0001 C CNN
+F 1 "GND" H 8575 1250 50  0000 C CNN
+F 2 "" H 8575 1400 50  0001 C CNN
+F 3 "" H 8575 1400 50  0001 C CNN
+	1    8575 1400
+	1    0    0    -1  
+$EndComp
+Text Label 8750 1000 2    50   ~ 0
+~INT
+Wire Wire Line
+	8575 1000 8750 1000
+Wire Wire Line
+	7800 1550 7800 1200
+Wire Wire Line
+	7800 1200 8275 1200
+Text Label 925  1800 0    50   ~ 0
+~INT
+Wire Wire Line
+	1175 1800 925  1800
 Wire Bus Line
 	8075 3250 8075 4300
 Wire Bus Line
