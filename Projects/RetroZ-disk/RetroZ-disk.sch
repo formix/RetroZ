@@ -667,7 +667,6 @@ Wire Wire Line
 	5175 5700 5400 5700
 Wire Wire Line
 	5400 5700 5400 5600
-NoConn ~ 1175 2100
 Text Notes 1900 5050 0    50   ~ 0
 5V to 3.3V,500mA
 Wire Wire Line
@@ -744,7 +743,6 @@ F 4 "SN74HC02NE4" V 9975 3425 50  0001 C CNN "Mfr#"
 	1    9975 3425
 	0    -1   -1   0   
 $EndComp
-NoConn ~ 5950 2575
 $Comp
 L power:VDD #PWR013
 U 1 1 5E37076F
@@ -756,7 +754,6 @@ F 3 "" H 6500 4700 50  0001 C CNN
 	1    6500 4700
 	1    0    0    -1  
 $EndComp
-NoConn ~ 7800 1650
 Wire Wire Line
 	8700 1750 8925 1750
 $Comp
@@ -987,7 +984,6 @@ Wire Wire Line
 Connection ~ 9150 2800
 Wire Wire Line
 	9150 2800 9175 2800
-NoConn ~ 7800 2900
 $Comp
 L power:GND #PWR020
 U 1 1 5E7A07A4
@@ -1055,37 +1051,51 @@ $EndComp
 $Comp
 L Device:Q_PNP_ECB Q2
 U 1 1 5E6AC7AF
-P 8475 1200
-F 0 "Q2" H 8400 1075 50  0000 C CNN
-F 1 "2SA933" H 8800 1225 50  0000 C CNN
-F 2 "Package_TO_SOT_THT:TO-92S_Wide" H 8675 1300 50  0001 C CNN
-F 3 "https://media.digikey.com/pdf/Data%20Sheets/Micro%20Commercial%20PDFs/2SA933AS-x.pdf" H 8475 1200 50  0001 C CNN
-	1    8475 1200
+P 9025 2250
+F 0 "Q2" H 8950 2125 50  0000 C CNN
+F 1 "2SA933" H 9350 2275 50  0000 C CNN
+F 2 "Package_TO_SOT_THT:TO-92S_Wide" H 9225 2350 50  0001 C CNN
+F 3 "https://media.digikey.com/pdf/Data%20Sheets/Micro%20Commercial%20PDFs/2SA933AS-x.pdf" H 9025 2250 50  0001 C CNN
+	1    9025 2250
 	1    0    0    1   
 $EndComp
 $Comp
 L power:GND #PWR0101
 U 1 1 5E6C653E
-P 8575 1400
-F 0 "#PWR0101" H 8575 1150 50  0001 C CNN
-F 1 "GND" H 8575 1250 50  0000 C CNN
-F 2 "" H 8575 1400 50  0001 C CNN
-F 3 "" H 8575 1400 50  0001 C CNN
-	1    8575 1400
+P 9125 2450
+F 0 "#PWR0101" H 9125 2200 50  0001 C CNN
+F 1 "GND" H 9125 2300 50  0000 C CNN
+F 2 "" H 9125 2450 50  0001 C CNN
+F 3 "" H 9125 2450 50  0001 C CNN
+	1    9125 2450
 	1    0    0    -1  
 $EndComp
-Text Label 8750 1000 2    50   ~ 0
+Text Label 9300 2050 2    50   ~ 0
 ~INT
 Wire Wire Line
-	8575 1000 8750 1000
-Wire Wire Line
-	7800 1550 7800 1200
-Wire Wire Line
-	7800 1200 8275 1200
+	9125 2050 9300 2050
 Text Label 925  1800 0    50   ~ 0
 ~INT
 Wire Wire Line
 	1175 1800 925  1800
+Wire Wire Line
+	1175 2100 925  2100
+Text Label 925  2100 0    50   ~ 0
+~M1
+Wire Wire Line
+	7800 1650 8100 1650
+Text Label 8100 1650 2    50   ~ 0
+~M1
+Text Label 8100 1550 2    50   ~ 0
+~IORQ
+Wire Wire Line
+	7800 1550 8100 1550
+Wire Wire Line
+	8825 2250 8800 2250
+Wire Wire Line
+	8800 2250 8800 2900
+Wire Wire Line
+	8800 2900 7800 2900
 Wire Bus Line
 	8075 3250 8075 4300
 Wire Bus Line
