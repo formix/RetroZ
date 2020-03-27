@@ -422,16 +422,16 @@ Wire Wire Line
 	1175 3100 925  3100
 Text Label 925  3100 0    50   ~ 0
 ~IORQ
-Text Label 9575 3725 0    50   ~ 0
+Text Label 10075 2700 2    50   ~ 0
 ~IORQ
 Wire Wire Line
-	9875 3725 9575 3725
+	9775 2700 10075 2700
 Text Label 5575 1250 2    50   ~ 0
 ~SEL
 Wire Wire Line
 	5275 1250 5575 1250
 Connection ~ 5275 1250
-Text Label 9575 3825 0    50   ~ 0
+Text Label 10075 2900 2    50   ~ 0
 ~SEL
 Wire Bus Line
 	3550 4300 8075 4300
@@ -699,50 +699,14 @@ Connection ~ 2250 5875
 Wire Wire Line
 	2250 5875 2250 5975
 Connection ~ 2250 5975
-Text Label 9900 5175 2    50   ~ 0
+Text Label 9550 3950 2    50   ~ 0
 ~WAIT
 Text Label 8100 2800 2    50   ~ 0
 ~CS
-$Comp
-L 74xx:7402 U5
-U 2 1 5E2FF702
-P 9475 2800
-F 0 "U5" H 9475 2483 50  0000 C CNN
-F 1 "74LS02" H 9475 2574 50  0000 C CNN
-F 2 "" H 9475 2800 50  0001 C CNN
-F 3 "http://www.ti.com/lit/gpn/sn74ls02" H 9475 2800 50  0001 C CNN
-	2    9475 2800
-	-1   0    0    1   
-$EndComp
-Wire Wire Line
-	9775 2700 9775 2800
-Wire Wire Line
-	9975 3125 9975 2800
-Wire Wire Line
-	9975 2800 9775 2800
-Connection ~ 9775 2800
-Wire Wire Line
-	9775 2800 9775 2900
-Wire Wire Line
-	10075 3825 10075 3725
-Wire Wire Line
-	9575 3825 10075 3825
 Wire Wire Line
 	3275 1750 3775 1750
 Text Notes 4450 950  0    50   ~ 0
 IO Base Address: 0b001SSSMM\nWhere SSS the IO SEL bits and\nMM are the IO Mode bits
-$Comp
-L 74xx:7402 U5
-U 1 1 5E34E3AC
-P 9975 3425
-F 0 "U5" V 10021 3245 50  0000 R CNN
-F 1 "74LS02" V 9930 3245 50  0000 R CNN
-F 2 "Housings_DIP:DIP-14_W7.62mm_Socket_LongPads" H 9975 3425 50  0001 C CNN
-F 3 "http://www.ti.com/lit/gpn/sn74ls02" H 9975 3425 50  0001 C CNN
-F 4 "SN74HC02NE4" V 9975 3425 50  0001 C CNN "Mfr#"
-	1    9975 3425
-	0    -1   -1   0   
-$EndComp
 $Comp
 L power:VDD #PWR013
 U 1 1 5E37076F
@@ -987,97 +951,29 @@ Wire Wire Line
 $Comp
 L power:GND #PWR020
 U 1 1 5E7A07A4
-P 9325 5475
-F 0 "#PWR020" H 9325 5225 50  0001 C CNN
-F 1 "GND" H 9325 5325 50  0000 C CNN
-F 2 "" H 9325 5475 50  0001 C CNN
-F 3 "" H 9325 5475 50  0001 C CNN
-	1    9325 5475
+P 9375 4350
+F 0 "#PWR020" H 9375 4100 50  0001 C CNN
+F 1 "GND" H 9375 4200 50  0000 C CNN
+F 2 "" H 9375 4350 50  0001 C CNN
+F 3 "" H 9375 4350 50  0001 C CNN
+	1    9375 4350
 	1    0    0    -1  
 $EndComp
-Text Notes 9725 5275 0    50   ~ 0
+Text Notes 9675 3825 2    50   ~ 0
 Open Collector
 Wire Wire Line
-	9725 5175 9900 5175
+	9375 3950 9550 3950
 $Comp
 L Device:Q_PNP_ECB Q1
 U 1 1 5E7F9FF3
-P 9525 5075
-F 0 "Q1" V 9760 5075 50  0000 C CNN
-F 1 "2SA933" V 9851 5075 50  0000 C CNN
-F 2 "Package_TO_SOT_THT:TO-92S_Wide" H 9725 5175 50  0001 C CNN
-F 3 "https://media.digikey.com/pdf/Data%20Sheets/Micro%20Commercial%20PDFs/2SA933AS-x.pdf" H 9525 5075 50  0001 C CNN
-	1    9525 5075
-	0    -1   1    0   
-$EndComp
-Wire Wire Line
-	9325 5175 9325 5475
-Wire Wire Line
-	9175 4325 9175 4425
-Wire Wire Line
-	9050 3675 9050 4425
-Wire Wire Line
-	9050 4425 9175 4425
-Connection ~ 9175 4425
-Wire Wire Line
-	9175 4425 9175 4525
-Wire Wire Line
-	9775 4425 9775 4875
-Wire Wire Line
-	9775 4875 9525 4875
-$Comp
-L 74xx:7402 U5
-U 4 1 5E88BC6D
-P 9475 4425
-F 0 "U5" H 9400 4700 50  0000 C CNN
-F 1 "74LS02" H 9475 4625 50  0000 C CNN
-F 2 "" H 9475 4425 50  0001 C CNN
-F 3 "http://www.ti.com/lit/gpn/sn74ls02" H 9475 4425 50  0001 C CNN
-	4    9475 4425
-	1    0    0    -1  
-$EndComp
-$Comp
-L 74xx:7402 U5
-U 3 1 5E8A09DC
-P 9050 3375
-F 0 "U5" V 9025 3575 50  0000 L CNN
-F 1 "74LS02" V 9100 3575 50  0000 L CNN
-F 2 "" H 9050 3375 50  0001 C CNN
-F 3 "http://www.ti.com/lit/gpn/sn74ls02" H 9050 3375 50  0001 C CNN
-F 4 "SN74HC02NE4" V 9050 3375 50  0001 C CNN "Mfr#"
-	3    9050 3375
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:Q_PNP_ECB Q2
-U 1 1 5E6AC7AF
-P 8475 1200
-F 0 "Q2" H 8400 1075 50  0000 C CNN
-F 1 "2SA933" H 8800 1225 50  0000 C CNN
-F 2 "Package_TO_SOT_THT:TO-92S_Wide" H 8675 1300 50  0001 C CNN
-F 3 "https://media.digikey.com/pdf/Data%20Sheets/Micro%20Commercial%20PDFs/2SA933AS-x.pdf" H 8475 1200 50  0001 C CNN
-	1    8475 1200
+P 9275 4150
+F 0 "Q1" H 9200 4025 50  0000 C CNN
+F 1 "2SA933" H 9175 4325 50  0000 C CNN
+F 2 "Package_TO_SOT_THT:TO-92S_Wide" H 9475 4250 50  0001 C CNN
+F 3 "https://media.digikey.com/pdf/Data%20Sheets/Micro%20Commercial%20PDFs/2SA933AS-x.pdf" H 9275 4150 50  0001 C CNN
+	1    9275 4150
 	1    0    0    1   
 $EndComp
-$Comp
-L power:GND #PWR0101
-U 1 1 5E6C653E
-P 8575 1400
-F 0 "#PWR0101" H 8575 1150 50  0001 C CNN
-F 1 "GND" H 8575 1250 50  0000 C CNN
-F 2 "" H 8575 1400 50  0001 C CNN
-F 3 "" H 8575 1400 50  0001 C CNN
-	1    8575 1400
-	1    0    0    -1  
-$EndComp
-Text Label 8750 1000 2    50   ~ 0
-~INT
-Wire Wire Line
-	8575 1000 8750 1000
-Wire Wire Line
-	7800 1550 7800 1200
-Wire Wire Line
-	7800 1200 8275 1200
 Text Label 925  1800 0    50   ~ 0
 ~INT
 Wire Wire Line
@@ -1086,14 +982,72 @@ Wire Wire Line
 	1175 2100 925  2100
 Text Label 925  2100 0    50   ~ 0
 ~M1
+$Comp
+L 74xx:74LS32 U5
+U 1 1 5E7FD5C4
+P 9475 2800
+F 0 "U5" H 9525 2600 50  0000 R CNN
+F 1 "SN74LS32N" H 9550 3025 50  0000 R CNN
+F 2 "Package_DIP:DIP-14_W7.62mm_LongPads" H 9475 2800 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS32" H 9475 2800 50  0001 C CNN
+	1    9475 2800
+	-1   0    0    1   
+$EndComp
 Wire Wire Line
-	7800 1650 8100 1650
-Text Label 8100 1650 2    50   ~ 0
-~M1
-Text Label 8100 2900 2    50   ~ 0
-~IORQ
+	9775 2900 10075 2900
+$Comp
+L 74xx:74LS32 U5
+U 2 1 5E83A9D0
+P 9050 3375
+F 0 "U5" V 9004 3563 50  0000 L CNN
+F 1 "SN74LS32N" V 9095 3563 50  0000 L CNN
+F 2 "Package_DIP:DIP-14_W7.62mm_LongPads" H 9050 3375 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS32" H 9050 3375 50  0001 C CNN
+	2    9050 3375
+	0    1    1    0   
+$EndComp
 Wire Wire Line
-	7800 2900 8100 2900
+	9050 3675 9050 4150
+Wire Wire Line
+	9050 4150 9075 4150
+$Comp
+L 74xx:74LS32 U5
+U 3 1 5E886F65
+P 1700 7000
+F 0 "U5" V 1850 7175 50  0000 C CNN
+F 1 "SN74LS32N" V 1300 7000 50  0000 C CNN
+F 2 "Package_DIP:DIP-14_W7.62mm_LongPads" H 1700 7000 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS32" H 1700 7000 50  0001 C CNN
+	3    1700 7000
+	0    -1   -1   0   
+$EndComp
+$Comp
+L 74xx:74LS32 U5
+U 4 1 5E8895AC
+P 2300 7000
+F 0 "U5" V 2450 7175 50  0000 C CNN
+F 1 "SN74LS32N" V 1900 7000 50  0000 C CNN
+F 2 "Package_DIP:DIP-14_W7.62mm_LongPads" H 2300 7000 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS32" H 2300 7000 50  0001 C CNN
+	4    2300 7000
+	0    -1   -1   0   
+$EndComp
+NoConn ~ 1700 6700
+NoConn ~ 2300 6700
+Wire Wire Line
+	2875 7300 2400 7300
+Connection ~ 1800 7300
+Wire Wire Line
+	1800 7300 1600 7300
+Connection ~ 2200 7300
+Wire Wire Line
+	2200 7300 1800 7300
+Connection ~ 2400 7300
+Wire Wire Line
+	2400 7300 2200 7300
+NoConn ~ 7800 2900
+NoConn ~ 7800 1550
+NoConn ~ 7800 1650
 Wire Bus Line
 	8075 3250 8075 4300
 Wire Bus Line
