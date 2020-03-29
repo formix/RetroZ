@@ -1,4 +1,0 @@
-(sym_lib_table
-  (lib (name RetroZ-disk-rescue)(type Legacy)(uri ${KIPRJMOD}/RetroZ-disk-rescue.lib)(options "")(descr ""))
-  (lib (name S80)(type Legacy)(uri ${KIPRJMOD}/..//S80-Library/S80.lib)(options "")(descr ""))
-)
