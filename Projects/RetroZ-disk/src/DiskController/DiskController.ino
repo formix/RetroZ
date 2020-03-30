@@ -1,6 +1,9 @@
 #include <SD.h>
 
 
+/* Pins */
+#define STATUS_LED      8
+
 /* Masks */
 #define MASK_MODE       0x3   /* Pins 14, 15 */
 #define MASK_READ_OUT   0x4   /* Pin 16 */
@@ -37,7 +40,17 @@ void setup() {
   for(int pin = 0; pin < 20; pin++) {
     pinMode(pin, INPUT);
   }
-  _status = STATUS_OK;
+
+  digitalWrite(STATUS_LED, LOW);
+  pinMode(STATUS_LED, INPUT);
+  if (!SD.begin(10)) {
+    _status = STATUS_SD_INIT_ERROR;
+    blink_status(3);
+  }
+  else {
+    _status = STATUS_OK;
+    blink_status(2);
+  }
 }
 
 
@@ -88,5 +101,15 @@ void setDataDir(byte value) {
   }
   else {
     DDRD = B11111111;
+  }
+}
+
+
+void blink_status(byte count) {
+  for (int i = 0; i < count; i++) {
+    digitalWrite(STATUS_LED, HIGH);
+    delay(125);
+    digitalWrite(STATUS_LED, LOW);
+    delay(125);
   }
 }

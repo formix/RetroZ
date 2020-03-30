@@ -28,5 +28,8 @@ _autosave-*
 
 # unrelated cloud files
 .dropbox
-
 plots
+
+
+# outputs from compilation, plot, etc
+out
