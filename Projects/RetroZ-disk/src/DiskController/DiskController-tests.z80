@@ -1,0 +1,98 @@
+#target bin
+
+#include "retroz-bios-inc.z80"
+#include "callstack.z80"
+
+;layout
+#code   _HEADER
+#code   _PROGRAM
+#code   _PROGRAM_FOOTER
+#code   _DATA
+#data   _HEAP,_DATA_end
+
+EXEC_TARGET     EQU $8100
+
+DISK_DATA       EQU $20
+DISK_CMD        EQU $21
+DISK_STATUS     EQU $22
+
+#data _HEAP
+    .PHASE  EXEC_TARGET+_PROGRAM_size+_DATA_size
+
+ITOA_BUF        DEFS 17
+
+
+#code _HEADER
+    DEFB 0
+    DEFW _PROGRAM_size+_DATA_size
+    DEFW EXEC_TARGET
+
+
+#code _DATA
+    .PHASE  EXEC_TARGET+_PROGRAM_size
+
+WELCOME         DEFB "*** RetroZ Disk Controller Test Suite ***",0
+PRESS_ANY_KEY   DEFB "Press any key to reset...",0
+RESETTING       DEFB "Resetting...",0
+
+
+#code _PROGRAM
+    .PHASE  EXEC_TARGET
+
+    _ADDLP  WELCOME
+    _CALL   PRINTLN
+    CALL    NEWLINE
+
+
+    ; Read the status register from the disk controller
+    LD      H,0
+    IN      A,(DISK_STATUS)
+    LD      L,A
+    _ADDRP  HL
+    _CALL   UINT_TO_STRING
+    _ADDRP  HL
+    _CALL   PRINTLN
+
+    _ADDLP  PRESS_ANY_KEY
+    _CALL   PRINTLN
+
+    CALL    START_RX_INT    ;Start listening to keyboard inputs
+
+
+PROGRAM_LOOP:
+    CALL    GETCHAR         ; Read the next character in the console
+    JR      Z, PROGRAM_LOOP ; Loop if no key pressed.
+    _ADDLP  RESETTING
+    _CALL   PRINTLN
+    JP      0               ;Hot reset
+
+
+
+PRINTLN:
+    POP     IX
+    CALL    PRINT
+    LD      A,10
+    CALL    OUTC
+    LD      A,13
+    CALL    OUTC
+    PUSH    IX
+    RET
+
+NEWLINE:
+    LD      A,10
+    CALL    OUTC
+    LD      A,13
+    CALL    OUTC
+    RET
+
+
+UINT_TO_STRING:
+    _GETP   DE,0
+    _ADDLP  10              ;Decimal display (conv. base)
+    _ADDRP  DE              ;The number to convert
+    _ADDLP  17              ;The size of the string buffer
+    _ADDLP  ITOA_BUF        ;The target string buffer
+    _CALL   ITOA
+    _RET_HL HL
+
+END
